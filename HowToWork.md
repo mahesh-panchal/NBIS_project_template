@@ -5,7 +5,7 @@ Cloning this repository as a template should have set up a lot of things for you
 General advice:
 * Use git branches to add new features, and make sure the `main` branch is always stable.
 * Make a test data set from the users data, and use that to test code as you develop.
-* To understand what a Nextflow construct does, make an example test like in [Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html). Nextflow also has a console mode to test syntax (`nextflow console`).
+* To understand what a Nextflow construct does, make an example test like in [Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html). Nextflow also has a (GUI) console mode to test syntax (`nextflow console`).
 
 ## Adding a new Nextflow process
 
