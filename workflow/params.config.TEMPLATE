@@ -1,0 +1,21 @@
+// Workflow parameters
+    // SNIC Compute allocation
+params.project = 'snic20XX-YY-ZZ'
+    // Custom cluster options (often not needed)
+params.clusterOptions = ''
+    // The absolute path (full path, begins with / ) to the results folder
+    // If you have a SNIC Storage allocation, use that!
+params.results = '/proj/snic20xx-yy-zz/results'
+    // The absolute path (full path, begins with / ) to the input data
+params.samples = ''
+    // Mode of copying results from the work directory
+    // 'symlink' : Use for test data.
+    // 'copy'    : Use for full analysis data.
+params.publish_mode = 'symlink' // values: 'symlink', 'copy'
+
+// Nextflow configuration
+    // The absolute path (full path, begins with / ) to the work directory (intermediate results)
+    // If you have a SNIC Storage allocation, use the nobackup folder in there.
+workDir = '/proj/snic20xx-yy-zz/nobackup/nxf-work'
+    // Resume analysis from the last complete process executions (not from the beginning).
+resume = true
