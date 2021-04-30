@@ -1,0 +1,7 @@
+run_modules:
+    - fastqc
+    - fastp
+
+module_order:
+    - fastqc
+    - fastp
