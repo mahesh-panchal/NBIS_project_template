@@ -19,29 +19,31 @@ practice, but it's a method that works well for me.
 
 ## How to use this repository
 
-1. Create a repository using this as a template, following a naming scheme.
+1. Create a **private** repository using this as a template, following a naming scheme.
 
   ```
   SMS-<id>-<short_description>
   ```
 
-2. Log in to Uppmax, and change directory into the SNIC compute allocation.
+2. Add a link to the Redmine project next to the project description (in the URL box).
+
+3. Log in to Uppmax, and change directory into the SNIC compute allocation.
 
   ```bash
   cd /proj/snic20XX-YY-ZZ
   ```
 
-3. Clone the Github repository into the project directory, renaming to a shorter name.
+4. Clone the Github repository into the SNIC compute allocation, renaming to a shorter name.
 
   ```bash
   git clone git@github.com:NBISweden/SMS-<id>-<short_description>.git NBIS_support_<id>
   ```
 
-4. Clone the repository on Uppmax locally.
+5. Clone the Uppmax repository locally.
 
   ```bash
   cd ~/Documents/Projects
   git clone <user>@rackham.uppmax.uu.se:/proj/snic20XX-YY-ZZ/NBIS_support_<id>
   ```
 
-5. Update the README.md with project information.
+6. Update the README.md with project information.
