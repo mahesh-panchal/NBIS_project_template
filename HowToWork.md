@@ -27,7 +27,7 @@ General advice:
 
 	  output:
 	    path "<filename>", emit: <file_type>
-		path "*"  // Captures everything. Use when you don't know what the output is.
+	    path "*"  // Captures everything. Use when you don't know what the output is.
 
 	  script:
 	  """
