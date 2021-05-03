@@ -94,10 +94,15 @@ shuf -n "$NUM_RECORDS" "${PREFIX}.csv" > "${PREFIX}.subsampled.csv"
 
 ## Adding a new Nextflow process
 
+To add the next step in the analysis, write a new process.
+It's a good idea to use git branches to add new functionality to your analysis,
+particularly if you're new to using the program. There is a section lower down
+on trouble shooting processes if you're having trouble executing a process.
+
 1. Make a new branch.
 
   ```bash
-  git branch -d <add_process>
+  git branch -d <add_new_process>
   ```
 
 2. Edit the process into the workflow:
@@ -120,6 +125,25 @@ shuf -n "$NUM_RECORDS" "${PREFIX}.csv" > "${PREFIX}.subsampled.csv"
   }
   ```
 
-3. Add the container path and resources to the configs.
+3. Pass the appropriate input channel(s) in the workflow block.
 
-4. Test with the test data.
+4. Add the container path and resources to the configs.
+
+5. Test with the test data.
+
+6. Once it works, merge with the existing development branch or main branch.
+
+```bash
+# Update main branch
+git checkout -b main
+git pull
+# merge updates to main into new process branch
+git checkout -b <add_new_process>
+git merge main
+# IMPORTANT: Resolve any conflicts if main was updated
+# Switch to main and merge new process
+git checkout -b main
+git merge <add_new_process>
+# delete new process branch
+git branch -d <add_new_process>
+```
