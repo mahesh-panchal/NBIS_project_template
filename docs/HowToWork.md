@@ -7,7 +7,8 @@ in a support project.
 
 * What I use
 * Summary of work habits
-* How to use the template repository
+* How to use the Template repository
+* Making a test data set
 
 ## What I use
 
@@ -31,11 +32,11 @@ and clone it into the SNIC Compute project and then locally from the SNIC Comput
 * To understand what a Nextflow construct does, make an example test like in [Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html). Nextflow also has a (GUI) console mode to test syntax (`nextflow console`).
 * Nextflow processes are kept as modular as possible, often limiting them to a single tool.
 * Try to use existing containers when possible. When a container must be created, I use Docker to make
-a local image, test, and then push it to Github packages.
+a local image, test, and then push it to Github packages to keep it private to the project.
 
-## How to use the template repository
+## How to use the Template repository
 
-1. Create a **private** repository using this as a template, following a naming scheme.
+1. Create a **private** Project repository using this as a template, following a naming scheme.
 
   ```
   SMS-<id>-<short_description>
@@ -63,6 +64,33 @@ a local image, test, and then push it to Github packages.
   ```
 
 6. Update the README.md in the root of the project with project information.
+
+## Making a test data set
+
+A good test data set should be small, but have enough data to get to the end of the analysis.
+
+There are various tools that let you subsample data, for example, seqtk, or samtools.
+
+Paired end sequence subsample example:
+```bash
+FRACTION=0.1
+SEED=100
+seqtk sample -s"$SEED" "$READ1" "$FRACTION" | gzip -c > "${READ1/_R1./_R1.subsampled.}" &
+seqtk sample -s"$SEED" "$READ2" "$FRACTION" | gzip -c > "${READ1/_R2./_R2.subsampled.}"
+wait
+```
+
+Subsample a bam file:
+```bash
+FRACTION=0.10
+samtools view -b -@ "${CPUS:-10}" -s "$FRACTION" -o "${PREFIX}.subsampled.subreads.bam" "${PREFIX}.subreads.bam"
+```
+
+Subsample a CSV file:
+```bash
+NUM_RECORDS=1000
+shuf -n "$NUM_RECORDS" "${PREFIX}.csv" > "${PREFIX}.subsampled.csv"  
+```
 
 ## Adding a new Nextflow process
 
