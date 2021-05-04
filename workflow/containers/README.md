@@ -132,5 +132,21 @@ docker rm <container_id>
 
 ## Uploading the Docker image to Github packages
 
+UPDATE: Docker package repository `docker.pkg.github.com` is being retired
+in favour of the container registry `ghcr.io`. One primary difference is
+packages are no longer at the repository level, but at the owner/registry level.
+
+Docker images can be built locally and pushed to Github packages:
+```bash
+docker build -t docker.pkg.github.com/<registry>/<repository>/<image_name>:<tag> .
+docker push docker.pkg.github.com/<registry>/<repository>/<image_name>:<tag>
+```
+
+Note that `<registry>`,`<repository>`, and `<image_name>` will all be lowercase,
+even if they have uppercase characters. A Personal Access Token (PAT) is also
+needed to publish, install, and delete packages (See [Documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-docker-registry#authenticating-to-github-packages)).
+
+See [Github's Container Registry Documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#pushing-container-images) for
+more information.
 
 ## First use of the image from Github packages
