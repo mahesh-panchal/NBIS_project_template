@@ -53,6 +53,9 @@ a local image, test, and then push it to Github packages to keep it private to t
      | - nobackup/nxf-work                         Intermediate analysis files
      \ - NBIS_support_<id>_results/                Analysis results
     ```
+* When disk space becomes an issue `nextflow clean` is used to clean up intermediate files.
+* Troubleshooting processes is often done inside the nextflow work directories where the
+input files and process scripts are staged.
 
 ## How to use the Template repository
 
