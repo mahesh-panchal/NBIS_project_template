@@ -1,6 +1,15 @@
 # Containers - Custom container folder
 
-Use this folder to keep Container image specifications.
+Use this folder to keep custom container image specifications.
+Make a directory for the tool, and keep the `Dockerfile` in
+there.
+```
+ containers/
+  | - <tool_name_X>/
+  |   \ - Dockerfile
+  \ - <tool_name_Y>/
+      \ - Dockerfile
+```
 
 Note:
 There are many images already out there. Please use a
@@ -12,6 +21,11 @@ Many tool images can be found from:
 
 If an image contains part of what you need, please
 build an image on top of it.
+
+I specify using `Dockerfile`s here because I use
+both Docker locally, and Singularity on Uppmax. Singularity
+can build containers from Docker images, but not vice versa.
+Docker images are also supported by Github packages.
 
 ## Contents
 
