@@ -110,8 +110,6 @@ CMD [ "<script>.py" ]
 
 ## Building a Docker image
 
-To build a Docker image from a Dockerfile you need Docker installed.
-
 Change directory to the folder where the Dockerfile is located,
 and then use the following to build the image locally. The `<image_name>`
 is what you want to refer to the image by, e.g. the software name,
