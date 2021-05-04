@@ -5,7 +5,7 @@ params.project = 'snic20XX-YY-ZZ'
 params.clusterOptions = ''
     // The absolute path (full path, begins with / ) to the results folder
     // If you have a SNIC Storage allocation, use that!
-params.results = '/proj/snic20xx-yy-zz/results'
+params.results = '/proj/snic20xx-yy-zz/NBIS_support_<id>_results'
     // The absolute path (full path, begins with / ) to the input data
 params.samples = ''
     // Mode of copying results from the work directory
