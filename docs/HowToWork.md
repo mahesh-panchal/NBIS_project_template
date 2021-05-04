@@ -33,6 +33,26 @@ and clone it into the SNIC Compute project and then locally from the SNIC Comput
 * Nextflow processes are kept as modular as possible, often limiting them to a single tool.
 * Try to use existing containers when possible. When a container must be created, I use Docker to make
 a local image, test, and then push it to Github packages to keep it private to the project.
+* Try to use a structured work directory such as the structure below:
+    ```
+    /proj/snic20XX-YY-ZZ/NBIS_support_<id>/        (SNIC Compute Allocation)
+     |
+     | - README.md                                 Project details summary
+     |
+     | - analyses/                                 Analysis configuration files
+     |   | - YYYY-MM-DD_workflow_dev                 Configuration to use test data
+     |   \ - YYYY-MM-DD_full_data_analysis           Configuration to use all the data
+     | - docs/                                     Project documentation
+     \ - workflow/                                 Nextflow workflow
+         | - bin                                     Custom script folder
+         | - configs                                 General workflow configuration
+         \ - containers                              Custom container definitions
+
+    /proj/snic20xx-yy-zz/                          (SNIC Storage Allocation)
+     |
+     | - nobackup/nxf-work                         Intermediate analysis files
+     \ - NBIS_support_<id>_results/                Analysis results
+    ```
 
 ## How to use the Template repository
 
