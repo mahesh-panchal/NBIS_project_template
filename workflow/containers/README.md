@@ -11,7 +11,44 @@ Many tool images can be found from:
 * [The Rocker Project](https://www.rocker-project.org)
 
 If an image contains part of what you need, please
-build an image on top of it. 
+build an image on top of it.
+
+## Contents
+
+* Testing an existing public image
+* Example Dockerfile specification
+* Building a Docker image
+* Uploading the Docker image to Github packages
+* First use of the image from Github packages
+
+## Testing an existing public image
+
+It can sometimes be difficult to know if a container image has
+what you need installed. It's a good idea to pull the image
+and test it before including it into the workflow.
+
+One can test a single command,
+```bash
+docker run --rm quay.io/biocontainers/fastqc:0.11.9--0 fastqc --version
+```
+or test interactively.
+```bash
+docker run --name fqc -it quay.io/biocontainers/fastqc:0.11.9--0 bash
+> fastqc --version
+> exit
+```
+
+More generally the command is:
+```bash
+docker run --rm <image_name>:<tag> <command> <parameters>
+```
+or, interactively,
+```bash
+docker run --name <container_id> -it <image_name>:<tag> bash
+> <command> <parameters>
+> exit
+docker rm <container_id>
+```
 
 ## Example Dockerfile specification
 
@@ -30,7 +67,7 @@ LABEL description="Software Description" \
       author="Mahesh Binzer-Panchal" \
       version="1.0.0"
 
-# Update and install software dependencies 
+# Update and install software dependencies
 # with APT (Advanced Packaging  Tool)
 RUN apt-get update --fix-missing && \
     apt-get install -y procps ghostscript
@@ -56,3 +93,32 @@ ENV PATH="/opt/<repository>:${PATH}"
 # Provide a default command (entry point)
 CMD [ "<script>.py" ]
 ```
+
+## Building a Docker image
+
+To build a Docker image from a Dockerfile you need Docker installed.
+
+Change directory to the folder where the Dockerfile is located,
+and then use the following to build the image locally. The `<image_name>`
+is what you want to refer to the image by, e.g. the software name,
+and the `<tag>` is often the the version, e.g. 1.0.0 .
+```bash
+docker build -t <image_name>:<tag> .
+```
+
+You can then test the tool by calling it from the container.
+```bash
+docker run --rm <image_name>:<tag> <command> --version
+```
+Alternatively, make an interactive session in the container, and test.
+```bash
+docker run --name <container_id> -it <image_name>:<tag> bash
+> <command> --version
+> exit
+docker rm <container_id>
+```
+
+## Uploading the Docker image to Github packages
+
+
+## First use of the image from Github packages
