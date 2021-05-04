@@ -43,7 +43,7 @@ NBIS Agreement: ( XX hrs)
 ```
 /proj/snic20XX-YY-ZZ/NBIS_support_<id>/        (SNIC Compute Allocation)
  |
- | - README.md                                 Project details
+ | - README.md                                 Project details summary
  |
  | - analyses/                                 Analysis configuration files
  | - docs/                                     Project documentation
@@ -52,7 +52,7 @@ NBIS Agreement: ( XX hrs)
 /proj/snic20xx-yy-zz/                          (SNIC Storage Allocation)
  |
  | - nobackup/nxf-work                         Intermediate analysis files
- \ - results/                                  Analysis results
+ \ - NBIS_support_<id>_results/                Analysis results
 ```
 
 ## Workflow instructions
