@@ -64,6 +64,7 @@ workflow {
 
 process FASTQC {
 
+    // Publish directories are numbered to help understand processing order
     publishDir "${params.outdir}/01_FastQC", mode: params.publish_mode,
 
     input:
