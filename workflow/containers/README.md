@@ -150,3 +150,39 @@ See [Github's Container Registry Documentation](https://docs.github.com/en/packa
 more information.
 
 ## First use of the image from Github packages
+
+Using container images (or data in general) from Github requires authentication,
+usually in the form of the Personal Access Token (PAT). Singularity requires
+setting some environment variables in order to authenticate on Github, however
+this causes issues pulling from Public repositories which don't require authentication.
+
+To assist with this, I've created my own functions to toggle this on and off in
+my `.bashrc` file.
+```bash
+ghauth-enable () {
+    source $HOME/.gh-auth.sh
+    export -p SINGULARITY_DOCKER_USERNAME SINGULARITY_DOCKER_PASSWORD
+}
+
+ghauth-disable () {
+    unset SINGULARITY_DOCKER_USERNAME SINGULARITY_DOCKER_PASSWORD
+}
+```
+
+where `.gh-auth.sh` contains:
+```bash
+SINGULARITY_DOCKER_USERNAME='$oauthtoken'
+SINGULARITY_DOCKER_PASSWORD='<github_personal_access_token>'
+```
+and has `rw` permissions only for myself (`600`).
+
+When I first run a process via Nextflow (e.g. testing a process) it will
+create the Singularity image locally in the Nextflow work directory.
+I enable github authentication before running and then disable afterwards.
+For subsequent runs of the process/container, Nextflow then uses the locally
+cached copy.
+```bash
+ghauth-enable
+./run_nextflow.sh
+ghauth-disable
+```
