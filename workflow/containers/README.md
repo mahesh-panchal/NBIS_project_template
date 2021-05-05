@@ -233,3 +233,11 @@ From: continuumio/miniconda3:4.8.2
     export PATH "/opt/<repository>:${PATH}"
 
 ```
+
+## Building a Singularity image using the cloud builder
+
+Details can be found on the [Singularity Remote Cloud Builder](https://cloud.sylabs.io/builder).
+You need a Sylabs cloud token from the remote builder for this to work (easily acquired).
+```bash
+singularity build --remote <tool>-<version>.sif /path/to/Singularityfile
+```
