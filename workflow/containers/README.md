@@ -1,7 +1,7 @@
 # Containers - Custom container folder
 
 Use this folder to keep custom container image specifications.
-Make a directory for the tool, and keep the `Dockerfile` in
+Make a directory for the tool, and keep the `Dockerfile`/`Singularityfile` in
 there.
 ```
  containers/
@@ -11,22 +11,20 @@ there.
       \ - Dockerfile
 ```
 
-Note:
-There are many images already out there. Please use a
+### Note:
+* There are many images already out there. Please use a
 public image before trying to create your own.
+* If you're using Singularity try to download Singularity
+images (since they are files) rather than building Singularity
+images from a Dockerfile.
 
 Many tool images can be found from:
-* [Biocontainers](https://biocontainers.pro)
+* [Biocontainers](https://biocontainers.pro) - Both Docker and Singularity
 * [The Rocker Project](https://www.rocker-project.org)
 * [Multi conda package Containers](https://github.com/BioContainers/multi-package-containers)
 
 If an image contains part of what you need, please
 build an image on top of it.
-
-I specify using `Dockerfile`s here because I use
-both Docker locally, and Singularity on Uppmax. Singularity
-can build containers from Docker images, but not vice versa.
-Docker images are also supported by Github packages.
 
 ## Contents
 
@@ -35,6 +33,8 @@ Docker images are also supported by Github packages.
 * Building a Docker image
 * Uploading the Docker image to Github packages
 * First use of the image from Github packages
+* Example Singularityfile specification
+* Building a Singularity image using the cloud builder
 
 ## Testing an existing public image
 
@@ -186,4 +186,50 @@ cached copy.
 ghauth-enable
 ./run_nextflow.sh
 ghauth-disable
+```
+
+## Example Singularityfile specification
+
+An example `Singularityfile` that builds on top of an image with package managers included.
+
+```
+# The method of building the image ( see https://sylabs.io/guides/3.7/user-guide/definition_files.html )
+Bootstrap: docker
+# Select a base image, e.g., an OS or another image with tools included.
+# https://hub.docker.com/r/continuumio/miniconda3/dockerfile
+From: continuumio/miniconda3:4.8.2
+
+# Add metadata
+%labels
+    Description Software Description
+    Author Mahesh Binzer-Panchal
+    Version 1.0.0
+
+# Update and install software dependencies
+# with APT (Advanced Packaging  Tool)
+%post
+    apt-get update --fix-missing
+    apt-get install -y procps ghostscript
+
+# Install tools using the conda package manager
+%post
+    conda update -n base conda
+    conda install -c conda-forge -c bioconda \
+	python=3.6 mafft=7.455 blast=2.9.0 openssl=1.1.1e perl-bioperl=1.7.2
+    conda clean --all -f -y
+
+# Manual installation in another directory
+%post
+    cd /opt
+    git clone --depth 1 https://github.com/<namespace>/<repository>
+    cd <repository>
+    pip install matplotlib==2.2.3
+    pip install seaborn==0.8.1
+    pip install weblogo==3.6.0
+    pip install biopython
+
+# Set environment variables
+%environment
+    export PATH "/opt/<repository>:${PATH}"
+
 ```
