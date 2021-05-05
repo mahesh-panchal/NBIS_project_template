@@ -6,8 +6,12 @@ to your copy.
 
 ```bash
 git remote add template <template_url>
+```
+
+Changes to the template can be incorporated using:
+
+```bash
 git fetch template
 git checkout <branch-to-merge-to>
 git merge template/<branch-to-merge>
 ```
-
