@@ -11,7 +11,7 @@ there.
       \ - Dockerfile
 ```
 
-### Note:
+### Note:
 * There are many images already out there. Please use a
 public image before trying to create your own.
 * If you're using Singularity try to download Singularity
