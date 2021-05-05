@@ -18,6 +18,7 @@ public image before trying to create your own.
 Many tool images can be found from:
 * [Biocontainers](https://biocontainers.pro)
 * [The Rocker Project](https://www.rocker-project.org)
+* [Multi conda package Containers](https://github.com/BioContainers/multi-package-containers)
 
 If an image contains part of what you need, please
 build an image on top of it.
