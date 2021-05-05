@@ -16,7 +16,7 @@ there.
 public image before trying to create your own.
 * If you're using Singularity try to download Singularity
 images (since they are files) rather than building Singularity
-images from a Dockerfile.
+images from a Docker image.
 
 Many tool images can be found from:
 * [Biocontainers](https://biocontainers.pro) - Both Docker and Singularity
