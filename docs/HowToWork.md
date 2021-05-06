@@ -9,6 +9,8 @@ in a support project.
 * Summary of work habits
 * How to use the Template repository
 * Making a test data set
+* Adding a new Nextflow process
+* Troubleshooting a Nextflow process
 
 ## What I use
 
@@ -170,3 +172,31 @@ git merge <add_new_process>
 # delete new process branch
 git branch -d <add_new_process>
 ```
+
+## Troubleshooting a Nextflow process
+
+If a process fails to run, Nextflow reports the Nextflow working directory it failed in.
+Change directory to that folder:
+
+```bash
+cd /path/to/nextflow/workdir/<xx>/<hashstring>
+```
+
+In that folder there are several hidden files starting with `.`.
+
+```
+.command.begin                     Script to execute before process script
+.command.err                       Error stream log
+.command.log                       Combined stream log
+.command.out                       Output stream log
+.command.run                       Run script - runs .command.sh in the correct environment.
+.command.sh                        Process script. 
+.exitcode
+```
+
+The `.command.sh` contains the process script.
+You can modify this and execute it, but it runs in your current environment (.i.e.
+outside the container). To run the modified `.command.sh` inside the container,
+you should run `.command.run`, either directly on your local node ( e.g. `bash .command.run`)
+or submit it to the cluster (e.g. `sbatch .command.run`). One can debug the process
+script in this way, incorporate changes to the Nextflow workflow, and continue.
