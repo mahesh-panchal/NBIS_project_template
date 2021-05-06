@@ -11,6 +11,7 @@ in a support project.
 * Making a test data set
 * Adding a new Nextflow process
 * Troubleshooting a Nextflow process
+* How to clean temporary files
 
 ## What I use
 
@@ -190,7 +191,7 @@ In that folder there are several hidden files starting with `.`.
 .command.log                       Combined stream log
 .command.out                       Output stream log
 .command.run                       Run script - runs .command.sh in the correct environment.
-.command.sh                        Process script. 
+.command.sh                        Process script.
 .exitcode
 ```
 
@@ -200,3 +201,17 @@ outside the container). To run the modified `.command.sh` inside the container,
 you should run `.command.run`, either directly on your local node ( e.g. `bash .command.run`)
 or submit it to the cluster (e.g. `sbatch .command.run`). One can debug the process
 script in this way, incorporate changes to the Nextflow workflow, and continue.
+
+## How to clean temporary files
+
+Each time you run Nextflow it's given a unique run name. This can be seen using
+`nextflow log`. You can use this to clean up temporary files and folders in
+the Nextflow working directory using `nextflow clean`.
+
+Most commonly you will clean up folders before the last run.
+```bash
+nextflow log
+nextflow clean -f -before <run_name>
+```
+
+See `nextflow help clean` for more options.
