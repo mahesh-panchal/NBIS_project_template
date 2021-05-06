@@ -177,7 +177,7 @@ git branch -d <add_new_process>
 ## How to use containers with a process
 
 A container image path can be provided to the `process.container` directive
-for a process (see [singularity_packages.config](../configs/singularity_packages.config)).
+for a process (see [singularity_packages.config](../workflow/configs/singularity_packages.config)).
 Various container images are supported. See the
 [Nextflow Documentation](https://www.nextflow.io/docs/latest/singularity.html) for more details.
 
