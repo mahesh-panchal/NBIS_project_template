@@ -2,7 +2,9 @@
 
 Keep your documentation here.
 
-The Project report is kept here and updated as the analyses continue.
+The Project report is kept here and updated as the analyses continues.
+[Markdown](https://www.markdownguide.org/cheat-sheet/) is used to write
+up the report, which is converted to HTML at the end for portability.
 
 ## Contents
 
