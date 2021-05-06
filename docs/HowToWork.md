@@ -10,6 +10,7 @@ in a support project.
 * How to use the Template repository
 * Making a test data set
 * Adding a new Nextflow process
+* How to use containers with a process
 * Troubleshooting a Nextflow process
 * How to clean temporary files
 
@@ -173,6 +174,14 @@ git merge <add_new_process>
 # delete new process branch
 git branch -d <add_new_process>
 ```
+## How to use containers with a process
+
+A container image path can be provided to the `process.container` directive
+for a process. Various container images are supported. See the
+[Nextflow Documentation](https://www.nextflow.io/docs/latest/singularity.html) for more details.
+
+The [README.md](../workflow/containers/README.md) in the `workflow/containers` directory
+has more information on creating custom containers.
 
 ## Troubleshooting a Nextflow process
 
