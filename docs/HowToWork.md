@@ -66,7 +66,7 @@ input files and process scripts are staged.
 1. Create a **private** Project repository using this as a template, following a naming scheme.
 
   ```
-  SMS-<id>-<short_description>
+  SMS-<id>-<year>-<short_description>
   ```
 
 2. Add a link to the Redmine project next to the project description (in the URL box).
@@ -80,7 +80,7 @@ input files and process scripts are staged.
 4. Clone the Github repository into the SNIC compute allocation, renaming to a shorter name.
 
   ```bash
-  git clone git@github.com:NBISweden/SMS-<id>-<short_description>.git NBIS_support_<id>
+  git clone git@github.com:NBISweden/SMS-<id>-<year>-<short_description>.git NBIS_support_<id>
   ```
 
 5. Clone the Uppmax repository locally.
