@@ -24,3 +24,9 @@ cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
 module load bioinfo-tools Nextflow
 ./run_nextflow.sh
 ```
+
+If the workflow script is extended to incorporate new processes / analyses,
+the workflow is rerun in the same directory to generate the next set of results.
+
+`nextflow log` can be used to see the date and status of each time nextflow has been
+run.
