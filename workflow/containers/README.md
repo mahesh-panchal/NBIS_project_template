@@ -20,8 +20,9 @@ images from a Docker image.
 
 Many tool images can be found from:
 * [Biocontainers](https://biocontainers.pro) - Both Docker and Singularity
-* [The Rocker Project](https://www.rocker-project.org)
-* [Multi conda package Containers](https://github.com/BioContainers/multi-package-containers)
+* [The Rocker Project](https://www.rocker-project.org) - R Docker images
+* [Multi conda package Containers](https://github.com/BioContainers/multi-package-containers) - How to make multipackage conda containers.
+* [Bioconductor R packages](https://www.bioconductor.org/help/docker/) - R Bioconductor images. 
 
 If an image contains part of what you need, please
 build an image on top of it.
