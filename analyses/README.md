@@ -27,6 +27,7 @@ module load bioinfo-tools Nextflow
 
 If the workflow script is extended to incorporate new processes / analyses,
 the workflow is rerun in the same directory to generate the next set of results.
+A new analysis folder usually corresponds to the creation of a new workflow script.
 
 `nextflow log` can be used to see the date and status of each time nextflow has been
-run.
+run. Git tags can also be used to mark major stages of completion on the main branch. 
