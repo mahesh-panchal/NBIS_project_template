@@ -25,9 +25,15 @@ on UPPMAX clusters. The process `executor` is `slurm` so jobs are
 submitted to the Slurm Queue Manager. All jobs submitted to slurm
 must have a project allocation. This is automatically added to the `clusterOptions`
 in the `uppmax` profile. All Uppmax clusters have node local disk space to do
-computations, and prevent heavy input/output over the network.
-The path to this disk space is provided by the `$SNIC_TMP` variable, and
-so is used in the `process.scratch` directive in the `uppmax` profile. Lastly
+computations, and prevent heavy input/output over the network (which
+slows down the cluster for all).
+The path to this disk space is provided by the `$SNIC_TMP` variable, used by
+the `process.scratch` directive in the `uppmax` profile. Lastly
 the profile enables the use of Singularity so that all processes must be
 executed within Singularity containers. See [nextflow.config](nextflow.config)
 for the profile specification.
+
+The profile is enabled using the `-profile` parameter to nextflow:
+```bash
+nextflow run -profile uppmax <nextflow_script>
+```
