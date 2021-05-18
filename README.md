@@ -46,6 +46,7 @@ NBIS Agreement: ( XX hrs)
  | - README.md                                 Project details summary
  |
  | - analyses/                                 Analysis configuration files
+ | - conda/                                    Shared conda environments
  | - docs/                                     Project documentation
  \ - workflow/                                 Nextflow workflow
 
