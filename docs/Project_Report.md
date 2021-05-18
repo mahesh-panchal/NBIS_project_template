@@ -142,6 +142,9 @@ runtime, system tools, system libraries, and settings. Containerised
 software will run the same regardless of the infrastructure, and
 isolate its software from the computational environment to ensure
 it works uniformly.
+- Conda Package Manager: Conda is used to provide a contained running
+environment for Nextflow. A shared environment is created for all
+members of the project to use.
 
 ## Results
 
