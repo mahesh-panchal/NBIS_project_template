@@ -1,0 +1,8 @@
+name: nextflow-env
+channels:
+    - conda-forge
+    - bioconda
+    - defaults
+dependencies:
+    - nextflow=20.04.1
+    - mamba=0.13.0
