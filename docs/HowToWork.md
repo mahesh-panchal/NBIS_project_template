@@ -25,7 +25,7 @@ in a support project.
   ```bash
   # Make a shared conda environment for everyone in the project
   PROJECT_DIR=/proj/snic20XX-YY-ZZ/NBIS_support_<id>
-  conda create --prefix "$PROJECT_DIR/conda_nextflow-env" -f "$PROJECT_DIR/workflow/environment.yml"
+  conda create --prefix "$PROJECT_DIR/conda/nextflow-env" -f "$PROJECT_DIR/workflow/environment.yml"
   ```
 * An editor ( I use Atom and Vim )
 
@@ -48,6 +48,7 @@ a local image, test, and then push it to Github packages to keep it private to t
      | - analyses/                                 Analysis configuration files
      |   | - YYYY-MM-DD_workflow_dev                 Configuration to use test data
      |   \ - YYYY-MM-DD_full_data_analysis           Configuration to use all the data
+     | - conda/nextflow-env                        Conda Environment containing tools and dependancies to run Nextflow
      | - docs/                                     Project documentation
      \ - workflow/                                 Nextflow workflow
          | - bin                                     Custom script folder
