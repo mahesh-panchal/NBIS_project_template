@@ -159,7 +159,8 @@ on trouble shooting processes if you're having trouble executing a process.
 
 4. Add the container path and resources to the configs.
 
-5. Test with the test data.
+5. Test with the test data. The parameter config contains a directive
+to resume the workflow from the last successfully executed process (`resume = true`). 
 
 6. Once it works, merge with the existing development branch or main branch.
 
