@@ -11,6 +11,13 @@ there.
       \ - Dockerfile
 ```
 
+My favoured method of storing Docker images for private user projects is to upload 
+them to Github packages under the private repository.
+
+Note: Github `docker.pkg.github.com` will soon be superceded by `ghrc.io`. Packages will
+also no longer be stored at the repository level, but at the owner level. 
+A new method of storing private images will be needed.
+
 ### Note:
 * There are many images already out there. Please use a
 public image before trying to create your own.
@@ -133,10 +140,6 @@ docker rm <container_id>
 ```
 
 ## Uploading the Docker image to Github packages
-
-UPDATE: Docker package repository `docker.pkg.github.com` is being retired
-in favour of the container registry `ghcr.io`. One primary difference is
-packages are no longer at the repository level, but at the owner/registry level.
 
 Docker images can be built locally and pushed to Github packages:
 ```bash
