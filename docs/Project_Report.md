@@ -62,6 +62,7 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
  | - README.md                                 Project details summary
  |
  | - analyses/                                 Analysis configuration files
+ | - conda/                                    Shared conda environments
  | - docs/                                     Project documentation
  \ - workflow/                                 Nextflow workflow
 
@@ -86,7 +87,7 @@ as follows:
 
 ```bash
 cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-module load bioinfo-tools Nextflow
+conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
