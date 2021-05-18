@@ -60,6 +60,6 @@ NBIS Agreement: ( XX hrs)
 Quickstart:
 ```bash
 cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-module load bioinfo-tools Nextflow
+conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```

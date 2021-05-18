@@ -21,7 +21,7 @@ This makes the analyses easy to run, recreate, and revisit to know settings used
 
 ```
 cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-module load bioinfo-tools Nextflow
+conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
@@ -30,4 +30,4 @@ the workflow is rerun in the same directory to generate the next set of results.
 A new analysis folder usually corresponds to the creation of a new workflow script.
 
 `nextflow log` can be used to see the date and status of each time nextflow has been
-run. Git tags can also be used to mark major stages of completion on the main branch. 
+run. Git tags can also be used to mark major stages of completion on the main branch.
