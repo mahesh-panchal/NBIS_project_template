@@ -36,8 +36,9 @@ and clone it into the SNIC Compute project and then locally from the SNIC Comput
 * Make a test data set from the users data, and use that to test code as I develop.
 * Use git branches to add new features, and make sure the `main` branch is always stable.
 * To understand what a Nextflow construct does, make an example test like in [Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html). Nextflow also has a (GUI) console mode to test syntax (`nextflow console`).
-* Nextflow processes are kept as modular as possible, often limiting them to a single tool.
-* Try to use existing containers when possible. When a container must be created, I use Docker to make
+* Nextflow processes are kept as modular as possible, often limiting them to a single tool. The benefits are that one can often use public images for
+a process, reducing build time. Environments are small, meaning low build time, and low conflict potential. As projects are often incrementally developed, this also reduces the need to rebuild images or environments, saving time.
+* Try to use existing containers (public images) when possible. When a container must be created, I use Docker to make
 a local image, test, and then push it to Github packages to keep it private to the project.
 * Try to use a structured work directory such as the structure below:
     ```
@@ -160,7 +161,7 @@ on trouble shooting processes if you're having trouble executing a process.
 4. Add the container path and resources to the configs.
 
 5. Test with the test data. The parameter config contains a directive
-to resume the workflow from the last successfully executed process (`resume = true`). 
+to resume the workflow from the last successfully executed process (`resume = true`).
 
 6. Once it works, merge with the existing development branch or main branch.
 
