@@ -5,5 +5,6 @@ channels:
     - defaults
 dependencies:
     - nextflow=20.04.1
+    - nf-core=1.14
     - mamba=0.13.0
     - pandoc=1.19.2.1
