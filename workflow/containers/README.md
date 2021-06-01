@@ -11,11 +11,11 @@ there.
       \ - Dockerfile
 ```
 
-My favoured method of storing Docker images for private user projects is to upload 
+My favoured method of storing Docker images for private user projects is to upload
 them to Github packages under the private repository.
 
 Note: Github `docker.pkg.github.com` will soon be superceded by `ghrc.io`. Packages will
-also no longer be stored at the repository level, but at the owner level. 
+also no longer be stored at the repository level, but at the owner level.
 A new method of storing private images will be needed.
 
 ### Note:
@@ -29,10 +29,15 @@ Many tool images can be found from:
 * [Biocontainers](https://biocontainers.pro) - Both Docker and Singularity
 * [The Rocker Project](https://www.rocker-project.org) - R Docker images
 * [Multi conda package Containers](https://github.com/BioContainers/multi-package-containers) - How to make multipackage conda containers.
-* [Bioconductor R packages](https://www.bioconductor.org/help/docker/) - R Bioconductor images. 
+* [Bioconductor R packages](https://www.bioconductor.org/help/docker/) - R Bioconductor images.
 
 If an image contains part of what you need, please
-build an image on top of it.
+build an image on top of it, for example miniconda or mamba based packages.
+
+R packages are often needed in groups. If you use a common set of
+R packages consider providing a more general container with tools
+specific to a topic. For example see [R docker images for Statistical
+Modelling](https://hub.docker.com/r/asachet/rocker-ml).
 
 ## Contents
 
