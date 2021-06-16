@@ -25,7 +25,7 @@ in a support project.
   ```bash
   # Make a shared conda environment for everyone in the project
   PROJECT_DIR=/proj/snic20XX-YY-ZZ/NBIS_support_<id>
-  conda create --prefix "$PROJECT_DIR/conda/nextflow-env" -f "$PROJECT_DIR/workflow/nextflow_conda-env.yml"
+  conda env create --prefix "$PROJECT_DIR/conda/nextflow-env" -f "$PROJECT_DIR/workflow/nextflow_conda-env.yml"
   ```
 * An editor ( I use Atom and Vim )
 
