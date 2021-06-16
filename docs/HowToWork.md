@@ -23,9 +23,9 @@ in a support project.
 * A conda environment with Nextflow
 
   ```bash
-  # Make a shared conda environment for everyone in the project
+  # Make a shared conda environment for everyone in the project using mamba for speed
   PROJECT_DIR=/proj/snic20XX-YY-ZZ/NBIS_support_<id>
-  conda env create --prefix "$PROJECT_DIR/conda/nextflow-env" -f "$PROJECT_DIR/workflow/nextflow_conda-env.yml"
+  mamba env create --prefix "$PROJECT_DIR/conda/nextflow-env" -f "$PROJECT_DIR/workflow/nextflow_conda-env.yml"
   ```
 * An editor ( I use Atom and Vim )
 
