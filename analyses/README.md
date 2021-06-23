@@ -44,3 +44,4 @@ You can modify the prompt to just use the environment name by using the followin
 conda config --set env_prompt '({name}) '
 ```
 which modifies or creates a `.condarc` file for your user.
+Details can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#specifying-a-location-for-an-environment).
