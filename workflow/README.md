@@ -1,9 +1,10 @@
 # Workflow
 
-Here is a folder for your workflows to manage the execution of your analyses from beginning to end.
+Here is a folder for your workflows, to manage the execution of your analyses
+from beginning to end.
 
-This folder contains a skeleton for a Nextflow script and configuration, intended to run on
-the UPPMAX clusters.
+This folder contains a skeleton for a Nextflow script and configuration,
+intended to run on the UPPMAX clusters.
 
 ```
 workflow/
