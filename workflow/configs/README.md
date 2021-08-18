@@ -9,13 +9,11 @@ The `compute_resources.config` file contains
 the specification of cluster resources to request
 from the cluster queue manager.
 
-The `singularity_packages.config` file contains
-the specification of how to load singularity images. This
-is separated from the `compute_resources.config`
-to allow flexibility with how packages are loaded.
-My preference is to stick to using containers,
-however packages can also be loaded using conda,
-or the module system.
+Package configuration is declared in the process
+description block to keep package configuration
+information visible. It is also coded to allow
+the use of Conda, Docker, or Singularity as package
+managers. The format is taken directly from nf-core.
 
-The configuration file for MultiQC is also kept
-here.
+Tool specific configuration files, for example, for
+MultiQC are also kept here.
