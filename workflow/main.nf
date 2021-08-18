@@ -3,20 +3,12 @@
 // Enable DSL2 syntax for Nextflow
 nextflow.enable.dsl = 2
 
-// Print parameters to screen before running workflow.
+// Print Workflow header
 log.info("""
 NBIS support <id>
 
  <Workflow title>
  ===================================
-
- Runtime parameters
-     Project allocation          : ${params.project}
-     Additional clusterOptions   : ${params.clusterOptions}
-     Results folder              : ${params.outdir}
-
- Workflow parameters
-     Sample Data paths           : ${params.samples}
 
 """)
 
