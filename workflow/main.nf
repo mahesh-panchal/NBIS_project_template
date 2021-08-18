@@ -3,21 +3,6 @@
 // Enable DSL2 syntax for Nextflow
 nextflow.enable.dsl = 2
 
-// Include default parameters for the workflow.
-// Override them in the params.config located in the analyses directories.
-params.project = ''
-params.clusterOptions = ''
-params.outdir = 'results'
-
-params.samples = ''
-
-params.multiqc_config = "$baseDir/configs/multiqc_conf.yaml"
-
-// Mode of copying results from the work directory
-// 'symlink' : Use for test data.
-// 'copy'    : Use for full analysis data.
-params.publish_mode = 'symlink' // values: 'symlink', 'copy'
-
 // Print parameters to screen before running workflow.
 log.info("""
 NBIS support <id>
