@@ -16,8 +16,34 @@ workflow/
 ## Usage:
 
 Usage:
-```
+```bash
 nextflow run -c <custom config> -profile <profile> <nextflow script>
+```
+
+Workflow parameters can be provided in a custom configuration file.
+A [template](params.config.TEMPLATE) is available to copy in this directory. 
+This can also be used to override workflow default settings. When
+modules are used, software specific parameters can be overridden by
+including a modules block with a tool specific block with the
+overriding parameters. For example:
+
+```
+// Workflow parameters
+params {
+
+    <workflow parameters>
+    ...
+
+    modules {
+        'blastx' {
+            // Increase max target sequences from 1 to 5
+            args = '-max_target_seqs 5 -evalue 1e-10'
+        }
+    }
+}
+
+<other configuration options>
+...
 ```
 
 ### Workflow parameter inputs
