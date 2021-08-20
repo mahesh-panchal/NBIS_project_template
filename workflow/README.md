@@ -1,14 +1,11 @@
 # Workflow
 
-Here is a folder for your workflows, to manage the execution of your analyses
+The workflows in this folder manage the execution of your analyses
 from beginning to end.
-
-This folder contains a skeleton for a Nextflow script and configuration,
-intended to run on the UPPMAX clusters.
 
 ```
 workflow/
- | - bin/                            A folder for custom workflow scripts
+ | - bin/                            Custom workflow scripts
  | - configs/                        Configuration files that govern workflow execution
  | - containers/                     Custom container definition files
  | - main.nf                         The primary analysis script
@@ -16,10 +13,48 @@ workflow/
  \ - params.config.TEMPLATE          A Template for parameter configuration
 ```
 
-There can be more than one workflow script if one desires. The Nextflow DSL2 syntax also
-supports modules / subworkflows, and it can be useful to make a folder for those.  
+## Usage:
 
-## Customisation for Uppmax
+Usage:
+```
+nextflow run -c <custom config> -profile <profile> <nextflow script>
+```
+
+### Workflow parameter inputs
+
+Mandatory:
+
+- `samples`: A samplesheet containing sample information to analyse.
+
+Optional:
+
+- `results`: The publishing path for results (default: `results`).
+- `publish_mode`: (values: `'symlink'` (default), `'copy'`) The file
+publishing method from the intermediate results folders
+(see [Table of publish modes](https://www.nextflow.io/docs/latest/process.html#publishdir)).
+
+    Software specific:
+    - `multiqc_config`: Path to MultiQC configuration file (default: `configs/multiqc_conf.yaml`).
+
+    Software package manager specific:
+    - `enable_conda`: Set to `true` to use conda as the software package manager (default: `false`).
+    - `singularity_pull_docker_container`: Set to `true` if Singularity images should be
+    built from the docker images, instead of retrieving existing Singularity images (default: `false`).
+
+    Uppmax cluster specific:
+    - `project`: SNIC Compute allocation number.
+    - `clusterOptions`: Additional Uppmax cluster options (e.g., `-M snowy`).
+
+### Workflow outputs
+
+All results are published to the path assigned to the workflow parameter `results`.
+
+- `01_FastQC/`: FastQC output
+- `02_Fastp_Trimming/`: FastP output
+- `pipeline_info/`: A folder containing workflow execution details.
+- `multiqc_report.html`: A MultiQC report summarising the results of data processing.
+
+### Customisation for Uppmax
 
 A custom profile named `uppmax` is available to run this workflow specifically
 on UPPMAX clusters. The process `executor` is `slurm` so jobs are
