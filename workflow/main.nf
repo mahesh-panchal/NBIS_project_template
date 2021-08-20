@@ -3,6 +3,8 @@
 // Enable DSL2 syntax for Nextflow
 nextflow.enable.dsl = 2
 
+// Default workflow parameters are provided in the file 'nextflow.config'.
+
 // Print Workflow header
 log.info("""
 NBIS support <id>
