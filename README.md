@@ -64,3 +64,9 @@ cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
 conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
+
+A description of the workflow stages is provided in
+the [Project Report](docs/Project_Report.md).
+
+Workflow parameter options and outputs are detailed
+in the [workflow README](workflow/README.md).
