@@ -1,7 +1,8 @@
 # Analyses
 
-Use this folder to keep your workflow configurations. I date analysis folders to
-know when an analysis was started. An analysis folder usually looks like this.
+Use this folder to keep your workflow configurations. I date analysis folders as
+a means to provide a natural ordering on analyses and know when it began.
+An analysis folder usually looks like this.
 There is a folder for the testing parameters for workflow development, and then
 usually one folder that runs the workflow on the full data set.
 
