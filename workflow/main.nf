@@ -44,7 +44,7 @@ workflow {
 process FASTQC {
 
     // Publish directories are numbered to help understand processing order
-    publishDir "${params.results}/01_FastQC", mode: params.publish_mode,
+    publishDir "${params.results}/01_FastQC", mode: params.publish_mode
 
     conda (params.enable_conda ? "bioconda::fastqc=0.11.9" : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
@@ -69,7 +69,7 @@ process FASTQC {
 
 process FASTP {
 
-    publishDir "${params.results}/02_Fastp_Trimming", mode: params.publish_mode,
+    publishDir "${params.results}/02_Fastp_Trimming", mode: params.publish_mode
 
     conda (params.enable_conda ? 'bioconda::fastp=0.20.1' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
@@ -97,7 +97,7 @@ process FASTP {
 
 process MULTIQC {
 
-    publishDir "${params.results}", mode: params.publish_mode,
+    publishDir "${params.results}", mode: params.publish_mode
 
     conda (params.enable_conda ? 'bioconda::multiqc=1.11' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
