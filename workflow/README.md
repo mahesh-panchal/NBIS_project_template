@@ -75,8 +75,8 @@ publishing method from the intermediate results folders
 
 All results are published to the path assigned to the workflow parameter `results`.
 
-- `01_FastQC/`: FastQC output
-- `02_Fastp_Trimming/`: FastP output
+- `01_FastQC_sequence_check/`: FastQC output
+- `02_Fastp_trimmed_sequences/`: FastP output
 - `pipeline_info/`: A folder containing workflow execution details.
 - `multiqc_report.html`: A MultiQC report summarising the results of data processing.
 
