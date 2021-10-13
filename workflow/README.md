@@ -17,7 +17,7 @@ workflow/
 
 Usage:
 ```bash
-nextflow run -params-file <params.yml> [ -c <custom.config> ] [-profile <profile>] <nextflow script>
+nextflow run -params-file <params.yml> [ -c <custom.config> ] [ -profile <profile> ] <nextflow script>
 ```
 
 where:
