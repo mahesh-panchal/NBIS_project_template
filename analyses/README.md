@@ -9,12 +9,14 @@ usually one folder that runs the workflow on the full data set.
 ```
 analyses
   |
-  | - YYYY-MM-DD_workflow_dev               (Analysis folder with testing parameters)
-  |     | - params.config                   (Parameter config file for test data)
+  | - YYYY-MM-DD_dev_<desc>                 (Analysis folder used to develop workflow with test data)
+  |     | - params.yml                      (Parameter file for test data)
+  |     | - nextflow.config                 (Additional Nextflow configuration, such as workdir)
   |     \ - run_nextflow.sh                 (Shell script to call nextflow with correct parameters)
   |
   \ - YYYY-MM-DD_<short_desc>               (Usually the workflow that runs all the data)
-        | - params.config                   (Parameter config for all data)
+        | - params.yml                      (Parameter config for all data)
+        | - nextflow.config
         \ - run_nextflow.sh
 ```
 
