@@ -25,10 +25,10 @@ version control, and containers in my support work.
 ???
 
 The aim of this presentation is to provide useful information to
-be able to continue working on these analyses. The tools are
-a steep learning curve, particularly if you're not used to
+continue working on these analyses. The tools can be
+a steep learning curve if you're not used to
 working in this way. However, these tools greatly improve
-both reproducibility and working efficiency if one knows how.
+both reproducibility and working efficiency if one is taught how.
 
 ---
 
@@ -301,7 +301,7 @@ git checkout -b <new_feature>
 Add a process into the workflow:
 ```{groovy, eval=FALSE}
 process <name> {
-  
+
   <directives>
   conda (params.enable_conda ? "<channel>::<software>=<version>" : null)
   if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
@@ -309,7 +309,7 @@ process <name> {
   } else {
     container "<docker_image_url>/<software>:<version+build>"
   }
-    
+
   input:
   path <filename_var>
 
@@ -320,7 +320,7 @@ process <name> {
   script:
   """
   """
-    
+
 }
 ```
 
@@ -330,14 +330,14 @@ Pass the appropriate input channel(s) in the `workflow` block.
 
 ```{groovy, eval=FALSE}
 workflow {
-  
+
   Channel.fromFilePairs(params.reads)
     .set { input_ch }
-    
+
   FASTQC (input_ch)
   FASTP (input_ch)
   ASSEMBLE (FASTP.out.trimmed_reads)
-  
+
 }
 ```
 
@@ -416,7 +416,7 @@ cd /path/to/nextflow/workdir/<xx>/<hashstring>
 .exitcode
 ```
 
-Clean up redundant working directories with 
+Clean up redundant working directories with
 ```{bash, eval=FALSE}
 nextflow clean -f [ -before ] <job_id>`.
 ```
@@ -507,7 +507,7 @@ commits.
   git restore <filename>
   ```
 
-- Do not add large ( > 100MB ) files. 
+- Do not add large ( > 100MB ) files.
 
 - Never commit sensitive information to a git repository.
   - usernames and passwords
@@ -522,7 +522,7 @@ commits.
 - [Dockerfile best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - Use existing containers where possible:
     - [Biocontainers Registry](https://biocontainers.pro/registry): Containerized conda packages.
-    - [Rocker](https://www.rocker-project.org/images/): R in Docker. 
+    - [Rocker](https://www.rocker-project.org/images/): R in Docker.
         - [Rocker TidyModels](https://hub.docker.com/r/asachet/rocker-tidymodels): R + Rstudio + tidyverse + tidymodels + common ML packages.
     - [Python Data science](https://hub.docker.com/r/civisanalytics/datascience-python/): Common python dependencies for data science workflows.
 
@@ -538,7 +538,7 @@ commits.
 - Build custom images in Docker first, for increased portabilty.
 - Use existing containers where possible:
     - [Biocontainers Registry](https://biocontainers.pro/registry): Containerized conda packages.
-    - [Rocker](https://www.rocker-project.org/images/): R in Docker. 
+    - [Rocker](https://www.rocker-project.org/images/): R in Docker.
         - [Rocker TidyModels](https://hub.docker.com/r/asachet/rocker-tidymodels): R + Rstudio + tidyverse + tidymodels + common ML packages.
     - [Python Data science](https://hub.docker.com/r/civisanalytics/datascience-python/): Common python dependencies for data science workflows.
 
