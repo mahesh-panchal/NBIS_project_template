@@ -4,17 +4,21 @@ Use this folder to keep your workflow configurations. I date analysis folders as
 a means to provide a natural ordering on analyses and know when it began.
 An analysis folder usually looks like this.
 There is a folder for the testing parameters for workflow development, and then
-usually one folder that runs the workflow on the full data set.
+usually one folder that runs the workflow on the full data set. For longer
+projects, a `Roadmap.md` communicates the strategy followed and how the analyses
+relate to each other, allowing analyses to be broken down into smaller packages.
 
 ```
 analyses
   |
-  | - YYYY-MM-DD_dev_<desc>                 (Analysis folder used to develop workflow with test data)
+  | - Roadmap.md                            (For longer projects, a roadmap of which analysis lead to what)
+  |
+  | - YYYY-MM-DD_dev_<desc>/                (Analysis folder used to develop workflow with test data)
   |     | - params.yml                      (Parameter file for test data)
   |     | - nextflow.config                 (Additional Nextflow configuration, such as workdir)
   |     \ - run_nextflow.sh                 (Shell script to call nextflow with correct parameters)
   |
-  \ - YYYY-MM-DD_<short_desc>               (Usually the workflow that runs all the data)
+  \ - YYYY-MM-DD_<short_desc>/              (Usually the workflow that runs all the data)
         | - params.yml                      (Parameter config for all data)
         | - nextflow.config
         \ - run_nextflow.sh
