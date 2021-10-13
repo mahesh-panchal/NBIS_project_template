@@ -54,12 +54,13 @@ process FASTQC {
     tuple val(sample), path(reads)
 
     output:
-    path ("fastqc_${sample}_logs")
+    tuple val(sample), path("*.html"), emit: html
+    tuple val(sample), path("*.zip") , emit: zip
 
     script:
+    def args = task.ext.args ?: ''
     """
-    mkdir fastqc_${sample}_logs
-    fastqc -t ${task.cpus} -o fastqc_${sample}_logs -f fastq -q ${reads}
+    fastqc $args --threads $task.cpus $reads
     """
 
 }
@@ -78,11 +79,12 @@ process FASTP {
 
     output:
     tuple val(sample), path("*fastp-trimmed_R{1,2}.fastq.gz"), emit: reads
-    path "*_fastp.json", emit: logs
+    path "*_fastp.json"                                      , emit: logs
 
     script:
+    def args = task.ext.args ?: ''
     """
-    fastp -Q -L -w ${task.cpus} -i ${reads[0]} -I ${reads[1]} \\
+    fastp $args -w $task.cpus -i ${reads[0]} -I ${reads[1]} \\
         -o ${sample}_fastp-trimmed_R1.fastq.gz \\
         -O ${sample}_fastp-trimmed_R2.fastq.gz \\
         --json ${sample}_fastp.json
@@ -108,7 +110,8 @@ process MULTIQC {
     path "multiqc_report.html"
 
     script:
+    def args = task.ext.args ?: ''
     """
-    multiqc . -c ${config}
+    multiqc . -c ${config} $args
     """
 }

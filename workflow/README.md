@@ -17,33 +17,35 @@ workflow/
 
 Usage:
 ```bash
-nextflow run -c <custom config> -profile <profile> <nextflow script>
+nextflow run -params-file <params.yml> [ -c <custom.config> ] [-profile <profile>] <nextflow script>
 ```
 
-Workflow parameters can be provided in a custom configuration file.
-A [template](params.config.TEMPLATE) is available to copy in this directory. 
-This can also be used to override workflow default settings. When
-modules are used, software specific parameters can be overridden by
-including a modules block with a tool specific block with the
-overriding parameters. For example:
+where:
+- `params.yml` is a YAML formatted file containing workflow parameters
+    such as input paths to the data.
+    A [params.yml template](params.yml.TEMPLATE) is provided to copy
+    for convenience.
+    Alternatively parameters can be provided on the
+    command-line using the `--parameter` notation (e.g., `--samples <path>` ).
+- `<custom.config>` is a nextflow configuration file which provides
+    additional configuration (see the [custom.config template](custom.config.TEMPLATE)).
+- `<profile>` is one of the preconfigured execution profiles
+    (`uppmax`, `singularity_local`, `docker_local`). Alternatively,
+    you can provide a custom configuration to configure this workflow
+    to your execution environment. See [Nextflow Configuration](https://www.nextflow.io/docs/latest/config.html#scope-executor)
+    for more details.
 
+Tool specific (module) parameters are supplied in the [modules file](configs/modules.config).
+These can be overridden in the `nextflow.config` in the analysis directory,
+by using process selectors. For example:
 ```
-// Workflow parameters
-params {
-
-    <workflow parameters>
-    ...
-
-    modules {
-        'blastx' {
-            // Increase max target sequences from 1 to 5
-            args = '-max_target_seqs 5 -evalue 1e-10'
-        }
+// Module settings
+process {
+    withName: 'FASTQC' {
+        // Override ext.args to FastQC
+        ext.args = '--quiet'
     }
 }
-
-<other configuration options>
-...
 ```
 
 ### Workflow parameter inputs
