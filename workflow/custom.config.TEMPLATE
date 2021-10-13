@@ -1,26 +1,3 @@
-// Workflow parameters
-params {
-
-    // Uppmax specific options
-    // SNIC Compute allocation
-    project = 'snic20XX-YY-ZZ'
-    // Custom cluster options (often not needed)
-    clusterOptions = ''
-
-    // Workflow inputs
-    // The absolute path (full path, begins with / ) to the input data
-    samples = ''
-
-    // Workflow outputs
-    // The absolute path (full path, begins with / ) to the results folder
-    // If you have a SNIC Storage allocation, use that!
-    results = '/proj/snic20xx-yy-zz/NBIS_support_<id>_results'
-    // Mode of copying results from the work directory
-    // 'symlink' : Use for test data.
-    // 'copy'    : Use for full analysis data.
-    publish_mode = 'copy' // values: 'symlink', 'copy'
-}
-
 // Nextflow configuration
 // The absolute path (full path, begins with / ) to the work directory ( where intermediate results are stored )
 // If you have a SNIC Storage allocation, use the nobackup folder in there.
