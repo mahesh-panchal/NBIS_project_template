@@ -1,4 +1,8 @@
 .nextflow*
 .DS_Store
 *.sif
-./conda/
+conda/
+docs/.config
+docs/.local
+docs/libs
+.Rhistory

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>How I work</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mahesh Binzer-Panchal" />
+    <script src="libs/header-attrs-2.9/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# How I work
+## Why use Nextflow, version control, and containers?
+### Mahesh Binzer-Panchal
+### National Bioinformatics Infrastructure Sweden (NBIS)
+### updated: 2021-09-01
+
+---
+
+
+# How I work
+
+This presentation demonstrates how I work and why I use Nextflow,
+version control, and containers in my support work.
+
+( I elaborate further on slides in the presenter notes (shortcut key: `p`)).
+
+???
+
+The aim of this presentation is to provide useful information to
+be able to continue working on these analyses. The tools are
+a steep learning curve, particularly if you're not used to
+working in this way. However, these tools greatly improve
+both reproducibility and working efficiency if one knows how.
+
+---
+
+## Contents
+
+- What I use.
+- Summary of work habits.
+- Starting a support project.
+
+---
+
+## What I (often) use
+
+* A SNIC compute allocation on Uppmax.
+* A SNIC storage allocation on Uppmax (not needed for small data sets).
+* Docker installed on my personal computer.
+* Singularity on Uppmax.
+* git on my personal computer and on Uppmax.
+* A Github account.
+* A conda environment with Nextflow installed (local, Uppmax).
+* The workflow manager Nextflow.
+* An editor (Atom, Vim).
+
+Why?
+
+This is how you reproduce my data analysis.
+
+
+```bash
+cd /proj/snic20XX-YY-ZZ/NBIS_support_&lt;id&gt;/analyses/&lt;date&gt;_&lt;analysis&gt;/
+conda activate /proj/snic20XX-YY-ZZ/NBIS_support_&lt;id&gt;/conda/nextflow-env
+./run_nextflow.sh
+```
+
+???
+
+Swedish research groups are encouraged to use the SNIC resources at Uppmax for
+large scale data processing. If you're only doing computations, then you're recommended
+to use a SNIC compute allocation, however, if you have a need to store large
+amounts of data (for the duration of the project), then you should also use
+a SNIC storage allocation too.
+
+I work both locally on my personal computer and Uppmax. Using the widely supported
+container system Docker means I have an easier time managing and porting
+software installations. Although Uppmax doesn't support Docker for various
+security reasons, it does support Singularity which is able to use container images
+from Docker. Using Container systems means I do not have to rely on computer
+administrators to install tools for me. Many bioinformatic tools are
+also available as containers through Biocontainers, meaning you can just use
+the container and get on with your analyses.
+
+Version control tools like Git are a great tool to help keep work organised,
+and in a way, backed up. Using git branches are a particularly powerful way
+to keep both a working copy of your analysis, and work on different exploratory
+analyses at the same time. It can also be useful for demonstrating work
+attribution (and accountability). Web-based git repositories such as Github,
+also provide a way of publishing your work (or keeping it private), can
+function as a backup of sorts, and provide other useful tools such as
+automated actions, or Wiki spaces.
+
+Conda (or mamba; drop-in replacement for conda) is a software package manager,
+however the main difference to containerised software
+is that the software environment is not self-contained like containers are.
+You can work with tools both in your environment and outside, which is particularly
+useful for a tool like Nextflow. One of Nextflow's strengths is that it can
+work on a wide variety of computing platforms, however in order to do so in a
+containerized environment would mean every tool Nextflow supports would need
+to be included and would need to be configured to use the correct files
+outside the container - a hugely complex process. It's much simpler to
+provide an environment for Nextflow and allow it to interact with whatever your
+compute system uses. The added benefit of using a conda environment is that
+it can be set up for everyone part of the project, easing installation issues.  
+
+Nextflow is a workflow manager. I use it to manage the flow of scripts so I know
+data provenance from beginning to end. It has very good file handing and scaling
+properties, making script writing simpler. I can write a Nextflow process for a single
+set of inputs and not worry too much about coding it for multiple files. That
+process can also be assigned a container, providing a running environment which
+doesn't have software conflicts with other things that need to be run.
+
+Editors with syntax highlighting and git integrations are useful coding tools.
+My preferences are Atom and Vim, but there are many other options, e.g. the popular
+VScode.
+
+---
+
+## Summary of work habits
+
+- Use an organised folder structure.  
+- Make a private Project repository on Github, and clone it on Uppmax and then locally.
+- Have a stable `main` git branch, and use git branches for feature development
+and exploratory analyses.
+- Make a test data set for development purposes.
+- Use toy examples for exploring Nextflow functionality.
+- Write processes in a modular way to use existing containers.
+- Use Docker to make containers for tools which are not available as containers.
+- Use Nextflow to manage intermediate files.
+- If a script is failing, debug it in the work directory.
+- parameters and config are included in version control.
+
+???
+
+The structure I've found that works well for me is:
+```
+/proj/snic20XX-YY-ZZ/NBIS_support_&lt;id&gt;/        (SNIC Compute Allocation)
+ |
+ | - README.md                                 Project details summary
+ |
+ | - analyses/                                 Analysis configuration files
+ |   | - YYYY-MM-DD_workflow_dev                 Configuration to use test data
+ |   \ - YYYY-MM-DD_full_data_analysis           Configuration to use all the data
+ | - conda/nextflow-env                        Conda Environment containing tools and dependancies to run Nextflow
+ | - docs/                                     Project documentation
+ \ - workflow/                                 Nextflow workflow
+     | - bin                                     Custom script folder
+     | - configs                                 General workflow configuration
+     \ - containers                              Custom container definitions
+
+/proj/snic20xx-yy-zz/                          (SNIC Storage Allocation)
+ |
+ | - nobackup/nxf-work                         Intermediate analysis files
+ \ - NBIS_support_&lt;id&gt;_results/                Analysis results
+```
+
+This is flexible enough for both data analysis and pipeline development
+projects.
+
+---
+
+## Starting a support project.
+
+- Make a private Project repository from my Template repository on Github.
+    1. Select `New Repository` on Github from the `+` symbol in the top right corner.
+    1. Select `mahesh-panchal/NBIS_project_template` in `Repository template`.
+    1. Change `owner` to `NBISweden`.
+    1. Provide a repository name following `SMS-&lt;id&gt;-&lt;year&gt;-&lt;short_description&gt;`.
+    1. Ensure repository is private, then click Create repository.
+    1. Add a link to the Redmine Project in the URL box.
+- Clone it into the SNIC Compute project.
+    
+    ```bash
+    cd /proj/snic20XX-YY-ZZ
+    git clone git@github.com:NBISweden/SMS-&lt;id&gt;-&lt;year&gt;-&lt;short_description&gt;.git NBIS_support_&lt;id&gt;
+    ```
+- Clone the SNIC compute project locally.
+    
+    ```bash
+    cd ~/Documents/Projects
+    git clone &lt;user&gt;@rackham.uppmax.uu.se:/proj/snic20XX-YY-ZZ/NBIS_support_&lt;id&gt;
+    ```
+- Update README in the repository.
+
+???
+
+I've made myself a [Template](https://github.com/mahesh-panchal/NBIS_project_template)
+from which to start working from. It provides:
+- The organised folder structure I use for projects (`analyses`, `docs`, `workflow`).
+- Skeleton files to quickly start prototyping.
+- A How I work, so others can see how I use the tools here and continue working.
+
+As I will primarily run analyses on Uppmax, I use Github as a backup, and push
+my local work directly to Uppmax saving a step. This means however the Uppmax
+active branch (usually `main`) must be different from my local branch ( usually
+a feature branch ) when I `git push`.
+
+Once the repositories are cloned, I update the README with the project info,
+tasks to be performed, and Uppmax directories.
+
+---
+
+## Make a test dataset
+
+A good test data set should be small, but have enough data to get
+a decent portion of the way into the analysis.
+
+Subsample Paired-end Illumina data:
+
+```bash
+FRACTION=0.1
+SEED=100
+seqtk sample -s"$SEED" "$READ1" "$FRACTION" | gzip -c &gt; "${READ1/_R1./_R1.subsampled.}" &amp;
+seqtk sample -s"$SEED" "$READ2" "$FRACTION" | gzip -c &gt; "${READ1/_R2./_R2.subsampled.}"
+wait
+```
+
+Subsample a bam file:
+
+```bash
+FRACTION=0.10
+samtools view -b -@ "${CPUS:-10}" -s "$FRACTION" -o "${PREFIX}.subsampled_${FRACTION}.subreads.bam" "${PREFIX}.subreads.bam"
+```
+
+Subsample a CSV file:
+
+```bash
+NUM_RECORDS=1000
+shuf -n "$NUM_RECORDS" "${PREFIX}.csv" &gt; "${PREFIX}.subsampled_${NUM_RECORDS}.csv"  
+```
+
+???
+
+A good place to start working is to make a test data set from the User's data.
+This makes prototyping your processes faster when you come to test if it runs.
+I inevitably make mistakes coding, and I don't want it running for a long time
+if I can help it.
+
+A good test dataset just needs enough data to get far enough while you're
+prototyping your Nextflow processes. Enabling reentrancy in Nextflow
+(`-resume`) will mean you can also let the workflow run, and then it
+continues from the last successfully completed processes the next time.
+
+Store it in `nobackup` on the SNIC storage allocation. I use a script
+to make sure I know how to recreate it, and what was used as input.
+
+---
+
+## Make the running environment
+
+Make a shared conda environment for everyone in the project.
+
+
+```bash
+PROJECT_DIR=/proj/snic20XX-YY-ZZ/NBIS_support_&lt;id&gt;
+mamba env create --prefix "$PROJECT_DIR/conda/nextflow-env" \
+  -f "$PROJECT_DIR/workflow/nextflow_conda-env.yml"
+```
+
+Activate the environment:
+
+```bash
+conda activate /proj/snic20XX-YY-ZZ/NBIS_support_&lt;id&gt;/conda/nextflow-env
+```
+
+Deactivate the environment:
+
+```bash
+conda deactivate
+```
+
+???
+
+Conda is a software package manager. It makes it easy to install tools
+into custom environments. Several tools can be installed into
+an environment, and along with it all the libraries and dependancies it
+needs. A conda environment is a double-edged sword in that, when activated,
+it is not isolated from the users normal environment. This makes it ideal
+for running a software like Nextflow, but perhaps troublesome for others.
+
+Mamba is another software intended to be a drop-in replacement for Conda.
+A primary advantage is faster building of environments, through
+better package dependancy resolution.
+
+Conda environments are activated using `conda activate &lt;environment&gt;`
+and deactivated using `conda deactivate`.
+
+Conda is enabled on Uppmax using `module load conda`.
+
+---
+
+## Prototyping
+
+- Stable `main` git branch.
+- Mostly stable `dev` git branch - develop a line of analysis.
+- Feature branch to try stuff.
+
+.center[
+&lt;div class="figure"&gt;
+&lt;img src="https://wac-cdn.atlassian.com/dam/jcr:34c86360-8dea-4be4-92f7-6597d4d5bfae/02%20Feature%20branches.svg?cdnVersion=1783" alt="The git flow model." width="50%" /&gt;
+&lt;p class="caption"&gt;The git flow model.&lt;/p&gt;
+&lt;/div&gt;
+]
+
+Make a new branch.
+
+```bash
+git checkout -b &lt;new_feature&gt;
+```
+
+---
+
+Add a process into the workflow:
+
+```groovy
+process &lt;name&gt; {
+  
+  &lt;directives&gt;
+  conda (params.enable_conda ? "&lt;channel&gt;::&lt;software&gt;=&lt;version&gt;" : null)
+  if (workflow.containerEngine == 'singularity' &amp;&amp; !params.singularity_pull_docker_container) {
+    container "https://&lt;singularity_image_url&gt;/&lt;software&gt;:&lt;version+build&gt;"
+  } else {
+    container "&lt;docker_image_url&gt;/&lt;software&gt;:&lt;version+build&gt;"
+  }
+    
+  input:
+  path &lt;filename_var&gt;
+
+  output:
+  path "&lt;filename&gt;", emit: &lt;file_type&gt;
+  path "*"  // Captures everything. Use when you don't know what the output is.
+
+  script:
+  """
+  """
+    
+}
+```
+
+---
+
+Pass the appropriate input channel(s) in the `workflow` block.
+
+
+```groovy
+workflow {
+  
+  Channel.fromFilePairs(params.reads)
+    .set { input_ch }
+    
+  FASTQC (input_ch)
+  FASTP (input_ch)
+  ASSEMBLE (FASTP.out.trimmed_reads)
+  
+}
+```
+
+Add the process resources to the configs.
+
+
+```groovy
+process {
+  withName 'FASTQC' {
+    cpus = 4
+    time = '1h'
+  }
+  withName 'FASTP' {
+    cpus = 4
+    time = '2h'
+  }
+}
+```
+
+???
+
+- Nextflow processes are kept as modular as possible, often limiting them to a
+single tool. The benefits are that one can often use public images for
+a process, reducing build time. Environments are small, meaning low build
+time, and low conflict potential. Since projects are often incrementally
+developed, this reduces the need to rebuild images or environments, saving time.
+- Try to use existing containers (public images) when possible. When a container
+must be created, I use Docker to make a local image, test, and then push it to
+Github packages to keep it private to the project.
+The [README.md](../workflow/containers/README.md) in the `workflow/containers` directory
+has more information on creating custom containers.
+
+- Nextflow has a large selection of channel operators (functions that manipulate
+process input), which can manipulate input into any format you need. It can be
+difficult to get the desired input combination first time, and you do not want to
+experiment on your long running data sets to find out what works. To understand
+what a Nextflow construct does, write toy examples like in
+[Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html).
+Nextflow also has a (GUI) console mode to test syntax (`nextflow console`).
+
+---
+
+## Prototyping
+
+- A folder under `analyses` for development (`YYYY-MM-DD_workflow_dev`)
+    - `params.config` points to test data.
+    - I use `YYYY-MM-DD` for labeling folders to provide a natural ordering.
+
+- Run stuff and break it.
+    - Activate conda environment.
+    - `run_nextflow.sh`
+    - Nextflow prints the working directory when a process fails.
+
+???
+
+1. Test with the test data. The parameter config contains a directive
+to resume the workflow from the last successfully executed process (`resume = true`).
+
+---
+
+## Troubleshooting a Nextflow process
+
+If a process fails to run, Nextflow reports the Nextflow working directory it failed in.
+Change directory to that folder:
+
+
+```bash
+cd /path/to/nextflow/workdir/&lt;xx&gt;/&lt;hashstring&gt;
+```
+
+
+```bash
+.command.begin      Script to execute before process script
+.command.err        Error stream log
+.command.log        Combined stream log
+.command.out        Output stream log
+.command.run        Run script - runs .command.sh in the correct environment.
+.command.sh         Process script.
+.exitcode
+```
+
+Clean up redundant working directories with 
+
+```bash
+nextflow clean -f [ -before ] &lt;job_id&gt;`.
+```
+Use `nextflow log` to get `&lt;job_id&gt;`.
+
+???
+
+Every process plus set of inputs is run in it's own directory. When a process fails,
+Nextflow will tell you the working directory where it was trying to run the process from.
+
+In that folder there are several hidden files starting with `.`.
+The `.command.sh` contains the process script.
+You can modify this and execute it, but it runs in your current environment ( i.e.,
+outside the container). To run the modified `.command.sh` inside the container,
+you should run `.command.run`, either directly on a worker node ( e.g. `bash .command.run`)
+or submit it to the cluster (e.g. `sbatch .command.run`). One can debug the process
+script in this way, incorporate changes to the Nextflow workflow, and continue.
+
+Be wary of long running commands, and use toy data to make something work.
+For example:
+
+```bash
+blastx ...                                      # Long run time
+awk '&lt;complex script&gt;' &lt;blast_output&gt;           # Quick
+```
+Comment out blastx and run awk with toy data. Alternatively comment out the
+awk, let it finish successfully, and use the cached output.
+
+Once you're done, use `nextflow clean -f [-before] &lt;job_id&gt;` to clean up
+redundant working directories.
+
+---
+
+## Prototyping
+
+Once it works, merge with the existing development branch or main branch.
+
+
+```bash
+# Update main branch with changes from origin
+git checkout main
+git pull --rebase
+
+# merge updates to main into new process branch
+git checkout &lt;new_feature&gt;
+git rebase main
+# IMPORTANT: It is your responsibility to resolve conflicts with stable code
+
+# Switch to main and merge new process
+git checkout main
+git merge &lt;new_feature&gt;
+git branch -d &lt;new_feature&gt; # delete new feature
+```
+
+.pull-left[
+&lt;div class="figure"&gt;
+&lt;img src="https://wac-cdn.atlassian.com/dam/jcr:c6db91c1-1343-4d45-8c93-bdba910b9506/02%20Branch-1%20kopiera.png?cdnVersion=1783" alt="Git merge." width="60%" /&gt;
+&lt;p class="caption"&gt;Git merge.&lt;/p&gt;
+&lt;/div&gt;
+]
+.pull-right[
+&lt;div class="figure"&gt;
+&lt;img src="https://wac-cdn.atlassian.com/dam/jcr:4e576671-1b7f-43db-afb5-cf8db8df8e4a/01%20What%20is%20git%20rebase.svg?cdnVersion=1783" alt="Git rebase." width="50%" /&gt;
+&lt;p class="caption"&gt;Git rebase.&lt;/p&gt;
+&lt;/div&gt;
+]
+
+???
+
+Merging changes is usually as simple as the last few lines, but sometimes
+one needs a little more.
+Every so often I will make a small change directly on Github. This means
+I need to update those changes locally. Then I also need to incorporate
+that change into my development branch.
+
+There are two ways of merging work.
+- `merge` will add the changes on top of your last commit, adding to the
+git history of commits.
+- `rebase` unapplies your commits, applies the changes, and reapplies your
+commits.
+
+---
+
+## Tool Tips - Git
+
+- [Version control with Git](https://swcarpentry.github.io/git-novice/): Software Carpentries course.
+
+- [How to undo (almost) anything](https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/): Tips on how to undo various actions in git.
+
+- Accidentally delete a tracked file?
+  
+  ```bash
+  git restore &lt;filename&gt;
+  ```
+
+- Do not add large ( &gt; 100MB ) files. 
+
+- Never commit sensitive information to a git repository.
+  - usernames and passwords
+  - API keys
+
+---
+
+## Tool Tips - Docker
+
+- [Reproducible Computational Environments Using Containers: Introduction to Docker](https://carpentries-incubator.github.io/docker-introduction/): Software Carpentries course.
+
+- [Dockerfile best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+- Use existing containers where possible:
+    - [Biocontainers Registry](https://biocontainers.pro/registry): Containerized conda packages.
+    - [Rocker](https://www.rocker-project.org/images/): R in Docker. 
+        - [Rocker TidyModels](https://hub.docker.com/r/asachet/rocker-tidymodels): R + Rstudio + tidyverse + tidymodels + common ML packages.
+    - [Python Data science](https://hub.docker.com/r/civisanalytics/datascience-python/): Common python dependencies for data science workflows.
+
+- Be careful not to commit sensitive data into a container.
+
+- [Docker compose](https://docs.docker.com/compose/): Add parameters and volumes to a `docker-compose.yml` file to reproduce a Docker ecosystem (start multiple containers with the same settings each time).
+
+---
+
+## Tool Tips - Singularity
+
+- [Reproducible computational environments using containers: Introduction to Singularity](https://carpentries-incubator.github.io/singularity-introduction/): Software Carpentries course (Work in progress).
+- Build custom images in Docker first, for increased portabilty.
+- Use existing containers where possible:
+    - [Biocontainers Registry](https://biocontainers.pro/registry): Containerized conda packages.
+    - [Rocker](https://www.rocker-project.org/images/): R in Docker. 
+        - [Rocker TidyModels](https://hub.docker.com/r/asachet/rocker-tidymodels): R + Rstudio + tidyverse + tidymodels + common ML packages.
+    - [Python Data science](https://hub.docker.com/r/civisanalytics/datascience-python/): Common python dependencies for data science workflows.
+
+- Be careful not to commit sensitive data into a container.
+
+---
+
+## Tool Tips - Nextflow
+
+- [Nextflow Training from Seqera](https://seqera.io/training/): Training from writers of Nextflow.
+- [Introduction to Bioinformatics workflows with Nextflow and nf-core](https://carpentries-incubator.github.io/workflows-nextflow/): Software Carpentries Course (Work in progress).
+- [RNA-seq Workflow Tutorial](https://github.com/seqeralabs/nextflow-tutorial): Tutorial writing
+an RNA-seq workflow to introduce Nextflow fundamentals.
+- [GATK Workflow Tutorial](https://seqera.io/training/handson/): Tutorial writing
+a GATK workflow to introduce Nextflow fundamentals.
+
+- Use toy examples to test Nextflow contructs.
+    
+    ```nextflow
+    Channel.of( ["hi","there",1], ["hi","there",1],
+        ["see","me",2], ["see","how",2] )
+    .unique()
+    .groupTuple(by:[0,2])
+    .view()
+    ```
+
+- [Nextflow documentation](https://www.nextflow.io/docs/latest/index.html): Nextflow Workflow writers best friend. A description of all the available Nextflow functionality.
+
+---
+
+## Tool Tips - Conda
+
+- [Introduction to Conda for (Data) Scientists](https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/): Software carpentries course.
+- Do not install anything into the base environment.
+- I recommend `mamba` (install it into a conda env).
+- My `nextflow-env`:
+        name: nextflow-env
+        channels:
+          - conda-forge
+          - bioconda
+          - defaults
+        dependencies:
+          - nextflow=21.04.0
+          - nf-core=2.1
+          - mamba=0.15.2
+          - pandoc=1.19.2.1
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
