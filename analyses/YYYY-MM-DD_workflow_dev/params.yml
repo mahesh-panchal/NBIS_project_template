@@ -6,13 +6,7 @@ samples: ''
 ## The absolute path (full path, begins with / ) to the results folder
 ## If you have a SNIC Storage allocation, use that!
 results: '/proj/snic20xx-yy-zz/NBIS_support_<id>_results'
-## Mode of copying results from the work directory
-## 'symlink' : Use for test data.
-## 'copy'    : Use for full analysis data.
-publish_mode: 'symlink' ## values: 'symlink', 'copy'
 
 ## Uppmax cluster configuration
 ## UPPMAX project - Needed only when running on an UPPMAX cluster
 # project : 'snic2021-YY-ZZ'
-## Convenience for adding additional cluster options to UPPMAX
-# clusterOptions : ''
