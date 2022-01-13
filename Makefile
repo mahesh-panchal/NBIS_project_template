@@ -1,21 +1,27 @@
 # Makefile for Uppmax Environment.
 
-CONDA_PKGM := mamba                                         # Conda package manager to use
-DISTILL_IMG := ghcr.io/mahesh-panchal/rocker/distill:4.1.2  # Image name and version
-WEBSITE_DIR := website
+# General variables
 UID := $$( id -u )
 GROUP := $$( id -g )
+
+# Conda settings
+CONDA_PKGM := mamba                                         # Conda package manager to use
+
+# R settings
 # CONTAINER_CMD := docker run --user "$(UID):$(GROUP)" --rm -v "${PWD}:/home/rstudio" -w /home/rstudio
 CONTAINER_CMD := singularity exec
+DISTILL_IMG := ghcr.io/mahesh-panchal/rocker/distill:4.1.2  # Image name and version
+WEBSITE_DIR := website
+REPORT_DIR := docs
 
 # Run Nextflow workflow
 analysis:
 	cd analyses/YYYY-MM-DD_workflow_dev; \
-	run_nextflow.sh
+		./run_nextflow.sh
 
-dev:
+workflow-test:
 	cd analyses/YYYY-MM-DD_workflow_dev; \
-	run_nextflow.sh
+		./run_nextflow.sh
 
 # Builds conda environment to execute workflow
 nextflow-env:
@@ -46,4 +52,8 @@ $(WEBSITE_DIR)/_site.yml:
 clean-website:
 	rm -rf $(WEBSITE_DIR)
 
-.PHONY: analysis gh-pages report rocker-distill website clean-report clean-website
+.PHONY: analysis workflow-test
+.PHONY: nextflow-env
+.PHONY: gh-pages gh-pages-origin
+.PHONY: report clean-report
+.PHONY: website clean-website
