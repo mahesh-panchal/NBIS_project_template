@@ -9,13 +9,14 @@ nextflow.enable.dsl = 2
 log.info("""
 NBIS support <id>
 
- <Workflow title>
+ $workflow.manifest.name
  ===================================
+ $workflow.manifest.description
 
 """)
 
 // Check a project allocation is given for running on Uppmax clusters.
-if(workflow.profile == "uppmax" && !params.project){
+if( workflow.profile == "uppmax" && !params.project ){
     exit 1, "Please provide a SNIC project number ( --project )!\n"
 }
 
@@ -24,19 +25,19 @@ workflow {
 
     main:
         // Get data
-        Channel.fromPath(params.samples)
+        Channel.fromPath( params.samples )
             .ifEmpty { exit 1, "Cannot find reads from ${params.samples}!\n" }
-            .set { readpairs }
+            .set { readpairs_ch }
 
         // Analyses
-        FASTQC(readpairs)
-        FASTP(readpairs)
+        FASTQC ( readpairs_ch )
+        FASTP ( readpairs_ch )
 
         // Report
-        MULTIQC(
+        MULTIQC (
             params.multiqc_config,
-            FASTQC.out.collect().ifEmpty([]),
-            FASTP.out.logs.ifEmpty([])
+            FASTQC.out.collect().ifEmpty( [] ),
+            FASTP.out.logs.ifEmpty( [] )
             )
 
 }
