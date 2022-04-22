@@ -1,29 +1,29 @@
 ---
-title: Project report
-author: Mahesh Binzer-Panchal
-date: DATE
+title: NBIS Project report
+format:
+  html:
+    toc: true
+    toc-location: left
+    self-contained: true
+    page-layout: full
+author: 
+  - name: '[Mahesh Binzer-Panchal](mailto:mahesh.binzer-panchal@nbis.se)'
+    affiliation: 
+      - Department of Medical Biochemistry and Microbiology, 
+      - National Bioinformatics Infrastructure Sweden (NBIS),
+      - Science for Life Laboratory,
+      - Uppsala Universitet, Uppsala, Sweden
+    orcid: 0000-0003-1675-0677
+date: last-modified
+date-format: iso
 bibliography: citations.bib
 ---
 
-#  PROJECT TITLE
-
 * Redmine ID: REDMINE_ID
-* NBIS experts: Mahesh Binzer-Panchal (mahesh.binzer-panchal@nbis.se)
 * Request by: PROJECT_CONTACT_NAME ( EMAIL_ADDRESS )
 * Principal Investigator: PROJECT_PI_NAME ( EMAIL_ADDRESS )
 * Organization: PROJECT_AFFILIATION
 
-Expert Affiliation:
-```
-Mahesh Binzer-Panchal
-Department of Medical Biochemistry and Microbiology,
-National Bioinformatics Infrastructure Sweden (NBIS),
-Science for Life Laboratory,
-Uppsala Universitet,
-Uppsala,
-Sweden
-ORCID = https://orcid.org/0000-0003-1675-0677
-```
 ## NBIS Support Request.
 
 Redmine support request:
@@ -102,7 +102,7 @@ The workflow runs the following data processing and analyses steps for each samp
 The following tools were used in the current analysis:
 
 | Tool        | Version    | Description | Citation   |
-| ----------- | ---------- | ------------------------------------- | ---------- |
+| ----------- | ---------- | ------------------------------------ | ---------- |
 | Fastp |  0.20.1 | Trimming and merging | [@chen2018fastp] |
 | FastQC | 0.11.9 | Illumina Read QC | [@andrews2010fastqc] |
 | MultiQC | 1.10.1 | Reporting summary tool | [@ewels2016multiqc] |
@@ -114,7 +114,7 @@ image path and version these Singularity images were made from
 can be found in the file
 `/proj/snic20XX-YY-ZZ/NBIS_support_<id>/workflow/configs/singularity_packages.config`.
 
-Images hosted on `docker.pkg.github.com` are initially private. These images should be
+Images hosted on `ghcr.io` are initially private. These images should be
 copied to a public respository on publication.
 Request access to the code repository from the NBIS expert to
 have access to the Docker container images. All other Docker images
