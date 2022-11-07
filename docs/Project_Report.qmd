@@ -1,5 +1,5 @@
 ---
-title: NBIS Project report
+title: NBIS Project Report
 format:
   html:
     toc: true
