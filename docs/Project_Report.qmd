@@ -17,9 +17,11 @@ author:
 date: last-modified
 date-format: iso
 bibliography: citations.bib
+params:
+  redmine_id: 'REDMINE_ID'
 ---
 
-* Redmine ID: REDMINE_ID
+* Redmine ID: `r params$redmine_id`
 * Request by: PROJECT_CONTACT_NAME ( EMAIL_ADDRESS )
 * Principal Investigator: PROJECT_PI_NAME ( EMAIL_ADDRESS )
 * Organization: PROJECT_AFFILIATION
