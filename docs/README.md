@@ -1,21 +1,14 @@
 # Docs - Documentation folder
 
-Keep your documentation here.
+Organise your documentation here.
 
-The Project report is kept here and updated as the analyses continues.
-[Markdown](https://www.markdownguide.org/cheat-sheet/) is used to write
-up the report, which is converted to HTML at the end for portability.
+## Project report
 
-## Contents
+Make a project report rendered from the Quarto Markdown document
+found in `report`. [Quarto Markdown](https://quarto.org/docs/authoring/markdown-basics.html) 
+and code are intertwinned in the document, which is then rendered to HTML or other output formats.
 
-* How I work
-* Converting a Project report from Markdown to HTML
-
-## How I work
-
-For a description of how I work see [How I work](docs/HowToWork.md).
-
-## Converting the Project report from Markdown to HTML
+### Converting the Project report from Quarto Markdown to HTML
 
 1. Update the `citations.bib` file with any new citations of
 tools used, and any others that need to be included in the report.
@@ -27,6 +20,13 @@ HTML file using the following command:
     ```
     quarto render Project_Report.md
     ```
+
+## Project website
+
+Quarto can be used to create websites that can be hosted on sites such as Github.
+This template instance renders how to use this template in the `how-to` folder.
+This website could be used to host more comprehensive descriptions of analyses
+performed for the project. Alternatively, the folder can be removed.
 
 ### Creating a website folder in docs using quarto
 
@@ -41,3 +41,7 @@ HTML file using the following command:
   cd docs
   quarto create-project how-to --type website
   ```
+
+3. Follow instructions on https://quarto.org/docs/publishing/github-pages.html#publish-command 
+to publish to the `gh-pages` branch on this repository.
+
