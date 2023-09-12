@@ -8,7 +8,7 @@ For example:
 - which folders run subsequent analyses to another folder.
 - which folders result in useful data, were abandoned/unfinished, or the resulting 
 data were of little use. 
-- which folders use test data and develop workflows, and which are folders run analyses on the full data set.
+- which folders use test data and develop workflows, and which folders run analyses on the full data sets.
 
 
 ```
@@ -27,7 +27,7 @@ analyses
         \ - run_nextflow.sh
 ```
 
-Run scripts often follow this recipe, making the analyses easy to run, recreate, and reference.
+Analyses often follow this recipe, making the analyses easy to run, recreate, and reference.
 
 ```bash
 cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
