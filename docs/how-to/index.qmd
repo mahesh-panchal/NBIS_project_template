@@ -1,7 +1,14 @@
 ---
-title: "how-to"
+title: "How to use this template"
 ---
 
-This is a Quarto website.
+# A guide to using this template
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Getting started
+
+### Tools
+
+1. Git
+2. Nextflow
+3. Quarto
+4. Apptainer/Docker
