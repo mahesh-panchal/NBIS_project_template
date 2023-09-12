@@ -27,3 +27,17 @@ HTML file using the following command:
     ```
     quarto render Project_Report.md
     ```
+
+### Creating a website folder in docs using quarto
+
+1. Install Quarto if necessary
+  ```
+  wget <quarto.package.latest>.deb
+  sudo dpkg -i <quarto.package.latest>.deb
+  ```
+
+2. Use Quarto to make a website project in docs.
+  ```
+  cd docs
+  quarto create-project how-to --type website
+  ```
