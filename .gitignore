@@ -1,8 +1,15 @@
-.nextflow*
-.DS_Store
-*.sif
+# Project environment files
 conda/
-docs/.config
-docs/.local
-docs/libs
-.Rhistory
+*.sif
+
+# Nextflow files
+.nextflow*
+work/
+
+# Quarto files
+.quarto/
+docs/_site/
+docs/_book/
+
+# misc
+.DS_Store
