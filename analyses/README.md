@@ -1,12 +1,15 @@
 # Analyses
 
-Use this folder to keep your workflow configurations. I date analysis folders as
-a means to provide a natural ordering on analyses and know when it began.
-An analysis folder usually looks like this.
-There is a folder for the testing parameters for workflow development, and then
-usually one folder that runs the workflow on the full data set. For longer
-projects, a `Roadmap.md` communicates the strategy followed and how the analyses
-relate to each other, allowing analyses to be broken down into smaller packages.
+This folder contains folders with scripts to run the project analyses. Folders within this folder
+are intended to be dated and have short description of the analysis run.
+A `Roadmap.md` file is used to communicate how analyses relate to each other. 
+For example:
+- which folders run the same workflow but with different parameters.
+- which folders run subsequent analyses to another folder.
+- which folders result in useful data, were abandoned/unfinished, or the resulting 
+data were of little use. 
+- which folders use test data and develop workflows, and which are folders run analyses on the full data set.
+
 
 ```
 analyses
@@ -24,7 +27,7 @@ analyses
         \ - run_nextflow.sh
 ```
 
-This makes the analyses easy to run, recreate, and revisit to know settings used.
+Run scripts often follow this recipe, making the analyses easy to run, recreate, and reference.
 
 ```bash
 cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
@@ -32,9 +35,9 @@ conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
-If the workflow script is extended to incorporate new processes / analyses,
-the workflow is rerun in the same directory to generate the next set of results.
-A new analysis folder usually corresponds to the creation of a new workflow script.
+When a workflow script is extended to incorporate new processes / tools,
+the workflow is resumed in the same analysis folder it was originally deployed to generate the next set of results.
+A new analysis folder often corresponds the running of a different workflow script or an alternate parameter input to investigate.
 
 `nextflow log` can be used to see the date and status of each time nextflow has been
 run. Git tags can also be used to mark major stages of completion on the main branch.
