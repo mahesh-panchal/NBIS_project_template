@@ -8,8 +8,8 @@ work/
 
 # Quarto files
 .quarto/
-docs/_site/
-docs/_book/
+_site/
+_book/
 
 # misc
 .DS_Store
