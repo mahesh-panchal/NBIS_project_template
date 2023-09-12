@@ -1,12 +1,9 @@
 # NBIS project template
 
-This is a personal template for NBIS support projects. This is an evolving method of
-working as I gain experience and find better ways of working. It's by no means best
-practice, but it's a method that works well for me.
-
-* See [How I work](docs/HowIWork.Rmd) for an explanation of how I use this template.
-* See [Copying the Template](docs/CopyTemplateRepo.md) for instructions to make
-your own template from this one.
+This is a personal template for NBIS support projects. It is an evolving method of
+working as I gain experience and find better ways of working. See the 
+[template website](https://mahesh-panchal.github.io/NBIS_project_template/) for how
+I use this template.
 
 # <Title>
 
