@@ -7,7 +7,14 @@ format:
     self-contained: true
     page-layout: full
     theme: flatly
-author: {{< var author >}}
+author: 
+  - name: '[Mahesh Binzer-Panchal](mailto:mahesh.binzer-panchal@nbis.se)'
+    affiliation: 
+      - Department of Medical Biochemistry and Microbiology, 
+      - National Bioinformatics Infrastructure Sweden (NBIS),
+      - Science for Life Laboratory,
+      - Uppsala Universitet, Uppsala, Sweden
+    orcid: 0000-0003-1675-0677
 date: last-modified
 date-format: iso
 bibliography: citations.bib
