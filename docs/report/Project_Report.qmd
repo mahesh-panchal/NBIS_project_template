@@ -6,23 +6,16 @@ format:
     toc-location: left
     self-contained: true
     page-layout: full
-author: 
-  - name: '[Mahesh Binzer-Panchal](mailto:mahesh.binzer-panchal@nbis.se)'
-    affiliation: 
-      - Department of Medical Biochemistry and Microbiology, 
-      - National Bioinformatics Infrastructure Sweden (NBIS),
-      - Science for Life Laboratory,
-      - Uppsala Universitet, Uppsala, Sweden
-    orcid: 0000-0003-1675-0677
+    theme: flatly
+author: {{< var author >}}
 date: last-modified
 date-format: iso
 bibliography: citations.bib
 ---
 
-* Redmine ID: REDMINE_ID
-* Request by: PROJECT_CONTACT_NAME ( EMAIL_ADDRESS )
-* Principal Investigator: PROJECT_PI_NAME ( EMAIL_ADDRESS )
-* Organization: PROJECT_AFFILIATION
+* Redmine ID: {{< var redmine_id >}}
+* Request by: {{< var project_contact >}}
+* Principal Investigator: {{< var project_pi >}}
 
 ## NBIS Support Request.
 
@@ -38,7 +31,8 @@ NBIS Agreement:
 
 ### Project allocation
 
-* snicXXXX-YY-ZZ (SNIC Compute allocation, Rackham)
+* {{< var compute_project >}} (NAISS Compute allocation, Rackham)
+* {{< var storage_project >}} (NAISS Storage allocation, Rackham)
 
 ### Data responsibility
 
