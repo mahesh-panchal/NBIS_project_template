@@ -58,7 +58,7 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
 ## Data
 
 ```
-/proj/snic20XX-YY-ZZ/NBIS_support_<id>/        (SNIC Compute Allocation)
+/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/       (NAISS Compute Allocation)
  |
  | - README.md                                 Project details summary
  |
@@ -67,7 +67,7 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
  | - docs/                                     Project documentation
  \ - workflow/                                 Nextflow workflow
 
-/proj/snic20xx-yy-zz/                          (SNIC Storage Allocation)
+/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
  |
  | - nobackup/nxf-work                         Intermediate analysis files
  \ - NBIS_support_<id>_results/                Analysis results
@@ -87,8 +87,8 @@ The workflow analyses can be run on UPPMAX HPC clusters within `screen` sessions
 as follows:
 
 ```bash
-cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
+conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
@@ -110,10 +110,10 @@ The following tools were used in the current analysis:
 
 All the tools used in this project are available as Singularity container
 images (`*.{img,sif}`) in the folder
-`/proj/snic20xx-yy-zz/nobackup/nxf-work/singularity`. The container
+`/proj/naiss20xx-yy-zz/nobackup/nxf-work/singularity`. The container
 image path and version these Singularity images were made from
 can be found in the file
-`/proj/snic20XX-YY-ZZ/NBIS_support_<id>/workflow/configs/singularity_packages.config`.
+`/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/workflow/configs/singularity_packages.config`.
 
 Images hosted on `ghcr.io` are initially private. These images should be
 copied to a public respository on publication.
