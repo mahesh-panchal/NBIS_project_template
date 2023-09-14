@@ -1,1 +1,4 @@
-# Empty gitpod file, so make isn't run on start up
+tasks:
+  - name: Hello
+    command: |
+      echo "Hello"
