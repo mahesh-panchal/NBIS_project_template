@@ -1,4 +1,3 @@
-tasks:
-  - name: Hello
-    command: |
-      echo "Hello"
+vscode:
+  extensions:
+    - quarto.quarto
