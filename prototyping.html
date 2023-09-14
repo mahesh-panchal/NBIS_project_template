@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>How to use this template</title>
+<title>How to use this template – prototyping</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -136,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Environment</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./prototyping.html" rel="" target="">
+    <a class="nav-link active" href="./prototyping.html" rel="" target="" aria-current="page">
  <span class="menu-text">Prototyping</span></a>
   </li>  
   <li class="nav-item">
@@ -167,16 +167,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-guide-to-using-this-template" id="toc-a-guide-to-using-this-template" class="nav-link active" data-scroll-target="#a-guide-to-using-this-template">A guide to using this template</a>
+  <li><a href="#prototyping" id="toc-prototyping" class="nav-link active" data-scroll-target="#prototyping">Prototyping</a>
   <ul class="collapse">
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a>
-  <ul class="collapse">
-  <li><a href="#uppmax" id="toc-uppmax" class="nav-link" data-scroll-target="#uppmax">Uppmax</a></li>
-  </ul></li>
-  <li><a href="#my-work-environment" id="toc-my-work-environment" class="nav-link" data-scroll-target="#my-work-environment">My work environment</a>
-  <ul class="collapse">
-  <li><a href="#my-toolkit" id="toc-my-toolkit" class="nav-link" data-scroll-target="#my-toolkit">My toolkit</a></li>
-  </ul></li>
+  <li><a href="#running-analyses" id="toc-running-analyses" class="nav-link" data-scroll-target="#running-analyses">Running analyses</a></li>
+  <li><a href="#merging-with-git" id="toc-merging-with-git" class="nav-link" data-scroll-target="#merging-with-git">Merging with git</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -184,69 +178,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">How to use this template</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="a-guide-to-using-this-template" class="level1">
-<h1>A guide to using this template</h1>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
-<p>Learning the tools used in this way of working can be a steep learning curve. However, the benefits are a well structured project, that is easy to follow, rerun, and build upon. A common issue with “Why should I learn this?” is the perceived overhead of using these tools. However, in my opinion, the ability to recover from mistakes or unexpected outcomes is greatly mitgated by using these tools, reducing overhead over time.</p>
-<p>The tools used in this way of working are:</p>
+<section id="prototyping" class="level2">
+<h2 class="anchored" data-anchor-id="prototyping">Prototyping</h2>
+<p>To build up an analysis project, workflow development aims to follow the <a href="http://datasift.github.io/gitflow/IntroducingGitFlow.html">GitFlow model</a> of coding.</p>
 <ul>
-<li><strong>Git</strong>: Version control is an important method of tracking changes and making exploratory changes that are revertable.</li>
-<li><strong>Nextflow</strong>: Nextflow is a workflow manager. It is ideal for processing large scale data across a wide variety of execution systems. Snakemake and WDL are examples of alternatives, but Nextflow is my favoured workflow manager.</li>
-<li><strong>Quarto</strong>: Quarto is a publishing system, useful for dynamically visualising data, performing statistical analyses, and performing small scale data processing tasks. It also supports a variety of analysis languages, such as Python, R, and Julia. It also supports a wide variety of outputs including reports, presentations, wikis, and websites.</li>
-<li><strong>Apptainer/Docker</strong>: Apptainer and Docker are container platforms; platforms which create isolated compute environments necessary for a computation. There are many public container images available, reducing the need for building one’s own computation environment.</li>
-<li><strong>Conda/Mamba</strong>: Conda (or the speedier flavour Mamba) is another package management system like containers, however these environments are not isolated like container environments are, allowing tools to interact with for example your local HPC scheduler.</li>
-<li><strong>Mermaid Diagrams</strong>: The mermaid diagraming system is a textual way of making various diagrams that can then be displayed for example in Quarto, or on Github, and allows for a wide variety of types of diagrams.</li>
+<li>Stable <code>main</code> git branch.</li>
+<li>Mostly stable <code>dev</code> git branch - develop a line of analysis.</li>
+<li>Feature branch to try stuff.</li>
 </ul>
-<p>The use of these tools helps me to better communicate science and increase the reproducibility of my scientific analyses. Typically, my analyses can be reproduced with the following commands:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/analyses/<span class="op">&lt;</span>date<span class="op">&gt;</span>_<span class="op">&lt;</span>analysis<span class="op">&gt;</span>/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate /proj/snic20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/conda/nextflow-env</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./run_nextflow.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="uppmax" class="level3">
-<h3 class="anchored" data-anchor-id="uppmax">Uppmax</h3>
-<p>This guide is very focused towards the Swedish Research Computation infrastructure, in particular the high performance cluster (HPC) “Uppmax”. However, this way of working should be adaptable to other compute infrastructures.</p>
-<p>Typcially, Uppmax provides two resources; a NAISS compute allocation, and a NAISS storage allocation on Uppmax (compute allocations are sufficient for small data sets). Swedish research groups are encouraged to use the NAISS resources at Uppmax for large scale data processing. If you’re only doing computations, then you’re recommended to use a NAISS compute allocation, however, if you need to store large amounts of data (for the duration of the project), then you should also use a NAISS storage allocation too.</p>
-</section>
-</section>
-<section id="my-work-environment" class="level2">
-<h2 class="anchored" data-anchor-id="my-work-environment">My work environment</h2>
-<p>An overview of my general working environment.</p>
+<p>Make a new branch named <code>&lt;new_feature&gt;</code> in Git.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="op">&lt;</span>new_feature<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add a process into the workflow:</p>
 <ul>
-<li>Docker installed on my personal computer.</li>
-<li>Apptainer on Uppmax.</li>
-<li>A Github account.</li>
-<li>A Gitpod account.</li>
-<li>Git on my personal computer, Uppmax, and Gitpod.</li>
-<li>A conda environment with Nextflow and Quarto installed (local, Uppmax).</li>
-<li>VSCode, with syntax highlighting, linting, and formatting.</li>
+<li>Nextflow processes are kept as modular as possible, often limiting them to a single tool. The benefits are that one can often use public images for a process, reducing build time. Environments are small, meaning low build time, and low conflict potential. Since projects are often incrementally developed, this reduces the need to rebuild images or environments, saving time.</li>
+<li>Try to use existing containers (public images) when possible. When a container must be created, I use Docker to make a local image, test, and then push it to Github packages to keep it private to the project. The <a href="../workflow/containers/README.md">README.md</a> in the <code>workflow/containers</code> directory has more information on creating custom containers.</li>
 </ul>
-<section id="my-toolkit" class="level3">
-<h3 class="anchored" data-anchor-id="my-toolkit">My toolkit</h3>
-<p>When working on a project, I may work on it locally on my PC, remotely on Uppmax, or remotely on Gitpod. Using the widely supported container system Docker means I have an easier time managing and porting software installations. Although Uppmax doesn’t support Docker for various security reasons, it does support Apptainer which is able to use container images from Docker. Using Container systems means I do not have to rely on computer administrators to install tools for me. Many bioinformatic tools are also available as container images through Biocontainers, meaning you can use the container and get on with your analyses, and not waste time building images yourself.</p>
-<p>Version control tools like Git are a great tool to help keep work organised, and in a way, backed up. Using git branches are a particularly powerful way to keep both a working copy of your analysis, and work on different exploratory analyses at the same time. It can also be useful for demonstrating work attribution (and accountability). Web-based git repositories such as Github, also provide a way of publishing your work (or keeping it private), can function as a backup of sorts, and provide other useful services such as automated actions, or Wiki spaces, or website hosting.</p>
-<p>Conda (or Mamba; drop-in replacement for conda) is another software package manager, however the main difference to containerised software is that the software environment is not self-contained like containers are. You can work with tools both in your environment and outside, which is particularly useful for a tool like Nextflow. One of Nextflow’s strengths is that it can work on a wide variety of computing platforms, however in order to do so in a containerized environment would mean every tool Nextflow supports would need to be included and would need to be configured to use the correct files outside the container - a hugely complex process. It’s much simpler to provide an environment for Nextflow and allow it to interact with whatever your compute system uses. The added benefit of using a conda environment is that it can be set up for everyone part of the project, easing installation issues.</p>
-<p>Nextflow is a workflow manager. I use it to manage the flow of scripts so I know data provenance from beginning to end. It has very good file handing and scaling properties, making script writing simpler. I can write a Nextflow process for a single set of inputs and not worry too much about coding it for multiple files. That process can also be assigned a container, providing a running environment which doesn’t have software conflicts with other things that need to be run.</p>
-<p>Editors with syntax highlighting and git integrations are useful coding tools. I currently use VScode, with various extensions, such as Prettier - code formatting, Nextflow syntax highlighting, and Quarto support.</p>
-
-
+<div class="sourceCode" id="cb2"><pre class="sourceCode groovy code-with-copy"><code class="sourceCode groovy"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>process <span class="op">&lt;</span>uppercase_name<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  input<span class="op">:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  path <span class="op">&lt;</span>filename_var<span class="op">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// directives</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>directives<span class="op">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  conda <span class="st">"&lt;channel&gt;::&lt;software&gt;=&lt;version&gt;"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  container <span class="st">"&lt;software&gt;:&lt;version+build&gt;"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  script<span class="op">:</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"""</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">  command --opts </span><span class="ss">$var</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">  """</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  output<span class="op">:</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  path <span class="st">"&lt;filename&gt;"</span><span class="op">,</span> emit<span class="op">:</span> <span class="op">&lt;</span>file_type<span class="op">&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  path <span class="st">"*"</span>  <span class="co">// Captures everything. Use when you don't know what the output is.</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pass the appropriate input channel(s) in the <code>workflow</code> block.</p>
+<ul>
+<li>Nextflow has a large selection of channel operators (functions that manipulate process input), which can manipulate input into any format you need. It can be difficult to get the desired input combination first time, and you do not want to experiment on your long running data sets to find out what works. To understand what a Nextflow construct does, write toy examples like in <a href="http://nextflow-io.github.io/patterns/index.html">Nextflow Patterns</a>. Nextflow also has a (GUI) console mode to test syntax (<code>nextflow console</code>).</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode groovy code-with-copy"><code class="sourceCode groovy"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>workflow <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span> <span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span><span class="op">{</span> input_ch <span class="op">}</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FASTQC</span><span class="op">(</span> input_ch <span class="op">)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FASTP</span><span class="op">(</span> input_ch <span class="op">)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ASSEMBLE</span><span class="op">(</span> FASTP<span class="op">.</span>out<span class="op">.</span>trimmed_reads <span class="op">)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add the process resources to the configs.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode groovy code-with-copy"><code class="sourceCode groovy"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>process <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  withName<span class="op">:</span> <span class="st">'FASTQC'</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    cpus <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'1h'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  withName<span class="op">:</span> <span class="st">'FASTP'</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    cpus <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2h'</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Don’t forget to commit your changes to the feature branch as you develop:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file<span class="op">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"What I did"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mistakes to commits can be changed using:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="running-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="running-analyses">Running analyses</h3>
+<ul>
+<li>Have a folder under <code>analyses</code> for development (<code>YYYY-MM-DD_workflow_dev</code>)
+<ul>
+<li><code>params.yml</code> points to test data.</li>
+<li>Use <code>YYYY-MM-DD</code> to label folders and provide a natural ordering.</li>
+</ul></li>
+<li>Have another folder under <code>analyses</code> to analyse the real data set (<code>YYYY-MM-DD_fulldata_analysis</code>)</li>
+<li>Run stuff and break it.
+<ul>
+<li>Activate conda environment.</li>
+<li><code>run_nextflow.sh</code></li>
+<li>Nextflow prints the working directory when a process fails.</li>
+</ul></li>
+</ul>
+<p>See <a href="./troubleshooting.html">Troubleshooting</a> for tips on debugging issues.</p>
 </section>
+<section id="merging-with-git" class="level3">
+<h3 class="anchored" data-anchor-id="merging-with-git">Merging with git</h3>
+<p>Once it works, merge with the existing development branch or main branch. There are two forms of merging with git. <code>merge</code> tacks on the changes to the end of the branch. <code>rebase</code> undoes your changes, applies commits to bring the branch up to date, and then reapplies your changes.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Update dev branch with changes from origin</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout dev</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull <span class="at">--rebase</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># merge updates from dev into new process branch</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>new_feature<span class="op">&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase dev</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTANT: It is your responsibility to resolve conflicts with stable code</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch to dev and merge new process</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout dev</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="op">&lt;</span>new_feature<span class="op">&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> <span class="op">&lt;</span>new_feature<span class="op">&gt;</span> # delete new feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
 </section>
 </section>
 

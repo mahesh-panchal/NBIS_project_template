@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>How to use this template</title>
+<title>How to use this template – troubleshooting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -140,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Prototyping</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./troubleshooting.html" rel="" target="">
+    <a class="nav-link active" href="./troubleshooting.html" rel="" target="" aria-current="page">
  <span class="menu-text">Troubleshoot</span></a>
   </li>  
   <li class="nav-item">
@@ -167,87 +167,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-guide-to-using-this-template" id="toc-a-guide-to-using-this-template" class="nav-link active" data-scroll-target="#a-guide-to-using-this-template">A guide to using this template</a>
-  <ul class="collapse">
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a>
-  <ul class="collapse">
-  <li><a href="#uppmax" id="toc-uppmax" class="nav-link" data-scroll-target="#uppmax">Uppmax</a></li>
-  </ul></li>
-  <li><a href="#my-work-environment" id="toc-my-work-environment" class="nav-link" data-scroll-target="#my-work-environment">My work environment</a>
-  <ul class="collapse">
-  <li><a href="#my-toolkit" id="toc-my-toolkit" class="nav-link" data-scroll-target="#my-toolkit">My toolkit</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#troubleshooting-a-nextflow-process" id="toc-troubleshooting-a-nextflow-process" class="nav-link active" data-scroll-target="#troubleshooting-a-nextflow-process">Troubleshooting a Nextflow process</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">How to use this template</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="a-guide-to-using-this-template" class="level1">
-<h1>A guide to using this template</h1>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
-<p>Learning the tools used in this way of working can be a steep learning curve. However, the benefits are a well structured project, that is easy to follow, rerun, and build upon. A common issue with “Why should I learn this?” is the perceived overhead of using these tools. However, in my opinion, the ability to recover from mistakes or unexpected outcomes is greatly mitgated by using these tools, reducing overhead over time.</p>
-<p>The tools used in this way of working are:</p>
-<ul>
-<li><strong>Git</strong>: Version control is an important method of tracking changes and making exploratory changes that are revertable.</li>
-<li><strong>Nextflow</strong>: Nextflow is a workflow manager. It is ideal for processing large scale data across a wide variety of execution systems. Snakemake and WDL are examples of alternatives, but Nextflow is my favoured workflow manager.</li>
-<li><strong>Quarto</strong>: Quarto is a publishing system, useful for dynamically visualising data, performing statistical analyses, and performing small scale data processing tasks. It also supports a variety of analysis languages, such as Python, R, and Julia. It also supports a wide variety of outputs including reports, presentations, wikis, and websites.</li>
-<li><strong>Apptainer/Docker</strong>: Apptainer and Docker are container platforms; platforms which create isolated compute environments necessary for a computation. There are many public container images available, reducing the need for building one’s own computation environment.</li>
-<li><strong>Conda/Mamba</strong>: Conda (or the speedier flavour Mamba) is another package management system like containers, however these environments are not isolated like container environments are, allowing tools to interact with for example your local HPC scheduler.</li>
-<li><strong>Mermaid Diagrams</strong>: The mermaid diagraming system is a textual way of making various diagrams that can then be displayed for example in Quarto, or on Github, and allows for a wide variety of types of diagrams.</li>
-</ul>
-<p>The use of these tools helps me to better communicate science and increase the reproducibility of my scientific analyses. Typically, my analyses can be reproduced with the following commands:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/analyses/<span class="op">&lt;</span>date<span class="op">&gt;</span>_<span class="op">&lt;</span>analysis<span class="op">&gt;</span>/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate /proj/snic20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/conda/nextflow-env</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./run_nextflow.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="uppmax" class="level3">
-<h3 class="anchored" data-anchor-id="uppmax">Uppmax</h3>
-<p>This guide is very focused towards the Swedish Research Computation infrastructure, in particular the high performance cluster (HPC) “Uppmax”. However, this way of working should be adaptable to other compute infrastructures.</p>
-<p>Typcially, Uppmax provides two resources; a NAISS compute allocation, and a NAISS storage allocation on Uppmax (compute allocations are sufficient for small data sets). Swedish research groups are encouraged to use the NAISS resources at Uppmax for large scale data processing. If you’re only doing computations, then you’re recommended to use a NAISS compute allocation, however, if you need to store large amounts of data (for the duration of the project), then you should also use a NAISS storage allocation too.</p>
-</section>
-</section>
-<section id="my-work-environment" class="level2">
-<h2 class="anchored" data-anchor-id="my-work-environment">My work environment</h2>
-<p>An overview of my general working environment.</p>
-<ul>
-<li>Docker installed on my personal computer.</li>
-<li>Apptainer on Uppmax.</li>
-<li>A Github account.</li>
-<li>A Gitpod account.</li>
-<li>Git on my personal computer, Uppmax, and Gitpod.</li>
-<li>A conda environment with Nextflow and Quarto installed (local, Uppmax).</li>
-<li>VSCode, with syntax highlighting, linting, and formatting.</li>
-</ul>
-<section id="my-toolkit" class="level3">
-<h3 class="anchored" data-anchor-id="my-toolkit">My toolkit</h3>
-<p>When working on a project, I may work on it locally on my PC, remotely on Uppmax, or remotely on Gitpod. Using the widely supported container system Docker means I have an easier time managing and porting software installations. Although Uppmax doesn’t support Docker for various security reasons, it does support Apptainer which is able to use container images from Docker. Using Container systems means I do not have to rely on computer administrators to install tools for me. Many bioinformatic tools are also available as container images through Biocontainers, meaning you can use the container and get on with your analyses, and not waste time building images yourself.</p>
-<p>Version control tools like Git are a great tool to help keep work organised, and in a way, backed up. Using git branches are a particularly powerful way to keep both a working copy of your analysis, and work on different exploratory analyses at the same time. It can also be useful for demonstrating work attribution (and accountability). Web-based git repositories such as Github, also provide a way of publishing your work (or keeping it private), can function as a backup of sorts, and provide other useful services such as automated actions, or Wiki spaces, or website hosting.</p>
-<p>Conda (or Mamba; drop-in replacement for conda) is another software package manager, however the main difference to containerised software is that the software environment is not self-contained like containers are. You can work with tools both in your environment and outside, which is particularly useful for a tool like Nextflow. One of Nextflow’s strengths is that it can work on a wide variety of computing platforms, however in order to do so in a containerized environment would mean every tool Nextflow supports would need to be included and would need to be configured to use the correct files outside the container - a hugely complex process. It’s much simpler to provide an environment for Nextflow and allow it to interact with whatever your compute system uses. The added benefit of using a conda environment is that it can be set up for everyone part of the project, easing installation issues.</p>
-<p>Nextflow is a workflow manager. I use it to manage the flow of scripts so I know data provenance from beginning to end. It has very good file handing and scaling properties, making script writing simpler. I can write a Nextflow process for a single set of inputs and not worry too much about coding it for multiple files. That process can also be assigned a container, providing a running environment which doesn’t have software conflicts with other things that need to be run.</p>
-<p>Editors with syntax highlighting and git integrations are useful coding tools. I currently use VScode, with various extensions, such as Prettier - code formatting, Nextflow syntax highlighting, and Quarto support.</p>
+<section id="troubleshooting-a-nextflow-process" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-a-nextflow-process">Troubleshooting a Nextflow process</h2>
+<p>If a NExtflow process fails to run, Nextflow reports the Nextflow working directory it failed in. Change directory to that folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/nextflow/workdir/<span class="op">&lt;</span>xx<span class="op">&gt;</span>/<span class="op">&lt;</span>hashstring<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In that folder there are several hidden files starting with <code>.</code>. The <code>.command.sh</code> contains the process script. You can modify this and execute it, but it runs in your current environment ( i.e., outside the container). To run the modified <code>.command.sh</code> inside the container, you should run <code>.command.run</code>, either directly on a worker node ( e.g.&nbsp;<code>bash .command.run</code>) or submit it to the cluster (e.g.&nbsp;<code>sbatch .command.run</code>). One can debug the process script in this way, incorporate changes to the Nextflow workflow, and continue.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.command.begin</span>      <span class="co"># Script to execute before process script</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.command.err</span>        <span class="co"># Error stream log</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">.command.log</span>        <span class="co"># Combined stream log</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">.command.out</span>        <span class="co"># Output stream log</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">.command.run</span>        <span class="co"># Run script - runs .command.sh in the correct environment.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">.command.sh</span>         <span class="co"># Process script.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">.exitcode</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Be wary of long running commands, and use toy data to make something work. For example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">blastx</span> ...                                      <span class="co"># Long run time</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'&lt;complex script&gt;'</span> <span class="op">&lt;</span>blast_output<span class="op">&gt;</span>           # Quick</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Comment out blastx and run awk with toy data. Alternatively comment out the awk, let it finish successfully, and use the cached output.</p>
+<p>Once you’re done, use <code>nextflow clean -f -before &lt;job_id&gt;</code> to clean up redundant working directories. Use <code>nextflow log</code> to get <code>&lt;job_id&gt;</code>.</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->

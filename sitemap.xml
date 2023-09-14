@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/working_habits.html</loc>
+    <lastmod>2023-09-14T14:43:40.130Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/test_dataset.html</loc>
+    <lastmod>2023-09-14T14:43:38.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/references.html</loc>
+    <lastmod>2023-09-14T14:43:37.086Z</lastmod>
+  </url>
+  <url>
     <loc>https://mahesh-panchal.github.io/NBIS_project_template/index.html</loc>
-    <lastmod>2023-09-13T14:04:40.205Z</lastmod>
+    <lastmod>2023-09-14T14:43:35.174Z</lastmod>
   </url>
   <url>
     <loc>https://mahesh-panchal.github.io/NBIS_project_template/about.html</loc>
-    <lastmod>2023-09-13T14:04:39.477Z</lastmod>
+    <lastmod>2023-09-14T14:43:32.466Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/computation_environment.html</loc>
+    <lastmod>2023-09-14T14:43:33.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/prototyping.html</loc>
+    <lastmod>2023-09-14T14:43:36.170Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/starting_steps.html</loc>
+    <lastmod>2023-09-14T14:43:37.818Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mahesh-panchal.github.io/NBIS_project_template/troubleshooting.html</loc>
+    <lastmod>2023-09-14T14:43:39.402Z</lastmod>
   </url>
 </urlset>
