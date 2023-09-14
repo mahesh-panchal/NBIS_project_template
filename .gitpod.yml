@@ -1,3 +1,4 @@
+image: nfcore/gitpod:latest
 vscode:
   extensions:
     - quarto.quarto
