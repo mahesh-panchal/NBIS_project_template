@@ -23,7 +23,7 @@ Add a process into the workflow:
 - Try to use existing containers (public images) when possible. When a container
   must be created, I use Docker to make a local image, test, and then push it to
   Github packages to keep it private to the project.
-  The [README.md](../workflow/containers/README.md) in the `workflow/containers` directory
+  The `README.md` in the `workflow/containers` directory
   has more information on creating custom containers.
 
 ```groovy

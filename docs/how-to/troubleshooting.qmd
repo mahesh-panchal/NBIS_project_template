@@ -1,6 +1,6 @@
 ## Troubleshooting a Nextflow process
 
-If a NExtflow process fails to run, Nextflow reports the Nextflow working directory it failed in.
+If a Nextflow process fails to run, Nextflow reports the Nextflow working directory it failed in.
 Change directory to that folder:
 
 ```bash

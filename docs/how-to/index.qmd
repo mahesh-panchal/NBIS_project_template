@@ -30,7 +30,7 @@ Typically, my analyses can be reproduced with the following commands:
 
 ```bash
 cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-mamba activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+mamba activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
