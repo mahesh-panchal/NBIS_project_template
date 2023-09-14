@@ -22,12 +22,12 @@ nextflow-env:
 		-f "workflow/nextflow_conda-env.yml"
 
 # Render How-to webpages
-how-to: 
+how-to:
 	cd docs/how-to && quarto publish gh-pages --no-browser
 
 # Render Report
 report:
-    cd docs/report && quarto render ProjectReport.qmd
+	cd docs/report && quarto render ProjectReport.qmd
 
 .PHONY: analysis workflow-test
 .PHONY: nextflow-env
