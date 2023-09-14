@@ -7,6 +7,20 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: working_habits.qmd
+        text: Habits
+      - href: starting_steps.qmd
+        text: Begin
+      - href: test_dataset.qmd
+        text: Test-Data
+      - href: computation_environment.qmd
+        text: Environment
+      - href: prototyping.qmd
+        text: Prototyping
+      - href: troubleshooting.qmd
+        text: Troubleshoot
+      - href: references.qmd
+        text: Reference
       - about.qmd
 
 format:
