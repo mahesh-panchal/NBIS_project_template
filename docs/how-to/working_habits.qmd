@@ -1,0 +1,44 @@
+## Summary of work habits
+
+- Use an organised folder structure.
+- Make a private Project repository on Github, and clone it on Uppmax and then locally.
+- Have a stable `main` git branch.
+- Git branches are used to develop new features and add exploratory analyses.
+- Make a test data set for development purposes.
+- Use toy examples for exploring Nextflow functionality.
+- Write processes in a modular way to use existing containers.
+- Use Docker to make containers for tools which are not available as existing container images.
+- Use Nextflow to manage intermediate files.
+- If a script is failing, debug it in the Nextflow work directory.
+- parameters and config are included in version control.
+
+### Folder structure
+
+The structure I've found that works well for me is:
+
+```
+/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/       (NAISS Compute Allocation)
+ |
+ | - README.md                                 Project details summary
+ |
+ | - analyses/                                 Analysis configuration files
+ |   | - YYYY-MM-DD_workflow_dev                 Configuration to use test data
+ |   \ - YYYY-MM-DD_full_data_analysis           Configuration to use all the data
+ | - conda/nextflow-env                        Conda Environment containing tools and dependancies to run Nextflow
+ | - docs/                                     Project documentation
+ \ - workflow/                                 Nextflow workflow
+     | - bin                                     Custom script folder
+     | - configs                                 General workflow configuration
+     \ - containers                              Custom container definitions
+
+/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
+ |
+ | - nobackup/nxf-work                         Intermediate analysis files
+ \ - NBIS_support_<id>_results/                Analysis results
+```
+
+This is flexible enough for both data analysis and pipeline development
+projects. For public pipeline development projects the public GitHub repo
+is used, instead of a repository `workflow` folder.
+
+The files and folders `README.md`, `analyses`, `docs`, and `workflow` are also tracked using Git.

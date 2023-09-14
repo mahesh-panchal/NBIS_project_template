@@ -1,0 +1,40 @@
+## Troubleshooting a Nextflow process
+
+If a NExtflow process fails to run, Nextflow reports the Nextflow working directory it failed in.
+Change directory to that folder:
+
+```bash
+cd /path/to/nextflow/workdir/<xx>/<hashstring>
+```
+
+In that folder there are several hidden files starting with `.`.
+The `.command.sh` contains the process script.
+You can modify this and execute it, but it runs in your current environment ( i.e.,
+outside the container). To run the modified `.command.sh` inside the container,
+you should run `.command.run`, either directly on a worker node ( e.g. `bash .command.run`)
+or submit it to the cluster (e.g. `sbatch .command.run`). One can debug the process
+script in this way, incorporate changes to the Nextflow workflow, and continue.
+
+```bash
+.command.begin      # Script to execute before process script
+.command.err        # Error stream log
+.command.log        # Combined stream log
+.command.out        # Output stream log
+.command.run        # Run script - runs .command.sh in the correct environment.
+.command.sh         # Process script.
+.exitcode
+```
+
+Be wary of long running commands, and use toy data to make something work.
+For example:
+
+```bash
+blastx ...                                      # Long run time
+awk '<complex script>' <blast_output>           # Quick
+```
+
+Comment out blastx and run awk with toy data. Alternatively comment out the
+awk, let it finish successfully, and use the cached output.
+
+Once you're done, use `nextflow clean -f -before <job_id>` to clean up
+redundant working directories. Use `nextflow log` to get `<job_id>`.

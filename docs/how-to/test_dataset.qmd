@@ -1,0 +1,38 @@
+## Make a test dataset
+
+Using a test dataset can help rapidly develop your analysis workflow.
+A good test data set should be small, but have enough data to get
+a decent portion of the way into the analysis.
+This makes prototyping your processes faster when you come to test if it runs.
+Mistakes during coding are inevitable, and the faster the error is returned, the better.
+
+Enabling reentrancy in Nextflow (`-resume`) will mean you can also let the
+workflow run, and it continues from the last successfully completed processes.
+
+The test dataset is typically stored in `nobackup` on the NAISS storage allocation.  
+A script is used to make sure I know how to recreate it, and what was used as input.
+
+Example commands:
+
+- Subsample Paired-end Illumina data:
+
+  ```bash
+  FRACTION=0.1
+  SEED=100
+  seqtk sample -s"$SEED" "$READ1" "$FRACTION" | gzip -c > "${READ1/_R1./_R1.subsampled.}" &
+  seqtk sample -s"$SEED" "$READ2" "$FRACTION" | gzip -c > "${READ1/_R2./_R2.subsampled.}"
+  wait
+  ```
+
+- Subsample a bam file:
+
+  ```bash
+  FRACTION=0.10
+  samtools view -b -@ "${CPUS:-10}" -s "$FRACTION" -o "${PREFIX}.subsampled_${FRACTION}.subreads.bam" "${PREFIX}.subreads.bam"
+  ```
+
+- Subsample a CSV file:
+  ```bash
+  NUM_RECORDS=1000
+  shuf -n "$NUM_RECORDS" "${PREFIX}.csv" > "${PREFIX}.subsampled_${NUM_RECORDS}.csv"
+  ```

@@ -6,9 +6,101 @@ title: "How to use this template"
 
 ## Getting started
 
-### Tools
+Learning the tools used in this way of working can be a steep learning curve. However,
+the benefits are a well structured project, that is easy to follow, rerun, and build upon.
+A common issue with "Why should I learn this?" is the perceived overhead of using these tools.
+However, in my opinion, the ability to recover from mistakes or unexpected outcomes is greatly
+mitgated by using these tools, reducing overhead over time.
 
-1. Git
-2. Nextflow
-3. Quarto
-4. Apptainer/Docker
+The tools used in this way of working are:
+
+- **Git**: Version control is an important method of tracking changes and making exploratory changes that are revertable.
+- **Nextflow**: Nextflow is a workflow manager. It is ideal for processing large scale data across a wide variety of execution systems.
+  Snakemake and WDL are examples of alternatives, but Nextflow is my favoured workflow manager.
+- **Quarto**: Quarto is a publishing system, useful for dynamically visualising data, performing statistical analyses, and performing
+  small scale data processing tasks. It also supports a variety of analysis languages, such as Python, R, and Julia. It also supports
+  a wide variety of outputs including reports, presentations, wikis, and websites.
+- **Apptainer/Docker**: Apptainer and Docker are container platforms; platforms which create isolated compute environments necessary for
+  a computation. There are many public container images available, reducing the need for building one's own computation environment.
+- **Conda/Mamba**: Conda (or the speedier flavour Mamba) is another package management system like containers, however these environments are
+  not isolated like container environments are, allowing tools to interact with for example your local HPC scheduler.
+- **Mermaid Diagrams**: The mermaid diagraming system is a textual way of making various diagrams that can then be displayed for example
+  in Quarto, or on Github, and allows for a wide variety of types of diagrams.
+
+The use of these tools helps me to better communicate science and increase the reproducibility of my scientific analyses.
+Typically, my analyses can be reproduced with the following commands:
+
+```bash
+cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
+mamba activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+./run_nextflow.sh
+```
+
+### Uppmax
+
+This guide is very focused towards the Swedish Research Computation infrastructure, in particular the high performance cluster (HPC) "Uppmax".
+However, this way of working should be adaptable to other compute infrastructures.
+
+Typcially, Uppmax provides two resources; a NAISS compute allocation, and a NAISS storage allocation on Uppmax (compute allocations are
+sufficient for small data sets). Swedish research groups are encouraged to use the NAISS resources at Uppmax for
+large scale data processing. If you're only doing computations, then you're recommended
+to use a NAISS compute allocation, however, if you need to store large
+amounts of data (for the duration of the project), then you should also use
+a NAISS storage allocation too.
+
+## My work environment
+
+An overview of my general working environment.
+
+- Docker installed on my personal computer.
+- Apptainer on Uppmax.
+- A Github account.
+- A Gitpod account.
+- Git on my personal computer, Uppmax, and Gitpod.
+- A conda environment with Nextflow and Quarto installed (local, Uppmax).
+- VSCode, with syntax highlighting, linting, and formatting.
+
+### My toolkit
+
+When working on a project, I may work on it locally on my PC, remotely on Uppmax,
+or remotely on Gitpod. Using the widely supported
+container system Docker means I have an easier time managing and porting
+software installations. Although Uppmax doesn't support Docker for various
+security reasons, it does support Apptainer which is able to use container images
+from Docker. Using Container systems means I do not have to rely on computer
+administrators to install tools for me. Many bioinformatic tools are
+also available as container images through Biocontainers, meaning you can use
+the container and get on with your analyses, and not waste time building images yourself.
+
+Version control tools like Git are a great tool to help keep work organised,
+and in a way, backed up. Using git branches are a particularly powerful way
+to keep both a working copy of your analysis, and work on different exploratory
+analyses at the same time. It can also be useful for demonstrating work
+attribution (and accountability). Web-based git repositories such as Github,
+also provide a way of publishing your work (or keeping it private), can
+function as a backup of sorts, and provide other useful services such as
+automated actions, or Wiki spaces, or website hosting.
+
+Conda (or Mamba; drop-in replacement for conda) is another software package manager,
+however the main difference to containerised software
+is that the software environment is not self-contained like containers are.
+You can work with tools both in your environment and outside, which is particularly
+useful for a tool like Nextflow. One of Nextflow's strengths is that it can
+work on a wide variety of computing platforms, however in order to do so in a
+containerized environment would mean every tool Nextflow supports would need
+to be included and would need to be configured to use the correct files
+outside the container - a hugely complex process. It's much simpler to
+provide an environment for Nextflow and allow it to interact with whatever your
+compute system uses. The added benefit of using a conda environment is that
+it can be set up for everyone part of the project, easing installation issues.
+
+Nextflow is a workflow manager. I use it to manage the flow of scripts so I know
+data provenance from beginning to end. It has very good file handing and scaling
+properties, making script writing simpler. I can write a Nextflow process for a single
+set of inputs and not worry too much about coding it for multiple files. That
+process can also be assigned a container, providing a running environment which
+doesn't have software conflicts with other things that need to be run.
+
+Editors with syntax highlighting and git integrations are useful coding tools.
+I currently use VScode, with various extensions, such as Prettier - code formatting,
+Nextflow syntax highlighting, and Quarto support.

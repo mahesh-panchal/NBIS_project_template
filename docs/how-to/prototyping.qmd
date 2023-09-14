@@ -1,0 +1,137 @@
+## Prototyping
+
+To build up an analysis project, workflow development aims to follow the
+[GitFlow model](http://datasift.github.io/gitflow/IntroducingGitFlow.html) of coding.
+
+- Stable `main` git branch.
+- Mostly stable `dev` git branch - develop a line of analysis.
+- Feature branch to try stuff.
+
+Make a new branch named `<new_feature>` in Git.
+
+```bash
+git checkout -b <new_feature>
+```
+
+Add a process into the workflow:
+
+- Nextflow processes are kept as modular as possible, often limiting them to a
+  single tool. The benefits are that one can often use public images for
+  a process, reducing build time. Environments are small, meaning low build
+  time, and low conflict potential. Since projects are often incrementally
+  developed, this reduces the need to rebuild images or environments, saving time.
+- Try to use existing containers (public images) when possible. When a container
+  must be created, I use Docker to make a local image, test, and then push it to
+  Github packages to keep it private to the project.
+  The [README.md](../workflow/containers/README.md) in the `workflow/containers` directory
+  has more information on creating custom containers.
+
+```groovy
+process <uppercase_name> {
+
+  input:
+  path <filename_var>
+
+  // directives
+  <directives>
+  conda "<channel>::<software>=<version>"
+  container "<software>:<version+build>"
+
+  script:
+  """
+  command --opts $var
+  """
+
+  output:
+  path "<filename>", emit: <file_type>
+  path "*"  // Captures everything. Use when you don't know what the output is.
+
+}
+```
+
+Pass the appropriate input channel(s) in the `workflow` block.
+
+- Nextflow has a large selection of channel operators (functions that manipulate
+  process input), which can manipulate input into any format you need. It can be
+  difficult to get the desired input combination first time, and you do not want to
+  experiment on your long running data sets to find out what works. To understand
+  what a Nextflow construct does, write toy examples like in
+  [Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html).
+  Nextflow also has a (GUI) console mode to test syntax (`nextflow console`).
+
+```groovy
+workflow {
+
+  Channel.fromFilePairs( params.reads, checkIfExists: true )
+    .set{ input_ch }
+
+  FASTQC( input_ch )
+  FASTP( input_ch )
+  ASSEMBLE( FASTP.out.trimmed_reads )
+
+}
+```
+
+Add the process resources to the configs.
+
+```groovy
+process {
+  withName: 'FASTQC' {
+    cpus = 4
+    time = '1h'
+  }
+  withName: 'FASTP' {
+    cpus = 4
+    time = '2h'
+  }
+}
+```
+
+Don't forget to commit your changes to the feature branch as you develop:
+
+```bash
+git add <file>
+git commit -m "What I did"
+```
+
+Mistakes to commits can be changed using:
+
+```bash
+git commit --amend
+```
+
+### Running analyses
+
+- Have a folder under `analyses` for development (`YYYY-MM-DD_workflow_dev`)
+  - `params.yml` points to test data.
+  - Use `YYYY-MM-DD` to label folders and provide a natural ordering.
+- Have another folder under `analyses` to analyse the real data set (`YYYY-MM-DD_fulldata_analysis`)
+- Run stuff and break it.
+  - Activate conda environment.
+  - `run_nextflow.sh`
+  - Nextflow prints the working directory when a process fails.
+
+See [Troubleshooting](troubleshooting.qmd) for tips on debugging issues.
+
+### Merging with git
+
+Once it works, merge with the existing development branch or main branch. There are two
+forms of merging with git. `merge` tacks on the changes to the end of the branch. `rebase`
+undoes your changes, applies commits to bring the branch up to date, and then reapplies your
+changes.
+
+```bash
+# Update dev branch with changes from origin
+git checkout dev
+git pull --rebase
+
+# merge updates from dev into new process branch
+git checkout <new_feature>
+git rebase dev
+# IMPORTANT: It is your responsibility to resolve conflicts with stable code
+
+# Switch to dev and merge new process
+git checkout dev
+git merge <new_feature>
+git branch -d <new_feature> # delete new feature
+```

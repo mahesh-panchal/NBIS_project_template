@@ -1,0 +1,31 @@
+## Starting a support project.
+
+- Make a private Project repository from my [Template](https://github.com/mahesh-panchal/NBIS_project_template) repository on Github.
+  1. Select `New Repository` on Github from the `+` symbol in the top right corner.
+  1. Select `mahesh-panchal/NBIS_project_template` in `Repository template`.
+  1. Change `owner` to `NBISweden`.
+  1. Provide a repository name following `SMS-<id>-<year>-<short_description>`.
+  1. Ensure repository is private, then click Create repository.
+  1. Add a link to the Redmine Project in the URL box.
+- Clone it into the NAISS Compute project.
+  ```bash
+  cd /proj/naiss20XX-YY-ZZ
+  git clone git@github.com:NBISweden/SMS-<id>-<year>-<short_description>.git NBIS_support_<id>
+  ```
+- Clone the NAISS compute project locally.
+  ```bash
+  cd ~/Documents/Projects
+  git clone <user>@rackham.uppmax.uu.se:/proj/naiss20XX-YY-ZZ/NBIS_support_<id>
+  ```
+- Update README in the repository.
+
+The template provides an organised folder structure, and skeleton files to quickly
+start prototyping. A Makefile is present to run common commands.
+
+Analyses are primarily run on Uppmax. Github is used as a backup, and local work is
+pushed directly to Uppmax saving a step. This means however the Uppmax
+active branch (usually `main`) must be different from my local branch ( usually
+a feature branch ) when I `git push`.
+
+Once the repositories are cloned, I update the README with the project info,
+tasks to be performed, and Uppmax directories.

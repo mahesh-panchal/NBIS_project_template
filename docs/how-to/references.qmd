@@ -1,0 +1,82 @@
+## References
+
+Tips and links to potentially useful learning resources.
+
+### Tool Tips - Git
+
+- [Version control with Git](https://swcarpentry.github.io/git-novice/): Software Carpentries course.
+
+- [How to undo (almost) anything](https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/): Tips on how to undo various actions in git.
+
+- Accidentally delete a tracked file?
+
+  ```bash
+  git restore <filename>
+  ```
+
+- Do not add large ( > 100MB ) files.
+
+- Never commit sensitive information to a git repository e.g.,
+  - usernames and passwords
+  - API keys
+
+### Tool Tips - Docker
+
+- [Reproducible Computational Environments Using Containers: Introduction to Docker](https://carpentries-incubator.github.io/docker-introduction/): Software Carpentries course.
+
+- [Dockerfile best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
+- Use existing containers where possible:
+
+  - [Biocontainers Registry](https://biocontainers.pro/registry): Containerized conda packages.
+  - [Rocker](https://www.rocker-project.org/images/): R in Docker.
+    - [Rocker TidyModels](https://hub.docker.com/r/asachet/rocker-tidymodels): R + Rstudio + tidyverse + tidymodels + common ML packages.
+  - [Python Data science](https://hub.docker.com/r/civisanalytics/datascience-python/): Common python dependencies for data science workflows.
+
+- Be careful not to commit sensitive data into a container.
+
+- [Docker compose](https://docs.docker.com/compose/): Add parameters and volumes to a `docker-compose.yml` file to reproduce a Docker ecosystem (start multiple containers with the same settings each time).
+
+### Tool Tips - Apptainer
+
+- [Reproducible computational environments using containers: Introduction to Singularity](https://carpentries-incubator.github.io/singularity-introduction/): Software Carpentries course (Work in progress).
+- Build custom images in Docker first, for increased portabilty.
+- Use existing containers where possible:
+
+  - [Biocontainers Registry](https://biocontainers.pro/registry): Containerized conda packages.
+  - [Rocker](https://www.rocker-project.org/images/): R in Docker.
+    - [Rocker TidyModels](https://hub.docker.com/r/asachet/rocker-tidymodels): R + Rstudio + tidyverse + tidymodels + common ML packages.
+  - [Python Data science](https://hub.docker.com/r/civisanalytics/datascience-python/): Common python dependencies for data science workflows.
+
+- Be careful not to commit sensitive data into a container.
+
+### Tool Tips - Nextflow
+
+- [Nextflow Training from Seqera](https://seqera.io/training/): Training from writers of Nextflow.
+- [Introduction to Bioinformatics workflows with Nextflow and nf-core](https://carpentries-incubator.github.io/workflows-nextflow/): Software Carpentries Course (Work in progress).
+- [RNA-seq Workflow Tutorial](https://github.com/seqeralabs/nextflow-tutorial): Tutorial writing
+  an RNA-seq workflow to introduce Nextflow fundamentals.
+- [GATK Workflow Tutorial](https://seqera.io/training/handson/): Tutorial writing
+  a GATK workflow to introduce Nextflow fundamentals.
+
+- Use toy examples to test Nextflow contructs.
+
+  ```groovy
+  Channel.of( 
+      [ "hi",  "there", 1 ], 
+      [ "hi",  "there", 1 ],
+      [ "see", "me",    2 ], 
+      [ "see", "how",   2 ]
+    )
+    .unique()
+    .groupTuple( by:[0,2] )
+    .view()
+  ```
+
+- [Nextflow documentation](https://www.nextflow.io/docs/latest/index.html): Nextflow Workflow writers best friend. A description of all the available Nextflow functionality.
+
+### Tool Tips - Conda
+
+- [Introduction to Conda for (Data) Scientists](https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/): Software carpentries course.
+- Do not install anything into the base environment.
+- I recommend `mamba` (install it into a conda env).

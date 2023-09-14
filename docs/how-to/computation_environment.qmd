@@ -1,0 +1,25 @@
+## Make the running environment
+
+Conda is a software package manager. It makes it easy to install tools
+into custom environments. Several tools can be installed into
+an environment, and along with it all the libraries and dependancies it
+needs. A conda environment is a double-edged sword in that, when activated,
+it is not isolated from the users normal environment. This makes it ideal
+for running a software like Nextflow, but perhaps troublesome for others.
+
+Mamba is another software intended to be a drop-in replacement for Conda.
+A primary advantage is faster building of environments, through
+better package dependancy resolution.
+
+Conda environments are activated using `conda activate <environment-name>`
+and deactivated using `conda deactivate`.
+
+Conda is enabled on Uppmax using `module load conda`.
+
+Create a project-wide conda environment:
+
+```bash
+PROJECT_DIR=/proj/naiss20XX-YY-ZZ/NBIS_support_<id>
+mamba env create --prefix "$PROJECT_DIR/conda/nextflow-env" \
+  -f "$PROJECT_DIR/workflow/nextflow_conda-env.yml"
+```
