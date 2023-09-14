@@ -1,3 +1,4 @@
 vscode:
   extensions:
     - quarto.quarto
+    - esbenp.prettier-vscode
