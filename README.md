@@ -38,7 +38,7 @@ NBIS Agreement: ( XX hrs)
 ## Directories
 
 ```
-/proj/snic20XX-YY-ZZ/NBIS_support_<id>/        (SNIC Compute Allocation)
+/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/       (NAISS Compute Allocation)
  |
  | - README.md                                 Project details summary
  |
@@ -47,7 +47,7 @@ NBIS Agreement: ( XX hrs)
  | - docs/                                     Project documentation
  \ - workflow/                                 Nextflow workflow
 
-/proj/snic20xx-yy-zz/                          (SNIC Storage Allocation)
+/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
  |
  | - nobackup/nxf-work                         Intermediate analysis files
  \ - NBIS_support_<id>_results/                Analysis results
@@ -57,13 +57,13 @@ NBIS Agreement: ( XX hrs)
 
 Quickstart:
 ```bash
-cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
+conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
 A description of the workflow stages is provided in
-the [Project Report](docs/Project_Report.md).
+the [Project Report](docs/report/Project_Report.md).
 
 Workflow parameter options and outputs are detailed
 in the [workflow README](workflow/README.md).
