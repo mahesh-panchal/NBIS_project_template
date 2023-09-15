@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>How to use this template</title>
+<title>How to use this template - Using this template</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -183,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">How to use this template</h1>
+<h1 class="title">Using this template</h1>
 </div>
 
 
@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p><a href="https://github.com/mahesh-panchal/NBIS_project_template">This repository</a> is a template for research/support projects to produce reproducible output. It describes how to work with this template and what working practices to follow.</p>
 <section id="getting-started" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
 <p>Learning the tools used in this way of working can be a steep learning curve. However, the benefits are a well structured project, that is easy to follow, rerun, and build upon. A common issue with “Why should I learn this?” is the perceived overhead of using these tools. However, in my opinion, the ability to recover from mistakes or unexpected outcomes is greatly mitgated by using these tools, reducing overhead over time.</p>
@@ -209,10 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Apptainer/Docker</strong>: Apptainer and Docker are container platforms; platforms which create isolated compute environments necessary for a computation. There are many public container images available, reducing the need for building one’s own computation environment.</li>
 <li><strong>Conda/Mamba</strong>: Conda (or the speedier flavour Mamba) is another package management system like containers, however these environments are not isolated like container environments are, allowing tools to interact with for example your local HPC scheduler.</li>
 <li><strong>Mermaid Diagrams</strong>: The mermaid diagraming system is a textual way of making various diagrams that can then be displayed for example in Quarto, or on Github, and allows for a wide variety of types of diagrams.</li>
+<li><strong>Markdown</strong>: Markdown is a markup language to create formatted text. The idea being to focus on content and leave the styling to someone else (or future you). It is a language supported my many platforms. In particular it’s used to author content with Quarto, and on Github. These sites also natively render Mermaid diagrams when included into Markdown text, in addition to rendering code, and so on.</li>
 </ul>
 <p>The use of these tools helps me to better communicate science and increase the reproducibility of my scientific analyses. Typically, my analyses can be reproduced with the following commands:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/analyses/<span class="op">&lt;</span>date<span class="op">&gt;</span>_<span class="op">&lt;</span>analysis<span class="op">&gt;</span>/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate /proj/snic20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/conda/nextflow-env</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/conda/nextflow-env</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./run_nextflow.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="uppmax" class="level3">
 <h3 class="anchored" data-anchor-id="uppmax">Uppmax</h3>

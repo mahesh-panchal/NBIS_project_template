@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Add a process into the workflow:</p>
 <ul>
 <li>Nextflow processes are kept as modular as possible, often limiting them to a single tool. The benefits are that one can often use public images for a process, reducing build time. Environments are small, meaning low build time, and low conflict potential. Since projects are often incrementally developed, this reduces the need to rebuild images or environments, saving time.</li>
-<li>Try to use existing containers (public images) when possible. When a container must be created, I use Docker to make a local image, test, and then push it to Github packages to keep it private to the project. The <a href="../workflow/containers/README.md">README.md</a> in the <code>workflow/containers</code> directory has more information on creating custom containers.</li>
+<li>Try to use existing containers (public images) when possible. When a container must be created, I use Docker to make a local image, test, and then push it to Github packages to keep it private to the project. The <code>README.md</code> in the <code>workflow/containers</code> directory has more information on creating custom containers.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode groovy code-with-copy"><code class="sourceCode groovy"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>process <span class="op">&lt;</span>uppercase_name<span class="op">&gt;</span> <span class="op">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
