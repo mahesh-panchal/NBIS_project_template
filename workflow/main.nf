@@ -17,7 +17,7 @@ NBIS support <id>
 
 // Check a project allocation is given for running on Uppmax clusters.
 if( workflow.profile == "uppmax" && !params.project ){
-    exit 1, "Please provide a SNIC project number ( --project )!\n"
+    exit 1, "Please provide a NAISS project number ( --project )!\n"
 }
 
 // The main workflow

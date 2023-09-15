@@ -70,7 +70,7 @@ publishing method from the intermediate results folders
     built from the docker images, instead of retrieving existing Singularity images (default: `false`).
 
     Uppmax cluster specific:
-    - `project`: SNIC Compute allocation number.
+    - `project`: NAISS Compute allocation number.
     - `clusterOptions`: Additional Uppmax cluster options (e.g., `-M snowy`).
 
 ### Workflow outputs

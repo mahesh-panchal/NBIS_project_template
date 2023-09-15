@@ -4,7 +4,7 @@ PROFILE=${PROFILE:-uppmax}
 NAISS_COMPUTE=${NAISS_COMPUTE:-/proj/naiss20XX-YY-ZZ/}
 NAISS_STORAGE=${NAISS_STORAGE:-/proj/naiss20xx-yy-zz/}
 REDMINE_ID=${REDMINE_ID:-XXXX}
-NXF_SCRIPT=${NXF_SCRIPT:-${SNIC_COMPUTE}/NBIS_support_${REDMINE_ID}/workflow/main.nf}
+NXF_SCRIPT=${NXF_SCRIPT:-${NAISS_COMPUTE}/NBIS_support_${REDMINE_ID}/workflow/main.nf}
 WORKDIR=${WORKDIR:-$NAISS_STORAGE/nobackup/nxf-work}
 
 nextflow run -resume \

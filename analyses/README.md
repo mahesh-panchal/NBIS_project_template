@@ -30,8 +30,8 @@ analyses
 Analyses often follow this recipe, making the analyses easy to run, recreate, and reference.
 
 ```bash
-cd /proj/snic20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
+conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ./run_nextflow.sh
 ```
 
@@ -46,7 +46,7 @@ run. Git tags can also be used to mark major stages of completion on the main br
 
 To run nextflow, you should activate the `nextflow-env` conda environment.
 ```bash
-conda activate /proj/snic20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ```
 However this can change your terminal prompt (`PS1`) variable to be something very long.
 You can modify the prompt to just use the environment name by using the following command.
