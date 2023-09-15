@@ -27,7 +27,7 @@ how-to:
 
 # Render Report
 report:
-	cd docs/report && quarto render ProjectReport.qmd
+	cd docs/report && quarto render Project_Report.qmd
 
 .PHONY: analysis workflow-test
 .PHONY: nextflow-env
