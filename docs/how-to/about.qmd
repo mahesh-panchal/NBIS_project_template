@@ -2,4 +2,4 @@
 title: "About"
 ---
 
-About this site
+This website is a guide to using this template to work reproducibly. 

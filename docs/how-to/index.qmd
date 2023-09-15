@@ -1,6 +1,10 @@
 ---
-title: "How to use this template"
+title: "Using this template"
 ---
+
+[This repository](https://github.com/mahesh-panchal/NBIS_project_template) is a template for
+research/support projects to produce reproducible output. It describes how to work with
+this template and what working practices to follow. 
 
 ## Getting started
 
@@ -24,6 +28,9 @@ The tools used in this way of working are:
   not isolated like container environments are, allowing tools to interact with for example your local HPC scheduler.
 - **Mermaid Diagrams**: The mermaid diagraming system is a textual way of making various diagrams that can then be displayed for example
   in Quarto, or on Github, and allows for a wide variety of types of diagrams.
+- **Markdown**: Markdown is a markup language to create formatted text. The idea being to focus on content and leave the styling
+  to someone else (or future you). It is a language supported my many platforms. In particular it's used to author content with Quarto,
+  and on Github. These sites also natively render Mermaid diagrams when included into Markdown text, in addition to rendering code, and so on.
 
 The use of these tools helps me to better communicate science and increase the reproducibility of my scientific analyses.
 Typically, my analyses can be reproduced with the following commands:
