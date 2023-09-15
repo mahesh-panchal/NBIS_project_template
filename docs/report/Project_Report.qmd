@@ -76,6 +76,7 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
 ### Input Data
 
 Description:
+
 - Input data type:
   - Path to data: `/path/to/data`
 
@@ -115,8 +116,9 @@ image path and version these Singularity images were made from
 can be found in the file
 `/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/workflow/configs/singularity_packages.config`.
 
-Images hosted on `ghcr.io` are initially private. These images should be
-copied to a public respository on publication.
+Custom container images are uploaded to `ghrc.io` (GitHub container registry) and associated
+with the project repostory. Images hosted on `ghcr.io` are initially private if the code
+repository is private. These images should be copied to a public respository on publication.
 Request access to the code repository from the NBIS expert to
 have access to the Docker container images. All other Docker images
 are hosted on public registries.
