@@ -38,22 +38,22 @@ NBIS Agreement:
 
 ### Project allocation
 
-* {{< var compute_project >}} (NAISS Compute allocation, Rackham)
-* {{< var storage_project >}} (NAISS Storage allocation, Rackham)
+- {{< var compute_project >}} (NAISS Compute allocation, Rackham)
+- {{< var storage_project >}} (NAISS Storage allocation, Rackham)
 
 ### Data responsibility
 
-* **NBIS & Uppnex:**  Unfortunately, we do not have resources to keep any files associated with the support request. We suggest that you safely store the results delivered by us. In addition, we ask that you remove the files from UPPMAX/UPPNEX after analysis is completed. The main storage at UPPNEX is optimized for high-speed and parallel access, which makes it expensive and not the right place for long time archiving.
-* **Sensitive data:** Please note that special considerations may apply to the human-derived sensitive personal data. These should be handled according to specific laws and regulations as outlined e.g. http://nbis.se/support/human-data.html.
-* **Long-term backup:** The responsibility for data archiving lies with universities and we recommend asking your local IT for support with long-term data archiving. Also a newly established Data Office (https://www.scilifelab.se/data/) at SciLifeLab may be of help to discuss other options.
+- **NBIS & Uppnex:**  Unfortunately, we do not have resources to keep any files associated with the support request. We suggest that you safely store the results delivered by us. In addition, we ask that you remove the files from UPPMAX/UPPNEX after analysis is completed. The main storage at UPPNEX is optimized for high-speed and parallel access, which makes it expensive and not the right place for long time archiving.
+- **Sensitive data:** Please note that special considerations may apply to the human-derived sensitive personal data. These should be handled according to specific laws and regulations as outlined e.g. http://nbis.se/support/human-data.html.
+- **Long-term backup:** The responsibility for data archiving lies with universities and we recommend asking your local IT for support with long-term data archiving. Also a newly established Data Office (https://www.scilifelab.se/data/) at SciLifeLab may be of help to discuss other options.
 
 ### Acknowledgements
 
 If you are presenting the results in a paper, at a workshop or conference, we kindly ask you to acknowledge us.
 
-* **NBIS:** Staff are encouraged to be co-authors when this is merited in accordance to the ethical recommendations for authorship, e.g. ICMJE recommendations. If applicable, please include Name, Surname, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Further Affliations, as co-author. In other cases, NBIS would be grateful if support by us is acknowledged in publications according to this example: "Support by NBIS (National Bioinformatics Infrastructure Sweden) is gratefully acknowledged."
-* **UPPMAX:** If your project has used HPC resources we kindly asks you to acknowledge UPPMAX and NAISS. If applicable, please add: "The computations were performed on resources provided by NAISS through Uppsala Multidisciplinary Center for Advanced Computational Science (UPPMAX) under Project NAISS XXXX/Y-ZZZ."
-* **NGI:** In publications based on data from NGI Sweden, the authors must acknowledge SciLifeLab, NGI and UPPMAX: "The authors would like to acknowledge support from Science for Life Laboratory, the National Genomics Infrastructure, NGI, and Uppmax for providing assistance in massive parallel sequencing and computational infrastructure."
+- **NBIS:** Staff are encouraged to be co-authors when this is merited in accordance to the ethical recommendations for authorship, e.g. ICMJE recommendations. If applicable, please include Name, Surname, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Further Affliations, as co-author. In other cases, NBIS would be grateful if support by us is acknowledged in publications according to this example: "Support by NBIS (National Bioinformatics Infrastructure Sweden) is gratefully acknowledged."
+- **UPPMAX:** If your project has used HPC resources we kindly asks you to acknowledge UPPMAX and NAISS. If applicable, please add: "The computations were performed on resources provided by NAISS through Uppsala Multidisciplinary Center for Advanced Computational Science (UPPMAX) under Project NAISS XXXX/Y-ZZZ."
+- **NGI:** In publications based on data from NGI Sweden, the authors must acknowledge SciLifeLab, NGI and UPPMAX: "The authors would like to acknowledge support from Science for Life Laboratory, the National Genomics Infrastructure, NGI, and Uppmax for providing assistance in massive parallel sequencing and computational infrastructure."
 
 ## Data
 
@@ -76,8 +76,8 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
 ### Input Data
 
 Description:
-* Input data type:
-    * Path to data: `/path/to/data`
+- Input data type:
+  - Path to data: `/path/to/data`
 
 ## Methods
 
@@ -151,6 +151,6 @@ members of the project to use.
 
 ## Recommendations and concluding remarks
 
-* RECOMMENDATIONS
+- RECOMMENDATIONS
 
 ## References
