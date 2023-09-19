@@ -63,7 +63,7 @@ conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
 ```
 
 A description of the workflow stages is provided in
-the [Project Report](docs/report/Project_Report.md).
+the [Project Report](docs/report/Project_Report.qmd).
 
 Workflow parameter options and outputs are detailed
 in the [workflow README](workflow/README.md).
