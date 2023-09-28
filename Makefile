@@ -36,7 +36,7 @@ git-link-template:
 # Merge changes from template to current branch
 git-merge-template:
 	git fetch template
-	git merge template/main
+	git merge template/main --allow-unrelated-histories
 
 # Phony targets
 .PHONY: analysis workflow-test
