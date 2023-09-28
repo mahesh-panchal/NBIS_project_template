@@ -5,7 +5,7 @@ UID := $$( id -u )
 GROUP := $$( id -g )
 
 # Conda settings
-CONDA_PKGM := mamba                                         # Conda package manager to use
+CONDA_PKGM := mamba  # Conda package manager to use
 
 # Run Nextflow workflow
 analysis:
@@ -29,7 +29,18 @@ how-to:
 report:
 	cd docs/report && quarto render Project_Report.qmd
 
+# Link template
+git-link-template:
+	git remote add template https://github.com/mahesh-panchal/NBIS_project_template
+
+# Merge changes from template to current branch
+git-merge-template:
+	git fetch template
+	git merge template/main
+
+# Phony targets
 .PHONY: analysis workflow-test
 .PHONY: nextflow-env
 .PHONY: how-to
 .PHONY: report
+.PHONY: git-link-template git-merge-template
