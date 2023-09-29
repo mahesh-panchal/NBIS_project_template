@@ -11,38 +11,6 @@ Use a mermaid diagram to visually describe how folders relate each other.
 folder relationships.
 
 ```mermaid
-flowchart TD
-  01Dev [ YYYY-MM-DD_dev_analysis ] -> 01Full [ YYYY-MM-DD_full_analysis ]
+flowchart LR
+  01Dev[ YYYY-MM-DD_dev_analysis ] --> 01Full[ YYYY-MM-DD_full_analysis ]
 ```
-
-## YYYY-MM-DD_workflow_dev
-
-### Objective: 
-
-Workflow development folder. Explain what the code is trying to achieve.
-
-### Result:
-
-A quality check workflow was successfully developed. Include a path to the result.
-
-### Status:
-
-- In use
-- Retired
-- Abandoned
-
-## YYYY-MM-DD_full_analysis
-
-### Objective: 
-
-Analyse all the data
-
-### Result:
-
-Describe result. Include a path to the result.
-
-### Status:
-
-- In use
-- Retired
-- Abandoned
