@@ -11,14 +11,15 @@ and code are intertwinned in the document, which is then rendered to HTML or oth
 ### Converting the Project report from Quarto Markdown to HTML
 
 1. Update the `citations.bib` file with any new citations of
-tools used, and any others that need to be included in the report.
+    tools used, and any others that need to be included in the report.
 
 2. Update the `Project_Report.qmd` with content and tools used.
 
 3. Transform the `Project_Report.qmd` file into a self-contained
-HTML file using the following command:
-    ```
-    quarto render Project_Report.md
+    HTML file using the following command:
+    
+    ```bash
+    quarto render Project_Report.qmd
     ```
 
 ## Project website
@@ -31,13 +32,16 @@ performed for the project. Alternatively, the folder can be removed.
 ### Creating a website folder in docs using quarto
 
 1. Install Quarto if necessary
-  ```
-  wget <quarto.package.latest>.deb
-  sudo dpkg -i <quarto.package.latest>.deb
+  
+  ```bash
+  wget https://quarto.org/download/latest/quarto-linux-amd64.deb
+  sudo dpkg -i quarto-linux-amd64.deb
+  quarto check all
+  rm quarto-linux-amd64.deb
   ```
 
 2. Use Quarto to make a website project in docs.
-  ```
+  ```bash
   cd docs
   quarto create-project how-to --type website
   ```
