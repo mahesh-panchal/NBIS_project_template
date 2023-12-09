@@ -1,1 +1,0 @@
-Sitemap: https://mahesh-panchal.github.io/NBIS_project_template/sitemap.xml
