@@ -2,7 +2,7 @@
 
 This folder contains folders with scripts to run the project analyses. Folders within this folder
 are intended to be dated and have short description of the analysis run.
-A `Roadmap.md` file is used to communicate how analyses relate to each other. 
+A `History.md` file is used to communicate how analyses relate to each other. 
 For example:
 - which folders run the same workflow but with different parameters.
 - which folders run subsequent analyses to another folder.
@@ -14,14 +14,14 @@ data were of little use.
 ```
 analyses
   |
-  | - Roadmap.md                            (For longer projects, a roadmap of which analysis lead to what)
+  | - History.md                            (For longer projects, a history of which analysis lead to what)
   |
-  | - YYYY-MM-DD_dev_<desc>/                (Analysis folder used to develop workflow with test data)
+  | - 01_workflow_dev_dardel/               (Analysis folder used to develop workflow with test data)
   |     | - params.yml                      (Parameter file for test data)
-  |     | - nextflow.config                 (Additional Nextflow configuration, such as workdir)
+  |     | - nextflow.config                 (Additional Nextflow configuration, such as custom process configuration)
   |     \ - run_nextflow.sh                 (Shell script to call nextflow with correct parameters)
   |
-  \ - YYYY-MM-DD_<short_desc>/              (Usually the workflow that runs all the data)
+  \ - 02_<short_desc>_<location>/           (Usually the workflow that runs all the data and where it should run)
         | - params.yml                      (Parameter config for all data)
         | - nextflow.config
         \ - run_nextflow.sh
