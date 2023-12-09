@@ -1,9 +1,9 @@
 # NBIS project template
 
-This is a personal template for NBIS support projects. It is an evolving method of
-working as I gain experience and find better ways of working. See the 
-[template website](https://mahesh-panchal.github.io/NBIS_project_template/) for how
-I use this template.
+This is a personal template for National Bioinformatics Infrastructure Sweden (NBIS) 
+support projects. It is an evolving method of working as I gain experience and find 
+better ways of working. See the [template website](https://mahesh-panchal.github.io/NBIS_project_template/) 
+for how I use this template.
 
 # <Title>
 
@@ -42,23 +42,26 @@ NBIS Agreement: ( XX hrs)
  |
  | - README.md                                 Project details summary
  |
- | - analyses/                                 Analysis configuration files
+ | - analyses/                                 Analysis launch scripts
  | - conda/                                    Shared conda environments
  | - docs/                                     Project documentation
  \ - workflow/                                 Nextflow workflow
 
 /proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
  |
- | - nobackup/nxf-work                         Intermediate analysis files
- \ - NBIS_support_<id>_results/                Analysis results
+ | - nobackup/nxf-work                         Intermediate computations
+ \ - NBIS_support_<id>_data/                   Project data
+     | - deliveries                              Sequence deliveries
+     | - raw-data                                Reorganised input data
+     | - outputs                                 Analysis/workflow outputs
+     \ - frozen                                  Data to publish
 ```
 
 ## Workflow instructions
 
 Quickstart:
 ```bash
-cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<analysis>/
 ./run_nextflow.sh
 ```
 
