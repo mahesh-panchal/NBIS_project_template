@@ -245,9 +245,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Markdown</strong>: Markdown is a markup language to create formatted text. The idea being to focus on content and leave the styling to someone else (or future you). It is a language supported my many platforms. In particular it’s used to author content with Quarto, and on Github. These sites also natively render Mermaid diagrams when included into Markdown text, in addition to rendering code, and so on.</li>
 </ul>
 <p>The use of these tools helps me to better communicate science and increase the reproducibility of my scientific analyses. Typically, my analyses can be reproduced with the following commands:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/analyses/<span class="op">&lt;</span>date<span class="op">&gt;</span>_<span class="op">&lt;</span>analysis<span class="op">&gt;</span>/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/conda/nextflow-env</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./run_nextflow.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss20XX-YY-ZZ/NBIS_support_<span class="op">&lt;</span>id<span class="op">&gt;</span>/analyses/<span class="op">&lt;</span>analysis<span class="op">&gt;</span>/</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./run_nextflow.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="uppmax" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="uppmax"><span class="header-section-number">1.1.1</span> Uppmax</h3>
 <p>This guide is very focused towards the Swedish Research Computation infrastructure, in particular the high performance cluster (HPC) “Uppmax”. However, this way of working should be adaptable to other compute infrastructures.</p>
@@ -256,16 +255,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="my-work-environment" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="my-work-environment"><span class="header-section-number">1.2</span> My work environment</h2>
-<p>An overview of my general working environment.</p>
+<p>An overview of my general working environment. I tend to do editing mostly in the cloud development environment supplied by Gitpod, or locally. The computations are then run on a HPC system.</p>
 <ul>
-<li>Docker installed on my personal computer.</li>
-<li>Apptainer on Uppmax.</li>
-<li>A Github account.</li>
-<li>A Gitpod account.</li>
-<li>Git on my personal computer, Uppmax, and Gitpod.</li>
-<li>A conda environment with Nextflow and Quarto installed (local, Uppmax).</li>
-<li>VSCode, with syntax highlighting, linting, and formatting.</li>
+<li>Gitpod:
+<ul>
+<li>VSCode, w. syntax highlighting and other extensions.</li>
+<li>Git</li>
+<li>Docker, Apptainer, Conda/Mamba</li>
+<li>Quarto</li>
+<li>I can install whatever else I need</li>
+</ul></li>
+<li>HPC:
+<ul>
+<li>Apptainer, Conda/Mamba</li>
+<li>Nextflow</li>
+</ul></li>
+<li>Local:
+<ul>
+<li>Docker, Mamba</li>
+<li>VSCode</li>
+<li>Git</li>
+</ul></li>
 </ul>
+<p>Github provides a place to archive code, reports, and computational environments (docker images), and if necessary host a website.</p>
 <section id="my-toolkit" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="my-toolkit"><span class="header-section-number">1.2.1</span> My toolkit</h3>
 <p>When working on a project, I may work on it locally on my PC, remotely on Uppmax, or remotely on Gitpod. Using the widely supported container system Docker means I have an easier time managing and porting software installations. Although Uppmax doesn’t support Docker for various security reasons, it does support Apptainer which is able to use container images from Docker. Using Container systems means I do not have to rely on computer administrators to install tools for me. Many bioinformatic tools are also available as container images through Biocontainers, meaning you can use the container and get on with your analyses, and not waste time building images yourself.</p>
