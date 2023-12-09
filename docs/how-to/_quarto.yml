@@ -16,7 +16,6 @@ book:
     - prototyping.qmd
     - troubleshooting.qmd
     - references.qmd
-    - about.qmd
   repo-url: https://github.com/mahesh-panchal/NBIS_project_template
   repo-actions: [edit, issue]
   repo-subdir: docs/how-to

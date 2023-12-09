@@ -1,4 +1,4 @@
-## Make a test dataset
+# Make a test dataset
 
 Using a test dataset can help rapidly develop your analysis workflow.
 A good test data set should be small, but have enough data to get

@@ -1,8 +1,8 @@
-## References
+# References
 
 Tips and links to potentially useful learning resources.
 
-### Tool Tips - Git
+## Tool Tips - Git
 
 - [Version control with Git](https://swcarpentry.github.io/git-novice/): Software Carpentries course.
 
@@ -20,7 +20,7 @@ Tips and links to potentially useful learning resources.
   - usernames and passwords
   - API keys
 
-### Tool Tips - Docker
+## Tool Tips - Docker
 
 - [Reproducible Computational Environments Using Containers: Introduction to Docker](https://carpentries-incubator.github.io/docker-introduction/): Software Carpentries course.
 
@@ -37,7 +37,7 @@ Tips and links to potentially useful learning resources.
 
 - [Docker compose](https://docs.docker.com/compose/): Add parameters and volumes to a `docker-compose.yml` file to reproduce a Docker ecosystem (start multiple containers with the same settings each time).
 
-### Tool Tips - Apptainer
+## Tool Tips - Apptainer
 
 - [Reproducible computational environments using containers: Introduction to Singularity](https://carpentries-incubator.github.io/singularity-introduction/): Software Carpentries course (Work in progress).
 - Build custom images in Docker first, for increased portabilty.
@@ -50,7 +50,7 @@ Tips and links to potentially useful learning resources.
 
 - Be careful not to commit sensitive data into a container.
 
-### Tool Tips - Nextflow
+## Tool Tips - Nextflow
 
 - [Nextflow Training from Seqera](https://seqera.io/training/): Training from writers of Nextflow.
 - [Introduction to Bioinformatics workflows with Nextflow and nf-core](https://carpentries-incubator.github.io/workflows-nextflow/): Software Carpentries Course (Work in progress).
@@ -75,7 +75,7 @@ Tips and links to potentially useful learning resources.
 
 - [Nextflow documentation](https://www.nextflow.io/docs/latest/index.html): Nextflow Workflow writers best friend. A description of all the available Nextflow functionality.
 
-### Tool Tips - Conda
+## Tool Tips - Conda
 
 - [Introduction to Conda for (Data) Scientists](https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/): Software carpentries course.
 - Do not install anything into the base environment.

@@ -1,4 +1,4 @@
-## Summary of work habits
+# Summary of work habits
 
 - Use an organised folder structure.
 - Make a private Project repository on Github, and clone it on Uppmax and then locally.
@@ -12,7 +12,7 @@
 - If a script is failing, debug it in the Nextflow work directory.
 - parameters and config are included in version control.
 
-### Folder structure
+## Folder structure
 
 The structure I've found that works well for me is:
 
@@ -22,8 +22,8 @@ The structure I've found that works well for me is:
  | - README.md                                 Project details summary
  |
  | - analyses/                                 Analysis configuration files
- |   | - YYYY-MM-DD_workflow_dev                 Configuration to use test data
- |   \ - YYYY-MM-DD_full_data_analysis           Configuration to use all the data
+ |   | - 01_workflow_dev_dardel                  Configuration to use test data
+ |   \ - 02_full_data_analysis_dardel            Configuration to use all the data
  | - conda/nextflow-env                        Conda Environment containing tools and dependancies to run Nextflow
  | - docs/                                     Project documentation
  \ - workflow/                                 Nextflow workflow
@@ -33,8 +33,12 @@ The structure I've found that works well for me is:
 
 /proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
  |
- | - nobackup/nxf-work                         Intermediate analysis files
- \ - NBIS_support_<id>_results/                Analysis results
+ | - nobackup/nxf-work                         Intermediate computations
+ \ - NBIS_support_<id>_data/                   Project data
+      | - deliveries                             Read only copy of data from sequencing center
+      | - raw_data                               Symlinked reorganized relevant raw data in deliveries
+      | - outputs                                Saved outputs from the workflow
+      \ - frozen                                 Curated outputs for publishing
 ```
 
 This is flexible enough for both data analysis and pipeline development

@@ -1,4 +1,4 @@
-## Starting a support project.
+# Starting a support project.
 
 - Make a private Project repository from my [Template](https://github.com/mahesh-panchal/NBIS_project_template) repository on Github.
   1. Select `New Repository` on Github from the `+` symbol in the top right corner.

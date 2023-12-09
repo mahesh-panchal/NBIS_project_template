@@ -1,4 +1,4 @@
-## Prototyping
+# Prototyping
 
 To build up an analysis project, workflow development aims to follow the
 [GitFlow model](http://datasift.github.io/gitflow/IntroducingGitFlow.html) of coding.
@@ -100,7 +100,7 @@ Mistakes to commits can be changed using:
 git commit --amend
 ```
 
-### Running analyses
+## Running analyses
 
 - Have a folder under `analyses` for development (`YYYY-MM-DD_workflow_dev`)
   - `params.yml` points to test data.
@@ -113,7 +113,7 @@ git commit --amend
 
 See [Troubleshooting](troubleshooting.qmd) for tips on debugging issues.
 
-### Merging with git
+## Merging with git
 
 Once it works, merge with the existing development branch or main branch. There are two
 forms of merging with git. `merge` tacks on the changes to the end of the branch. `rebase`

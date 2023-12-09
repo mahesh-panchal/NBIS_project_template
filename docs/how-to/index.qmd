@@ -1,6 +1,4 @@
----
-title: "Using this template"
----
+# Using this template
 
 [This repository](https://github.com/mahesh-panchal/NBIS_project_template) is a template for
 research/support projects to produce reproducible output. It describes how to work with

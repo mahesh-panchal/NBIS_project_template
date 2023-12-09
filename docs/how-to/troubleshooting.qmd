@@ -1,4 +1,4 @@
-## Troubleshooting a Nextflow process
+# Troubleshooting a Nextflow process
 
 If a Nextflow process fails to run, Nextflow reports the Nextflow working directory it failed in.
 Change directory to that folder:

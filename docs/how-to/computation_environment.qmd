@@ -1,4 +1,4 @@
-## Make the running environment
+# Make the running environment
 
 Conda is a software package manager. It makes it easy to install tools
 into custom environments. Several tools can be installed into
