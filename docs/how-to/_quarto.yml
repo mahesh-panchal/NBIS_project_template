@@ -1,27 +1,25 @@
 project:
-  type: website
+  type: book
 
-website:
+book:
   title: "How to use this template"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - href: working_habits.qmd
-        text: Habits
-      - href: starting_steps.qmd
-        text: Begin
-      - href: test_dataset.qmd
-        text: Test-Data
-      - href: computation_environment.qmd
-        text: Environment
-      - href: prototyping.qmd
-        text: Prototyping
-      - href: troubleshooting.qmd
-        text: Troubleshoot
-      - href: references.qmd
-        text: Reference
-      - about.qmd
+  page-navigation: true
+  sidebar:
+    title: Usage
+    search: true
+  chapters:
+    - index.qmd
+    - working_habits.qmd
+    - starting_steps.qmd
+    - test_dataset.qmd
+    - computation_environment.qmd
+    - prototyping.qmd
+    - troubleshooting.qmd
+    - references.qmd
+    - about.qmd
+  repo-url: https://github.com/mahesh-panchal/NBIS_project_template
+  repo-actions: [edit, issue]
+  repo-subdir: docs/how-to
 
 format:
   html:
