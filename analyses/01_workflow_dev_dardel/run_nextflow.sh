@@ -1,16 +1,31 @@
 #! /usr/bin/env bash
 
-PROFILE=${PROFILE:-uppmax}
-NAISS_COMPUTE=${NAISS_COMPUTE:-/proj/naiss20XX-YY-ZZ/}
-NAISS_STORAGE=${NAISS_STORAGE:-/proj/naiss20xx-yy-zz/}
-REDMINE_ID=${REDMINE_ID:-XXXX}
-NXF_SCRIPT=${NXF_SCRIPT:-${NAISS_COMPUTE}/NBIS_support_${REDMINE_ID}/workflow/main.nf}
-WORKDIR=${WORKDIR:-$NAISS_STORAGE/nobackup/nxf-work}
+# Internal Project ID
+REDMINE_ID='XXXX'
+# NAISS compute allocation
+COMPUTEALLOC='/proj/snicXX-YY-ZZZ'
+# NAISS storage allocation
+STORAGEALLOC='/proj/snicXX-YY-ZZZ'
+# Nextflow work directory
+WORKDIR="${STORAGEALLOC}/nobackup/nxf-work"
+# Path to Nextflow script.
+NXF_SCRIPT="${COMPUTEALLOC}/NBIS_support_${REDMINE_ID}/workflow/main.nf"
+# Set common path to store all Singularity containers
+export NXF_SINGULARITY_CACHEDIR="${STORAGEALLOC}/nobackup/singularity-cache"
 
-nextflow run -resume \
+# Activate shared Nextflow environment
+eval "$(conda shell.bash hook)"
+conda activate "${COMPUTEALLOC}/NBIS_support_${REDMINE_ID}/conda/nextflow-env"
+
+# Launch workflow
+nextflow run \
+    -resume \
+    -ansi-log false \
+    -profile pdc-kth \
     -params-file params.yml \
-    -profile "$PROFILE" \
     -work-dir "$WORKDIR" \
     "$NXF_SCRIPT"
 
+# Clean up Nextflow cache to remove unused files
+nextflow clean -f -before $( nextflow log -q | tail -n 1 )
 # Use `nextflow log` to see the time and state of the last nextflow executions.
