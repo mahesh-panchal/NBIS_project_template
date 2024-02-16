@@ -21,7 +21,7 @@ conda activate "${COMPUTEALLOC}/NBIS_support_${REDMINE_ID}/conda/nextflow-env"
 nextflow run \
     -resume \
     -ansi-log false \
-    -profile pdc-kth \
+    -profile pdc_kth \
     -params-file params.yml \
     -work-dir "$WORKDIR" \
     "$NXF_SCRIPT"

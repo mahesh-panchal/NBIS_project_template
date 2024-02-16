@@ -73,7 +73,6 @@ publishing method from the intermediate results folders
 
     Uppmax cluster specific:
     - `project`: NAISS Compute allocation number.
-    - `clusterOptions`: Additional Uppmax cluster options (e.g., `-M snowy`).
 
 ### Workflow outputs
 
