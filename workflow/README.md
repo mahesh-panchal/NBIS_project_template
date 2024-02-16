@@ -8,6 +8,7 @@ workflow/
  | - bin/                            Custom workflow scripts
  | - configs/                        Configuration files that govern workflow execution
  | - containers/                     Custom container definition files
+ | - modules/                        Process definitions
  | - main.nf                         The primary analysis script
  \ - nextflow.config                 General Nextflow configuration
 ```
