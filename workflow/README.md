@@ -9,8 +9,7 @@ workflow/
  | - configs/                        Configuration files that govern workflow execution
  | - containers/                     Custom container definition files
  | - main.nf                         The primary analysis script
- | - nextflow.config                 General Nextflow configuration
- \ - params.config.TEMPLATE          A Template for parameter configuration
+ \ - nextflow.config                 General Nextflow configuration
 ```
 
 ## Usage:
@@ -22,13 +21,21 @@ nextflow run -params-file <params.yml> [ -c <custom.config> ] [ -profile <profil
 
 where:
 - `params.yml` is a YAML formatted file containing workflow parameters
-    such as input paths to the data.
-    A [params.yml template](params.yml.TEMPLATE) is provided to copy
-    for convenience.
+    such as input paths to the data. See examples in the analyses subfolders.
     Alternatively parameters can be provided on the
     command-line using the `--parameter` notation (e.g., `--samples <path>` ).
 - `<custom.config>` is a nextflow configuration file which provides
-    additional configuration (see the [custom.config template](custom.config.TEMPLATE)).
+    additional configuration or overrides existing settings. For example:
+
+    ```nextflow
+    // custom.config supplied using -c custom.config
+    process {
+        withName: 'TASK' {
+            cpus = 4       // Update cpus required
+            time = 1.d     // Update maxium time process can run for
+        }
+    }
+    ``` 
 - `<profile>` is one of the preconfigured execution profiles
     (`uppmax`, `singularity_local`, `docker_local`). Alternatively,
     you can provide a custom configuration to configure this workflow
@@ -63,11 +70,6 @@ publishing method from the intermediate results folders
 
     Software specific:
     - `multiqc_config`: Path to MultiQC configuration file (default: `configs/multiqc_conf.yaml`).
-
-    Software package manager specific:
-    - `enable_conda`: Set to `true` to use conda as the software package manager (default: `false`).
-    - `singularity_pull_docker_container`: Set to `true` if Singularity images should be
-    built from the docker images, instead of retrieving existing Singularity images (default: `false`).
 
     Uppmax cluster specific:
     - `project`: NAISS Compute allocation number.
