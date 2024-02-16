@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+# Exit on unset variables, errors, or pipe failures
+# Prevent clean up of working dirs when prototyping
+set -euo pipefail
+
 # Internal Project ID
 REDMINE_ID='XXXX'
 # NAISS compute allocation
