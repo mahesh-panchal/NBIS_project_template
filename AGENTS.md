@@ -23,6 +23,13 @@ assumptions about project layout.
 If a task touches one of these areas and the relevant advice file doesn't
 cover it, prefer asking the user over guessing a convention.
 
+Use [`scratch/`](scratch/README.md) for your own temporary files and
+testing — throwaway scripts, downloads, intermediate outputs you're
+checking before deciding where (if anywhere) they belong — instead of
+`/tmp` or scattering them elsewhere in the repo. Nothing there is tracked
+except its README, so it's always safe to leave things behind or clean
+up.
+
 When you make (or are asked to make) a significant, non-obvious, or
 hard-to-reverse decision — choosing a tool, changing the data layout,
 dropping something — record it as a new file in

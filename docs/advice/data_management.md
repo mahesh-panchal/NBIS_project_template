@@ -1,13 +1,14 @@
 # Data management
 
-This repository is organised around four top-level folders:
+This repository is organised around five top-level folders:
 
 ```
 <project_root>/
  | - analyses/     Numbered launch scripts that run code/ against data/
  | - code/         Adhoc scripts and workflows that analyses/ calls
  | - data/         Source data, structured input, and results
- \ - docs/         Documentation, including this folder
+ | - docs/         Documentation, including this folder
+ \ - scratch/      Disposable space - temp files and the local container cache
 ```
 
 ## `data/`
@@ -69,6 +70,9 @@ don't reach for a notebook to process raw sequencing data at scale.
   `data/results/`. See [`code.md`](code.md).
 - **`docs/`** contains project documentation, including this advice folder
   and the Quarto closing report under `docs/closing_report/`.
+- **`scratch/`** holds temporary/throwaway files and the local container
+  image cache — nothing here is authored or precious. See
+  [`environment.md`](environment.md#container-images-and-seqera-wave).
 
 When asked to add a new analysis, add a new data source, or explain the
 repository layout, use this structure rather than inventing a different

@@ -47,7 +47,8 @@ NBIS Agreement: ( XX hrs)
  | - analyses/                                 Numbered analysis launch scripts
  | - code/                                     Adhoc scripts and workflows analyses/ calls
  | - data/                                     Source data, structured input, and results
- \ - docs/                                     Project documentation (incl. docs/advice/)
+ | - docs/                                     Project documentation (incl. docs/advice/)
+ \ - scratch/                                  Disposable space - temp files, local container cache
 ```
 
 On HPC systems with a separate storage allocation from the compute

@@ -5,6 +5,11 @@ description = "NBIS support project template"
 channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "osx-arm64"]
 
+[activation.env]
+# Local default container cache; analyses/*/run_nextflow.sh overrides this
+# on HPC clusters with a separate storage allocation (see nobackup/).
+NXF_SINGULARITY_CACHEDIR = "$PIXI_PROJECT_ROOT/scratch/singularity-cache"
+
 [dependencies]
 nextflow = "*"
 nf-core = "*"

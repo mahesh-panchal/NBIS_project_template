@@ -57,7 +57,8 @@ function run_nextflow {
     # Path to Nextflow script
     SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/main.nf}"
 
-    # Set common path to store all Singularity containers
+    # Override pixi.toml's scratch/ container cache default with this
+    # cluster's storage allocation
     export NXF_SINGULARITY_CACHEDIR="${PWD/analyses*/nobackup}/singularity-cache"
 
     # Clean results folder if last run resulted in error
