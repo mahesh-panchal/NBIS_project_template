@@ -2,50 +2,41 @@
 
 Organise your documentation here.
 
-## Project report
+## Advice for working in this repository
 
-Make a project report rendered from the Quarto Markdown document
-found in `report`. [Quarto Markdown](https://quarto.org/docs/authoring/markdown-basics.html) 
+The [`advice/`](advice/) folder contains markdown files that explain how
+this repository is organised and how to work in it (e.g.,
+[`advice/data_management.md`](advice/data_management.md) describes the
+`analyses/`/`code/`/`data/` layout). [`AGENTS.md`](../AGENTS.md) at the
+project root points AI agents here — keep these files up to date as the
+project's conventions evolve, and update them (not `AGENTS.md`) when a
+convention changes.
+
+## Decisions
+
+The [`decisions/`](decisions/) folder holds Architecture Decision Records
+(ADRs) and similar documents — the reasoning behind significant,
+non-obvious, or hard-to-reverse choices. See
+[`decisions/README.md`](decisions/README.md) for the convention and
+[`decisions/template.md`](decisions/template.md) to start a new one.
+
+## Closing report
+
+Make a closing report rendered from the Quarto Markdown document found in
+`closing_report`. [Quarto Markdown](https://quarto.org/docs/authoring/markdown-basics.html)
 and code are intertwinned in the document, which is then rendered to HTML or other output formats.
 
-### Converting the Project report from Quarto Markdown to HTML
+### Converting the closing report from Quarto Markdown to HTML
 
 1. Update the `citations.bib` file with any new citations of
     tools used, and any others that need to be included in the report.
 
-2. Update the `Project_Report.qmd` with content and tools used.
+2. Update the `closing_report.qmd` with content and tools used.
 
-3. Transform the `Project_Report.qmd` file into a self-contained
-    HTML file using the following command:
-    
+3. Transform the `closing_report.qmd` file into a self-contained
+    HTML file using:
+
     ```bash
-    quarto render Project_Report.qmd
+    pixi run closing-report
     ```
-
-## Project website
-
-Quarto can be used to create websites that can be hosted on sites such as Github.
-This template instance renders how to use this template in the `how-to` folder.
-This website could be used to host more comprehensive descriptions of analyses
-performed for the project. Alternatively, the folder can be removed.
-
-### Creating a website folder in docs using quarto
-
-1. Install Quarto if necessary
-  
-  ```bash
-  wget https://quarto.org/download/latest/quarto-linux-amd64.deb
-  sudo dpkg -i quarto-linux-amd64.deb
-  quarto check all
-  rm quarto-linux-amd64.deb
-  ```
-
-2. Use Quarto to make a website project in docs.
-  ```bash
-  cd docs
-  quarto create-project how-to --type website
-  ```
-
-3. Follow instructions on https://quarto.org/docs/publishing/github-pages.html#publish-command 
-to publish to the `gh-pages` branch on this repository.
 

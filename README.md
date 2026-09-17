@@ -2,8 +2,8 @@
 
 This is a personal template for National Bioinformatics Infrastructure Sweden (NBIS) 
 support projects. It is an evolving method of working as I gain experience and find 
-better ways of working. See the [template website](https://mahesh-panchal.github.io/NBIS_project_template/) 
-for how I use this template.
+better ways of working. See [`docs/advice/how_to.md`](docs/advice/how_to.md)
+for how to use this template.
 
 # <Title>
 
@@ -38,35 +38,38 @@ NBIS Agreement: ( XX hrs)
 ## Directories
 
 ```
-/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/       (NAISS Compute Allocation)
+<project_root>/
  |
  | - README.md                                 Project details summary
+ | - AGENTS.md                                 Pointers for AI agents (see docs/advice/)
+ | - pixi.toml                                 Tool dependencies and tasks (pixi)
  |
- | - analyses/                                 Analysis launch scripts
- | - conda/                                    Shared conda environments
- | - docs/                                     Project documentation
- \ - workflow/                                 Nextflow workflow
-
-/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
- |
- | - nobackup/nxf-work                         Intermediate computations
- \ - NBIS_support_<id>_data/                   Project data
-     | - deliveries                              Sequence deliveries
-     | - raw-data                                Reorganised input data
-     | - outputs                                 Analysis/workflow outputs
-     \ - frozen                                  Data to publish
+ | - analyses/                                 Numbered analysis launch scripts
+ | - code/                                     Adhoc scripts and workflows analyses/ calls
+ | - data/                                     Source data, structured input, and results
+ \ - docs/                                     Project documentation (incl. docs/advice/)
 ```
+
+On HPC systems with a separate storage allocation from the compute
+allocation (e.g., NAISS storage vs. compute projects on UPPMAX), `data/`
+and Nextflow's work directory typically live on the storage allocation
+instead of inside this repository. See
+[docs/advice/data_management.md](docs/advice/data_management.md) for details.
 
 ## Workflow instructions
 
 Quickstart:
 ```bash
-cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<analysis>/
-./run_nextflow.sh
+pixi run <numbered-analysis-task>
 ```
 
-A description of the workflow stages is provided in
-the [Project Report](docs/report/Project_Report.qmd).
+Each folder under `analyses/` has a matching pixi task (`cwd` baked in),
+so this doesn't require `cd`-ing there or activating anything manually.
 
-Workflow parameter options and outputs are detailed
-in the [workflow README](workflow/README.md).
+A description of the workflow stages is provided in
+the [closing report](docs/closing_report/closing_report.qmd).
+
+See [`docs/advice/`](docs/advice/) for how this repository is organised
+and how to work in it, including how to write a `run_nextflow.sh`,
+`params.yml`, `nextflow.config`, and the matching pixi task
+([`docs/advice/nextflow_workflow.md`](docs/advice/nextflow_workflow.md)).
