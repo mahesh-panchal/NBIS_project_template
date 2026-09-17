@@ -48,3 +48,28 @@ clusters with a separate storage allocation, `run_nextflow.sh` overrides
 this to point at `nobackup/` instead (see
 [`nextflow_workflow.md`](nextflow_workflow.md)) — `scratch/` covers local
 development and anywhere without a separate allocation.
+
+## Per-notebook environments
+
+A notebook under `code/notebooks/` (see [`code.md`](code.md)) that needs
+a different set of packages than the project default gets its own pixi
+feature and environment, rather than a hand-written `environment.yml` in
+a separate folder:
+
+```toml
+[feature.stats.dependencies]
+python = "*"
+pandas = "*"
+
+[feature.stats.tasks.stats-notebook]
+cmd = "quarto render stats.qmd"
+cwd = "code/notebooks"
+
+[environments]
+stats = ["stats"]
+```
+
+Run it with `pixi run -e stats stats-notebook`. This keeps one source of
+truth for every environment the project needs (all resolved and
+dry-run-checked the same way) instead of a parallel, hand-maintained set
+of environment files.

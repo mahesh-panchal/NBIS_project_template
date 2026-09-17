@@ -37,6 +37,9 @@ for which one a task calls for.
   scattering scripts elsewhere in the repo.
 - Notebooks under `notebooks/` read from `data/results/` (a workflow's
   published output), not from `data/source/`/`data/input/` directly.
+- A notebook needing its own package set gets its own pixi feature and
+  environment rather than a separate environment file — see
+  [`environment.md`](environment.md#per-notebook-environments).
 
 When asked to add a new processing step, add a module under `modules/`,
 wire it into `main.nf`, and add its resource/tool configuration under
