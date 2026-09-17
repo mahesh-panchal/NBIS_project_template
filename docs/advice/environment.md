@@ -73,3 +73,21 @@ Run it with `pixi run -e stats stats-notebook`. This keeps one source of
 truth for every environment the project needs (all resolved and
 dry-run-checked the same way) instead of a parallel, hand-maintained set
 of environment files.
+
+## Platform-specific tasks
+
+When a task needs a different invocation on HPC/Linux (typically
+Singularity/Apptainer) than locally on macOS (typically Docker), use
+pixi's per-platform task tables rather than branching inside the command
+itself:
+
+```toml
+[target.linux.tasks.view-results]
+cmd = "singularity exec $NXF_SINGULARITY_CACHEDIR/<image>.sif <viewer> <args>"
+
+[target.osx.tasks.view-results]
+cmd = "docker run --rm -v \"$PWD:/data\" <image>:<tag> <viewer> <args>"
+```
+
+`pixi run view-results` then does the right thing on whichever platform
+it's run from.
