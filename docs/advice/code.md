@@ -26,8 +26,9 @@ for which one a task calls for.
 
 - Keep Nextflow processes modular, ideally one tool per process, so public
   container images can be reused directly. Prefer an existing public image
-  (Biocontainers, Rocker, ...) before building a custom one; keep custom
-  `Dockerfile`s under `containers/<tool_name>/`.
+  (Biocontainers, Rocker, ...), then building one with Seqera Wave from a
+  conda/pip spec, before hand-writing a custom `Dockerfile` under
+  `containers/<tool_name>/` — see [`environment.md`](environment.md#container-images-and-seqera-wave).
 - Analysis-specific parameters (e.g., input paths, per-run overrides)
   belong in the relevant `analyses/<n>_<desc>/` folder, not here — this
   folder holds the workflow logic and its defaults, not one run's inputs.

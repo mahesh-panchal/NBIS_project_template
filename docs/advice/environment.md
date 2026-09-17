@@ -22,3 +22,29 @@ environment.
 
 When asked to add a tool or change how an environment is built, edit
 `pixi.toml` and re-resolve with `pixi lock --dry-run` before installing.
+
+## Container images and Seqera Wave
+
+Nextflow processes always run containerised, pulling images from a
+registry. When a tool has no existing public image (Biocontainers,
+Rocker, ...), prefer building one with
+[Seqera Containers](https://seqera.io/containers/) (Wave) from a
+conda/pip environment spec over hand-writing a `Dockerfile` under
+`code/containers/`. Validate the spec resolves *before* building, using
+[`../../scratch/`](../../scratch/README.md) as scratch space:
+
+```bash
+pixi init --import <environment.yml> -p linux-64 scratch/precheck
+pixi lock --manifest-path scratch/precheck/pixi.toml --dry-run
+```
+
+Only fall back to a custom `Dockerfile` when Wave and existing public
+images don't cover it — see [`code.md`](code.md).
+
+The container cache itself defaults to
+[`scratch/singularity-cache/`](../../scratch/README.md), set via
+`NXF_SINGULARITY_CACHEDIR` in `pixi.toml`'s `[activation.env]`. On HPC
+clusters with a separate storage allocation, `run_nextflow.sh` overrides
+this to point at `nobackup/` instead (see
+[`nextflow_workflow.md`](nextflow_workflow.md)) — `scratch/` covers local
+development and anywhere without a separate allocation.
