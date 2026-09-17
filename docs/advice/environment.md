@@ -12,9 +12,11 @@ environment.
   than creating a separate environment file.
 - Repeated commands (rendering docs, linking the upstream template, ...)
   are defined as `[tasks]` in `pixi.toml` — run them with `pixi run <task>`.
-- `analyses/<n>_<desc>/run_nextflow.sh` scripts call Nextflow through
-  `pixi run --manifest-path <project_root>/pixi.toml nextflow ...` so they
-  work without first activating anything.
+- `analyses/<n>_<desc>/run_nextflow.sh` scripts assume `nextflow` is
+  already on `PATH` — each has a matching pixi task (`cwd` baked in), so
+  launch them with `pixi run <task-name>` (or from inside `pixi shell`),
+  never by activating a conda environment. See
+  [`nextflow_workflow.md`](nextflow_workflow.md).
 - Never include the `defaults` conda channel in `pixi.toml` or any vendored
   `environment.yml` — only `conda-forge`/`bioconda`.
 
