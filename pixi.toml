@@ -22,6 +22,6 @@ description = "Add the upstream project template repository as a git remote"
 [tasks.git-merge-template]
 cmd = """
 git fetch template
-git merge template/main --allow-unrelated-histories
+git merge --allow-unrelated-histories --squash template/main
 """
-description = "Merge changes from the upstream template into the current branch"
+description = "Stage changes from the upstream template as a single commit (review and commit yourself; --squash keeps the template's own history out of this repo's log)"
