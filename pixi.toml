@@ -1,0 +1,32 @@
+[workspace]
+name = "nbis-project-template"
+version = "0.1.0"
+description = "NBIS support project template"
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64"]
+
+[dependencies]
+nextflow = "*"
+nf-core = "*"
+quarto = "*"
+
+[tasks.how-to]
+cmd = "quarto publish gh-pages --no-browser"
+cwd = "docs/how-to"
+description = "Render and publish the how-to website to GitHub Pages"
+
+[tasks.report]
+cmd = "quarto render Project_Report.qmd"
+cwd = "docs/report"
+description = "Render the project report to a self-contained HTML file"
+
+[tasks.git-link-template]
+cmd = "git remote add template https://github.com/NBISweden/NBIS_project_template"
+description = "Add the upstream project template repository as a git remote"
+
+[tasks.git-merge-template]
+cmd = """
+git fetch template
+git merge template/main --allow-unrelated-histories
+"""
+description = "Merge changes from the upstream template into the current branch"

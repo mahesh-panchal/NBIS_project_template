@@ -1,5 +1,5 @@
 # Project environment files
-conda/
+.pixi/
 *.sif
 nobackup/
 
