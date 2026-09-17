@@ -41,6 +41,13 @@ a symlink to, or mounted from, that storage allocation rather than living
 directly inside the git repository. The logical structure above still
 applies either way.
 
+**Sensitive/personal data does not go under `data/` at all.** AI coding
+tools (Copilot, this assistant, ...) read workspace file content live as
+you work, regardless of `.gitignore` or git status — keeping sensitive
+data out of the repository's working tree (e.g., processing it on Bianca
+under its own access controls, never inside a cloned copy of this repo)
+is the only reliable protection.
+
 ## Workflows vs. notebooks
 
 `code/` can hold two different kinds of processing — pick the one that
@@ -51,7 +58,7 @@ matches the task rather than defaulting to whichever is more familiar:
   `data/source/`/`data/input/` at the scale of raw sequencing data, many
   samples, or anything that benefits from Nextflow's parallelism, caching,
   and container management.
-- **Notebooks** (e.g. Quarto/Jupyter, `code/notebooks/`) are for analysing
+- **Notebooks** (e.g. Quarto/Jupyter/Marimo, `code/notebooks/`) are for analysing
   already-processed, typically small, tabular data — CSVs and similar
   formats a workflow has published to `data/results/` — statistics,
   figures, and interpretation.
