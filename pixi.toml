@@ -10,11 +10,6 @@ nextflow = "*"
 nf-core = "*"
 quarto = "*"
 
-[tasks.how-to]
-cmd = "quarto publish gh-pages --no-browser"
-cwd = "docs/how-to"
-description = "Render and publish the how-to website to GitHub Pages"
-
 [tasks.report]
 cmd = "quarto render Project_Report.qmd"
 cwd = "docs/report"
