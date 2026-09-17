@@ -19,6 +19,9 @@ assumptions about project layout.
   and environments are managed with pixi.
 - [`docs/advice/how_to.md`](docs/advice/how_to.md) — starting a new
   project, working habits, and the git branching workflow.
+- [`docs/advice/writing_style.md`](docs/advice/writing_style.md) — how to
+  write code comments, docs, commit messages, and review comments in this
+  repository.
 
 If a task touches one of these areas and the relevant advice file doesn't
 cover it, prefer asking the user over guessing a convention.
