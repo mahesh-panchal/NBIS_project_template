@@ -110,10 +110,10 @@ The following tools were used in the current analysis:
 | ----------- | ---------- | ------------------------------------ | ---------- |
 | <tool> | <version> | <description> | [@citation-key] |
 
-All the tools used in this project are available as Singularity container
+All the tools used in this project are available as Apptainer container
 images (`*.{img,sif}`) in the folder
-`/proj/naiss20xx-yy-zz/nobackup/nxf-work/singularity`. The container
-image and version each Singularity image was made from can be found in
+`/proj/naiss20xx-yy-zz/nobackup/nxf-work/apptainer-cache`. The container
+image and version each Apptainer image was made from can be found in
 the workflow's config files under `<project_root>/code/configs/`.
 
 Custom container images are uploaded to `ghrc.io` (GitHub container registry) and associated
@@ -137,9 +137,9 @@ to make a copy of this repository and continue making changes to it.
 the running of various tools for data processing and analysis. It
 provides a complete computational description of how the analysis
 was run, from beginning to end. A configuration profile
-`<cluster>` was created to utilise the `singularity` container technology
+`<cluster>` was created to utilise the `apptainer` container technology
 and `slurm` queueing system available on the cluster <cluster>.
-- Singularity container technology: Containers provide a software
+- Apptainer container technology: Containers provide a software
 package that include everything needed to run an application: code,
 runtime, system tools, system libraries, and settings. Containerised
 software will run the same regardless of the infrastructure, and

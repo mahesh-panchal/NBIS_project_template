@@ -39,6 +39,13 @@ shell`) provides that, not `conda`/`mamba` or manual activation (see
 # Exit on unset variables, errors, or pipe failures
 set -euo pipefail
 
+# Guard against running this outside the project's pixi environment,
+# where `nextflow` (and the container cache env var) wouldn't be set up.
+if [ -z "${PIXI_ENVIRONMENT_NAME:-}" ]; then
+    echo "Error: run this via 'pixi run <task-name>' (see analyses/README.md)." >&2
+    exit 1
+fi
+
 function get_cluster_name {
     if command -v sacctmgr >/dev/null 2>&1; then
         # Only return cluster names we're catering for
@@ -54,12 +61,14 @@ function run_nextflow {
     WORKDIR="${PWD/analyses/nobackup}/nxf-work" # Nextflow work directory
     RESULTS="${PWD/analyses/data/results}"      # Path to store results from Nextflow
 
-    # Path to Nextflow script
+    # Path to Nextflow script. Point this at a remote pipeline (e.g.
+    # nf-core/rnaseq) instead of a local path if that's what you're running,
+    # and pin it with -r <version> below.
     SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/main.nf}"
 
     # Override pixi.toml's scratch/ container cache default with this
     # cluster's storage allocation
-    export NXF_SINGULARITY_CACHEDIR="${PWD/analyses*/nobackup}/singularity-cache"
+    export NXF_APPTAINER_CACHEDIR="${PWD/analyses*/nobackup}/apptainer-cache"
 
     # Clean results folder if last run resulted in error
     if [ "$( nextflow log | awk -F $'\t' '{ last=$4 } END { print last }' )" == "ERR" ]; then
@@ -75,6 +84,7 @@ function run_nextflow {
         -ansi-log false \
         -params-file params.yml \
         --outdir "$RESULTS"
+        # -r <version>  # pin this if $SCRIPT is a remote pipeline, e.g. nf-core/rnaseq
 
     # Clean up Nextflow cache to remove unused files
     nextflow clean -f -before last
@@ -138,31 +148,45 @@ process {
 ```
 
 `code/nextflow.config` itself should define one profile per cluster, named
-to match `run_nextflow.sh`'s detected cluster name. For example, a Slurm +
-Singularity cluster with node-local scratch space:
+to match `run_nextflow.sh`'s detected cluster name. Prefer pulling in
+[nf-core's maintained institutional configs](https://nf-co.re/configs)
+over hand-writing one — they're kept up to date with each cluster's
+scheduler, scratch variable, and container tooling:
 
 ```groovy
 profiles {
     pelle {
+        includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/uppmax.config'
         params.project = ''
-        process {
-            executor = 'slurm'
-            clusterOptions = "-A $params.project"
-            scratch = '$TMPDIR' // check the cluster's actual scratch variable
-        }
-        singularity.enabled = true
+    }
+    bianca {
+        includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/uppmax.config'
+        params.project = ''
     }
     dardel {
-        // see https://github.com/nf-core/configs/blob/master/conf/pdc_kth.config
+        includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/pdc_kth.config'
         params.project = ''
+    }
+    arrhenius {
+        includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/naiss.config'
+        params.project = ''
+    }
+}
+```
+
+NAC has no maintained nf-core config, so hand-write its profile (it's
+still Slurm-based, but unlike the others doesn't need a project
+allocation):
+
+```groovy
+profiles {
+    nac {
         process {
             executor = 'slurm'
-            clusterOptions = "-A $params.project"
+            scratch = '$TMPDIR' // check the cluster's actual scratch variable
         }
-        singularity.enabled = true
+        apptainer.enabled = true
     }
-    // Add bianca / arrhenius / nac profiles the same way, once you know
-    // each cluster's scheduler, scratch variable, and container tooling.
 }
 ```
 
@@ -207,6 +231,13 @@ failed in:
 
 ```bash
 cd /path/to/nextflow/workdir/<xx>/<hashstring>
+```
+
+If that's scrolled out of view, filter `nextflow log` instead of
+scrolling back through it (`-l` lists the available fields to filter/show):
+
+```bash
+nextflow log -f process,workdir,status -F "status == 'FAILED'" last
 ```
 
 That folder contains several hidden files:

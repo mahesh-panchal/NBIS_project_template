@@ -21,7 +21,7 @@ always the full Nextflow shape:
 - **Standalone container script** (for a one-off, single-tool step that
   doesn't need Nextflow's orchestration — e.g., running one tool once
   against an existing result): a single shell script that invokes the
-  container directly, e.g. `singularity run <container.sif> <tool> ...` or
+  container directly, e.g. `apptainer run <container.sif> <tool> ...` or
   `docker run ...`, with no `params.yml`/`nextflow.config`. It can double
   as an `sbatch` script (`#SBATCH` directives at the top) when it needs to
   be queued rather than run interactively.

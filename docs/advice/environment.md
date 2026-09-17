@@ -42,12 +42,50 @@ Only fall back to a custom `Dockerfile` when Wave and existing public
 images don't cover it — see [`code.md`](code.md).
 
 The container cache itself defaults to
-[`scratch/singularity-cache/`](../../scratch/README.md), set via
-`NXF_SINGULARITY_CACHEDIR` in `pixi.toml`'s `[activation.env]`. On HPC
-clusters with a separate storage allocation, `run_nextflow.sh` overrides
-this to point at `nobackup/` instead (see
-[`nextflow_workflow.md`](nextflow_workflow.md)) — `scratch/` covers local
-development and anywhere without a separate allocation.
+[`scratch/apptainer-cache/`](../../scratch/README.md), set via
+`NXF_APPTAINER_CACHEDIR` in `pixi.toml`'s `[activation.env]` (Apptainer is
+the maintained successor to Singularity — prefer its env var/CLI name
+over the `singularity`-named equivalents). On HPC clusters with a
+separate storage allocation, `run_nextflow.sh` overrides this to point at
+`nobackup/` instead (see [`nextflow_workflow.md`](nextflow_workflow.md))
+— `scratch/` covers local development and anywhere without a separate
+allocation.
+
+### Publishing a custom container
+
+When Wave and existing public images genuinely don't cover a tool, build
+and push a `Dockerfile` from `code/containers/<tool_name>/`:
+
+```bash
+docker build -t ghcr.io/<org>/<image_name>:<tag> .
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u <username> --password-stdin
+docker push ghcr.io/<org>/<image_name>:<tag>
+```
+
+New images are private by default — make the package public from its
+GitHub package settings once it's ready to be pulled without
+authentication. You can also build straight from a conda/pip spec with
+the Wave CLI itself, skipping the `Dockerfile` entirely:
+
+```bash
+wave --conda-file environment.yml --freeze --await
+# -> community.wave.seqera.io/library/<name>:<tag>
+```
+
+### Personal pixi setup on HPC
+
+Pixi's own cache and global-install directories (`~/.cache/rattler`,
+`~/.pixi`) default to your home directory, which often has a small quota
+on HPC. If you hit quota issues, redirect them to your storage
+allocation in your shell profile (this is personal machine setup, not
+something `pixi.toml` can declare):
+
+```bash
+export PIXI_CACHE_DIR=/proj/naiss20XX-YY-ZZ/<user>/nobackup/.pixi-cache
+export PIXI_HOME=/proj/naiss20XX-YY-ZZ/<user>/nobackup/.pixi-home
+mkdir -p "$PIXI_CACHE_DIR" "$PIXI_HOME"
+export PATH="$PATH:$PIXI_HOME/bin"
+```
 
 ## Per-notebook environments
 
@@ -77,13 +115,13 @@ of environment files.
 ## Platform-specific tasks
 
 When a task needs a different invocation on HPC/Linux (typically
-Singularity/Apptainer) than locally on macOS (typically Docker), use
+Apptainer) than locally on macOS (typically Docker), use
 pixi's per-platform task tables rather than branching inside the command
 itself:
 
 ```toml
 [target.linux.tasks.view-results]
-cmd = "singularity exec $NXF_SINGULARITY_CACHEDIR/<image>.sif <viewer> <args>"
+cmd = "apptainer exec $NXF_APPTAINER_CACHEDIR/<image>.sif <viewer> <args>"
 
 [target.osx.tasks.view-results]
 cmd = "docker run --rm -v \"$PWD:/data\" <image>:<tag> <viewer> <args>"

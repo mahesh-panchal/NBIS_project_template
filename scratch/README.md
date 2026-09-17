@@ -9,7 +9,7 @@ and safe to delete at any time — nothing here should be the only copy of
 anything you care about.
 
 This is also where the local container image cache lives by default
-(`scratch/singularity-cache/`, set via `NXF_SINGULARITY_CACHEDIR` in the
+(`scratch/apptainer-cache/`, set via `NXF_APPTAINER_CACHEDIR` in the
 root [`pixi.toml`](../pixi.toml)) — slow to rebuild, but not precious;
 losing it just means Nextflow re-pulls/re-converts images next run. On
 HPC systems with a separate storage allocation, `run_nextflow.sh`
