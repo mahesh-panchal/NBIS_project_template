@@ -3,7 +3,13 @@
 *.sif
 nobackup/
 
-# Nextflow files
+# Data folders (tracked as structure only, see data/README.md)
+data/source/*
+data/input/*
+data/results/*
+!data/*/README.md
+
+# Nextflow files
 .nextflow*
 work/
 

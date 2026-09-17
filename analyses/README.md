@@ -1,27 +1,28 @@
 # Analyses
 
-This folder contains folders with scripts to run the project analyses. Folders within this folder
-are intended to be dated and have short description of the analysis run.
-A `History.md` file is used to communicate how analyses relate to each other. 
-For example:
+This folder contains numbered folders with launch scripts to run the
+project's analyses. Each folder is numbered in the order it was run, and
+has a short description of the analysis.
+
+The section [History](#history) below, and its mermaid diagram, is used to
+communicate how the folders relate to each other. For example:
 - which folders run the same workflow but with different parameters.
 - which folders run subsequent analyses to another folder.
 - which folders result in useful data, were abandoned/unfinished, or the resulting 
 data were of little use. 
 - which folders use test data and develop workflows, and which folders run analyses on the full data sets.
 
-
 ```
 analyses
   |
-  | - History.md                            (For longer projects, a history of which analysis lead to what)
+  | - README.md                             (This file, including the History section)
   |
-  | - 01_workflow_dev_dardel/               (Analysis folder used to develop workflow with test data)
+  | - 01_workflow_dev/                      (Analysis folder used to develop the workflow with test data)
   |     | - params.yml                      (Parameter file for test data)
   |     | - nextflow.config                 (Additional Nextflow configuration, such as custom process configuration)
   |     \ - run_nextflow.sh                 (Shell script to call nextflow with correct parameters)
   |
-  \ - 02_<short_desc>_<location>/           (Usually the workflow that runs all the data and where it should run)
+  \ - 02_<short_desc>/                      (Usually the workflow that runs all the data)
         | - params.yml                      (Parameter config for all data)
         | - nextflow.config
         \ - run_nextflow.sh
@@ -30,10 +31,15 @@ analyses
 Analyses often follow this recipe, making the analyses easy to run, recreate, and reference.
 
 ```bash
-cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
-./run_nextflow.sh
+pixi run <numbered-analysis-task>
 ```
+
+Each analysis folder has a matching task in the root
+[`pixi.toml`](../pixi.toml), with its `cwd` baked in, so running it
+doesn't require `cd`-ing there or activating anything manually. See
+[`../docs/advice/nextflow_workflow.md`](../docs/advice/nextflow_workflow.md)
+for how to write `run_nextflow.sh`, `params.yml`, `nextflow.config`, and
+the matching pixi task.
 
 When a workflow script is extended to incorporate new processes / tools,
 the workflow is resumed in the same analysis folder it was originally deployed to generate the next set of results.
@@ -42,16 +48,19 @@ A new analysis folder often corresponds the running of a different workflow scri
 `nextflow log` can be used to see the date and status of each time nextflow has been
 run. Git tags can also be used to mark major stages of completion on the main branch.
 
-### Long conda env prefix
+## History
 
-To run nextflow, you should activate the `nextflow-env` conda environment.
-```bash
-conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
+For longer projects, a mermaid flowchart diagram can visually describe how
+the numbered folders above relate to each other, and communicate the
+strategy followed to obtain the end results.
+
+An example chart for a longer project:
+```mermaid
+flowchart TD
+  gatherdata( 01_data_gather ):::green --> cleandata( 02_clean_data ):::green
+  cleandata --> analyse01( 03_data_analysis_method_01 ):::green
+  cleandata --> analyse02( 04_data_analysis_method_02 ):::red
+  analyse01 --> report( 05_quarto_report ):::green
+  classDef red stroke:#f00
+  classDef green stroke:#0f0
 ```
-However this can change your terminal prompt (`PS1`) variable to be something very long.
-You can modify the prompt to just use the environment name by using the following command.
-```bash
-conda config --set env_prompt '({name}) '
-```
-which modifies or creates a `.condarc` file for your user.
-Details can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#specifying-a-location-for-an-environment).
