@@ -9,13 +9,14 @@ project's workflow takes shape, rather than assuming it already exists:
 
 ```
 code/
- | - bin/            Adhoc/custom scripts (automatically on PATH for Nextflow processes)
- | - configs/         Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
- | - containers/      Custom container image definitions (Dockerfile per tool)
- | - modules/         Nextflow process definitions
- | - notebooks/       Notebooks analysing already-processed data (e.g. Quarto/Jupyter)
- | - main.nf          The primary workflow script
- \ - nextflow.config  General Nextflow configuration (profiles, defaults)
+ | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
+ | - configs/              Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
+ | - containers/           Custom container image definitions (Dockerfile per tool)
+ | - modules/nf-core/      Modules installed with `nf-core modules install <name>`
+ | - modules/local/        Hand-written modules (no nf-core equivalent exists)
+ | - notebooks/            Notebooks analysing already-processed data (e.g. Quarto/Jupyter/Marimo)
+ | - main.nf               The primary workflow script
+ \ - nextflow.config       General Nextflow configuration (profiles, defaults)
 ```
 
 `main.nf`/`modules/` (the Nextflow workflow) and `notebooks/` serve
@@ -24,6 +25,12 @@ for which one a task calls for.
 
 ## Conventions
 
+- Before writing a process, check whether an
+  [nf-core module](https://nf-co.re/modules/) already does it —
+  `nf-core modules list remote <name>` — and install it
+  (`nf-core modules install <name>`) rather than reimplementing it. Only
+  write a local module, under `modules/local/`, when no nf-core module
+  covers the tool.
 - Keep Nextflow processes modular, ideally one tool per process, so public
   container images can be reused directly. Prefer an existing public image
   (Biocontainers, Rocker, ...), then building one with Seqera Wave from a
@@ -40,13 +47,45 @@ for which one a task calls for.
 - A notebook needing its own package set gets its own pixi feature and
   environment rather than a separate environment file — see
   [`environment.md`](environment.md#per-notebook-environments).
+- Lint before committing: `nextflow lint -exclude .pixi -exclude results .`
+  (also available as an IDE extension).
+- A process that fetches a shared, stable file (e.g. a reference database)
+  should use `storeDir` so independent analysis runs reuse the same
+  download instead of refetching it:
 
-When asked to add a new processing step, add a module under `modules/`,
-wire it into `main.nf`, and add its resource/tool configuration under
-`configs/`, following this shape:
+  ```groovy
+  process FETCH_DB {
+      storeDir "${params.db_cachedir}/my_db"
+
+      script:
+      """
+      fetch-my-db.sh
+      """
+  }
+  ```
+
+### Installing an nf-core module
+
+```bash
+nf-core modules install <name>
+```
+
+This installs `modules/nf-core/<name>/` (`main.nf`, `environment.yml`,
+`meta.yml`, `tests/`) and tracks it in `modules.json`, so it can later be
+updated (`nf-core modules update <name>`) or patched
+(`nf-core modules patch <name>`) if you need a small local change without
+losing the ability to update it. See the
+[nf-core modules docs](https://nf-co.re/docs/nf-core-tools/pipelines/modules)
+for the full workflow.
+
+### Writing a local module
+
+When asked to add a new processing step with no nf-core equivalent, add a
+module under `modules/local/`, wire it into `main.nf`, and add its
+resource/tool configuration under `configs/`, following this shape:
 
 ```groovy
-// modules/<tool>.nf
+// modules/local/<tool>.nf
 process <UPPERCASE_NAME> {
 
     input:
@@ -59,7 +98,8 @@ process <UPPERCASE_NAME> {
 
     script:
     """
-    command --opts $var
+    echo "[TASK] Starting <tool> for ${task.tag}" >&2
+    command --opts $var 2> >(tee -a <tool>.log >&2)
     """
 
     output:
@@ -68,6 +108,10 @@ process <UPPERCASE_NAME> {
 
 }
 ```
+
+Write to standard error for progress/log messages (`>&2`), and `tee` a
+tool's own stderr to a log file so it survives even if the job's
+allocation is relinquished right after a failure.
 
 Wire the module into `main.nf`'s `workflow` block, passing whatever
 channel shape the process needs — write toy examples first (e.g. via
@@ -96,3 +140,18 @@ process {
     }
 }
 ```
+
+If a step is one of many short, fast tasks, batch them into a single
+process (e.g. with `xargs -P`) rather than submitting hundreds of
+individually-scheduled jobs — each job submission has real scheduling
+overhead on a shared cluster.
+
+## Testing
+
+Test modules and workflows with
+[nf-test](https://www.nf-test.com/), the nf-core-standard testing
+framework — `nf-test generate process modules/local/<tool>.nf` scaffolds
+a test, which snapshots a process/workflow's output so a future change
+that alters it is caught as a diff to review, not silently passed.
+`nf-core modules install` already ships nf-test scaffolding for installed
+modules under their `tests/` folder.
