@@ -1,5 +1,5 @@
 ---
-title: NBIS Project Report
+title: NBIS Closing Report
 format:
   html:
     toc: true
@@ -7,10 +7,10 @@ format:
     self-contained: true
     page-layout: full
     theme: flatly
-author: 
+author:
   - name: '[Mahesh Binzer-Panchal](mailto:mahesh.binzer-panchal@nbis.se)'
-    affiliation: 
-      - Department of Medical Biochemistry and Microbiology, 
+    affiliation:
+      - Department of Medical Biochemistry and Microbiology,
       - National Bioinformatics Infrastructure Sweden (NBIS),
       - Science for Life Laboratory,
       - Uppsala Universitet, Uppsala, Sweden
@@ -18,11 +18,16 @@ author:
 date: last-modified
 date-format: iso
 bibliography: citations.bib
+redmine_id: "[TODO]"
+project_contact: "[TODO]"
+project_pi: "[TODO]"
+compute_project: "[TODO]"
+storage_project: "[TODO]"
 ---
 
-* Redmine ID: {{< var redmine_id >}}
-* Request by: {{< var project_contact >}}
-* Principal Investigator: {{< var project_pi >}}
+* Redmine ID: {{< meta redmine_id >}}
+* Request by: {{< meta project_contact >}}
+* Principal Investigator: {{< meta project_pi >}}
 
 ## NBIS Support Request.
 
@@ -38,8 +43,8 @@ NBIS Agreement:
 
 ### Project allocation
 
-- {{< var compute_project >}} (NAISS Compute allocation, Rackham)
-- {{< var storage_project >}} (NAISS Storage allocation, Rackham)
+- {{< meta compute_project >}} (NAISS Compute allocation, <cluster>)
+- {{< meta storage_project >}} (NAISS Storage allocation, <cluster>)
 
 ### Data responsibility
 
@@ -58,19 +63,19 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
 ## Data
 
 ```
-/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/       (NAISS Compute Allocation)
+<project_root>/                                (NAISS Compute Allocation)
  |
  | - README.md                                 Project details summary
+ | - pixi.toml                                 Tools and tasks, incl. Nextflow (pixi)
  |
  | - analyses/                                 Analysis configuration files
- | - conda/                                    Shared conda environments
  | - docs/                                     Project documentation
- \ - workflow/                                 Nextflow workflow
+ \ - code/                                     Nextflow workflow
 
-/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation)
+/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation, or data/ locally)
  |
  | - nobackup/nxf-work                         Intermediate analysis files
- \ - NBIS_support_<id>_results/                Analysis results
+ \ - data/results/                             Analysis results
 ```
 
 ### Input Data
@@ -83,21 +88,19 @@ Description:
 ## Methods
 
 A workflow has been written in Nextflow to manage the data analysis steps.
-Nextflow is used to run the tasks on the HPC cluster Rackham.
-The workflow analyses can be run on UPPMAX HPC clusters within `screen` sessions
+Nextflow is used to run the tasks on the HPC cluster <cluster>.
+The workflow analyses can be run within `screen` or `tmux` sessions
 as follows:
 
 ```bash
-cd /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/analyses/<date>_<analysis>/
-conda activate /proj/naiss20XX-YY-ZZ/NBIS_support_<id>/conda/nextflow-env
-./run_nextflow.sh
+pixi run <numbered-analysis-task>
 ```
 
 The workflow runs the following data processing and analyses steps for each sample.
 
-- FastQC (Illumina Read QC)
-- Fastp (Illumina Read trimming and QC)
-- MultiQC (Log collection processing and reporting)
+- <STEP 1 (tool used)>
+- <STEP 2 (tool used)>
+- <STEP 3 (tool used)>
 
 ### Software
 
@@ -105,16 +108,13 @@ The following tools were used in the current analysis:
 
 | Tool        | Version    | Description | Citation   |
 | ----------- | ---------- | ------------------------------------ | ---------- |
-| Fastp |  0.20.1 | Trimming and merging | [@chen2018fastp] |
-| FastQC | 0.11.9 | Illumina Read QC | [@andrews2010fastqc] |
-| MultiQC | 1.10.1 | Reporting summary tool | [@ewels2016multiqc] |
+| <tool> | <version> | <description> | [@citation-key] |
 
 All the tools used in this project are available as Singularity container
 images (`*.{img,sif}`) in the folder
 `/proj/naiss20xx-yy-zz/nobackup/nxf-work/singularity`. The container
-image path and version these Singularity images were made from
-can be found in the file
-`/proj/naiss20XX-YY-ZZ/NBIS_support_<id>/workflow/configs/singularity_packages.config`.
+image and version each Singularity image was made from can be found in
+the workflow's config files under `<project_root>/code/configs/`.
 
 Custom container images are uploaded to `ghrc.io` (GitHub container registry) and associated
 with the project repostory. Images hosted on `ghcr.io` are initially private if the code
@@ -137,17 +137,17 @@ to make a copy of this repository and continue making changes to it.
 the running of various tools for data processing and analysis. It
 provides a complete computational description of how the analysis
 was run, from beginning to end. A configuration profile
-`uppmax` was created to utilise the `singularity` container technology
-and `slurm` queueing system available on the UPPMAX cluster Rackham.
+`<cluster>` was created to utilise the `singularity` container technology
+and `slurm` queueing system available on the cluster <cluster>.
 - Singularity container technology: Containers provide a software
 package that include everything needed to run an application: code,
 runtime, system tools, system libraries, and settings. Containerised
 software will run the same regardless of the infrastructure, and
 isolate its software from the computational environment to ensure
 it works uniformly.
-- Conda Package Manager: Conda is used to provide a contained running
-environment for Nextflow. A shared environment is created for all
-members of the project to use.
+- Pixi: Pixi declares the tool environment (Nextflow and other tools) for
+running the workflow in a single `pixi.toml` file, shared by all
+members of the project.
 
 ## Results
 
