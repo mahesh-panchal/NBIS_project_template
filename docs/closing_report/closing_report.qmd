@@ -25,6 +25,12 @@ storage_project: "[TODO]"
 Project ID, PI, and requester are in
 [`../project_info.md`](../project_info.md).
 
+## Overview
+
+> <One to three plain-language sentences: what was requested, what was
+> done, and the outcome. Write this for the PI, not a bioinformatician —
+> some readers will only read this section.>
+
 ## Project information
 
 ### Project allocation
@@ -47,26 +53,6 @@ If you are presenting the results in a paper, at a workshop or conference, we ki
 - **NGI:** In publications based on data from NGI Sweden, the authors must acknowledge SciLifeLab, NGI and UPPMAX: "The authors would like to acknowledge support from Science for Life Laboratory, the National Genomics Infrastructure, NGI, and Uppmax for providing assistance in massive parallel sequencing and computational infrastructure."
 
 ## Data
-
-```
-<project_root>/                                (NAISS Compute Allocation)
- |
- | - README.md                                 Project details summary
- | - pixi.toml                                 Tools and tasks, incl. Nextflow (pixi)
- |
- | - analyses/                                 Analysis configuration files
- | - docs/                                     Project documentation
- \ - code/                                     Nextflow workflow
-
-/proj/naiss20xx-yy-zz/                         (NAISS Storage Allocation, or data/ locally)
- |
- | - nobackup/nxf-work                         Intermediate analysis files
- \ - data/results/                             Analysis results
-```
-
-### Input Data
-
-Description:
 
 - Input data type:
   - Path to data: `/path/to/data`
@@ -109,7 +95,18 @@ Request access to the code repository from the NBIS expert to
 have access to the Docker container images. All other Docker images
 are hosted on public registries.
 
-### Reproducibility
+## Results
+
+<Insert the key figure(s), table(s), or summary of findings here — link
+to the full output rather than reproducing it, e.g.:>
+
+- Summary report: `<project_root>/data/results/<analysis>/multiqc_report.html`
+- Key output: `<path or figure>`
+
+<State what the results mean for the request in the Overview, in plain
+language.>
+
+## Reproducibility
 
 Several tools have been used to aid the reproducibility of this analysis.
 
@@ -134,8 +131,6 @@ it works uniformly.
 - Pixi: Pixi declares the tool environment (Nextflow and other tools) for
 running the workflow in a single `pixi.toml` file, shared by all
 members of the project.
-
-## Results
 
 ## Recommendations and concluding remarks
 
