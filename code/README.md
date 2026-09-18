@@ -1,15 +1,17 @@
 # Code
 
 This folder holds the workflow(s) and adhoc scripts that launch scripts
-under `analyses/` call. It ships empty — build it up as the project's
-workflow takes shape:
+under `analyses/` call. It ships a minimal, real, working example — a
+single `FASTQC` step run by `analyses/02_workflow_dev/` — build it up as
+the project's actual workflow takes shape:
 
 ```
 code/
  | - bin/                            Adhoc/custom scripts
  | - configs/                        Configuration files that govern workflow execution
  | - containers/                     Custom container definition files
- | - modules/                        Process definitions
+ | - modules/nf-core/                nf-core modules (ships: fastqc)
+ | - modules/local/                  Hand-written modules
  | - notebooks/                      Notebooks analysing already-processed data
  | - main.nf                         The primary analysis script
  \ - nextflow.config                 General Nextflow configuration

@@ -1,0 +1,11 @@
+## Workflow inputs
+## Path to the input data, relative to this folder (or an absolute path)
+samples: '../../data/input/sarscov2_test/sarscov2_test_R{1,2}.fastq.gz'
+
+## Workflow outputs
+## run_nextflow.sh sets this via -output-dir to <project_root>/data/results/<analysis>
+## (override here only if you need a different location)
+# results: '<project_root>/data/results/<analysis>'
+
+## Cluster project allocation - needed only when running on a Slurm cluster
+# project: 'naiss2025-YY-ZZ'

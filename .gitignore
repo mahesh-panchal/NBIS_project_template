@@ -16,6 +16,11 @@ scratch/*
 # Nextflow files
 .nextflow*
 work/
+analyses/*/results
+
+# nf-test
+.nf-test/
+.nf-test.log
 
 # Quarto files
 docs/*/.gitignore

@@ -14,6 +14,17 @@ NXF_APPTAINER_CACHEDIR = "$PIXI_PROJECT_ROOT/scratch/apptainer-cache"
 nextflow = "*"
 nf-core = "*"
 quarto = "*"
+nf-test = ">=0.9.5,<0.10"
+
+[tasks."01-fetch-source-data"]
+cmd = "./fetch_source_data.sh"
+cwd = "analyses/01_fetch-source-data"
+description = "Fetch the small nf-core test dataset used by 02-workflow-dev"
+
+[tasks."02-workflow-dev"]
+cmd = "./run_nextflow.sh"
+cwd = "analyses/02_workflow_dev"
+description = "Run the workflow-dev analysis (test data)"
 
 [tasks.closing-report]
 cmd = "quarto render closing_report.qmd"
