@@ -19,70 +19,25 @@ code/
  \ - nextflow.config       General Nextflow configuration (profiles, defaults)
 ```
 
-`main.nf`/`modules/` (the Nextflow workflow) and `notebooks/` serve
-different jobs — see [`data_management.md`](data_management.md#workflows-vs-notebooks)
-for which one a task calls for.
+## Installing an nf-core module
 
-## Conventions
-
-- Before writing a process, check whether an
-  [nf-core module](https://nf-co.re/modules/) already does it —
-  `nf-core modules list remote <name>` — and install it
-  (`nf-core modules install <name>`) rather than reimplementing it. Only
-  write a local module, under `modules/local/`, when no nf-core module
-  covers the tool.
-- Keep Nextflow processes modular, ideally one tool per process, so public
-  container images can be reused directly. Prefer an existing public image
-  (Biocontainers, Rocker, ...), then building one with Seqera Wave from a
-  conda/pip spec, before hand-writing a custom `Dockerfile` under
-  `containers/<tool_name>/` — see [`environment.md`](environment.md#container-images-and-seqera-wave).
-- Analysis-specific parameters (e.g., input paths, per-run overrides)
-  belong in the relevant `analyses/<n>_<desc>/` folder, not here — this
-  folder holds the workflow logic and its defaults, not one run's inputs.
-- Adhoc, one-off scripts that aren't formal Nextflow processes still live
-  under `bin/`, alongside process scripts — keep them there rather than
-  scattering scripts elsewhere in the repo.
-- Notebooks under `notebooks/` read from `data/results/` (a workflow's
-  published output), not from `data/source/`/`data/input/` directly.
-- A notebook needing its own package set gets its own pixi feature and
-  environment rather than a separate environment file — see
-  [`environment.md`](environment.md#per-notebook-environments).
-- Lint before committing: `nextflow lint -exclude .pixi -exclude results .`
-  (also available as an IDE extension).
-- A process that fetches a shared, stable file (e.g. a reference database)
-  should use `storeDir` so independent analysis runs reuse the same
-  download instead of refetching it:
-
-  ```groovy
-  process FETCH_DB {
-      storeDir "${params.db_cachedir}/my_db"
-
-      script:
-      """
-      fetch-my-db.sh
-      """
-  }
-  ```
-
-### Installing an nf-core module
+Check first whether an [nf-core module](https://nf-co.re/modules/)
+already does what you need:
 
 ```bash
+nf-core modules list remote <name>
 nf-core modules install <name>
 ```
 
 This installs `modules/nf-core/<name>/` (`main.nf`, `environment.yml`,
 `meta.yml`, `tests/`) and tracks it in `modules.json`, so it can later be
 updated (`nf-core modules update <name>`) or patched
-(`nf-core modules patch <name>`) if you need a small local change without
-losing the ability to update it. See the
-[nf-core modules docs](https://nf-co.re/docs/nf-core-tools/pipelines/modules)
-for the full workflow.
+(`nf-core modules patch <name>`) without losing the ability to update it.
+See the [nf-core modules docs](https://nf-co.re/docs/nf-core-tools/pipelines/modules)
+for the full workflow. Only write a local module when no nf-core module
+covers the tool.
 
-### Writing a local module
-
-When asked to add a new processing step with no nf-core equivalent, add a
-module under `modules/local/`, wire it into `main.nf`, and add its
-resource/tool configuration under `configs/`, following this shape:
+## Writing a local module
 
 ```groovy
 // modules/local/<tool>.nf
@@ -114,10 +69,7 @@ tool's own stderr to a log file so it survives even if the job's
 allocation is relinquished right after a failure.
 
 Wire the module into `main.nf`'s `workflow` block, passing whatever
-channel shape the process needs — write toy examples first (e.g. via
-`nextflow console`, or see
-[Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html)) if
-it's not obvious what a channel operator produces:
+channel shape the process needs:
 
 ```groovy
 workflow {
@@ -129,6 +81,10 @@ workflow {
     ASSEMBLE( FASTP.out.trimmed_reads )
 }
 ```
+
+Write toy examples first (e.g. via `nextflow console`, or see
+[Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html)) if
+it's not obvious what a channel operator produces.
 
 Add the process's resource requirements to `configs/compute_resources.config`:
 
@@ -148,10 +104,52 @@ overhead on a shared cluster.
 
 ## Testing
 
-Test modules and workflows with
-[nf-test](https://www.nf-test.com/), the nf-core-standard testing
-framework — `nf-test generate process modules/local/<tool>.nf` scaffolds
-a test, which snapshots a process/workflow's output so a future change
-that alters it is caught as a diff to review, not silently passed.
-`nf-core modules install` already ships nf-test scaffolding for installed
-modules under their `tests/` folder.
+```bash
+nf-test generate process modules/local/<tool>.nf
+```
+
+Test modules and workflows with [nf-test](https://www.nf-test.com/), the
+nf-core-standard testing framework — it snapshots a process/workflow's
+output so a future change that alters it is caught as a diff to review,
+not silently passed. `nf-core modules install` already ships nf-test
+scaffolding for installed modules under their `tests/` folder.
+
+## Caching a shared reference file
+
+```groovy
+process FETCH_DB {
+    storeDir "${params.db_cachedir}/my_db"
+
+    script:
+    """
+    fetch-my-db.sh
+    """
+}
+```
+
+`storeDir` means independent analysis runs sharing `params.db_cachedir`
+reuse the same download instead of refetching it.
+
+## Conventions
+
+- `main.nf`/`modules/` (the Nextflow workflow) and `notebooks/` serve
+  different jobs — see [`data_management.md`](data_management.md#workflows-vs-notebooks)
+  for which one a task calls for.
+- Keep Nextflow processes modular, ideally one tool per process, so public
+  container images can be reused directly. Prefer an existing public image
+  (Biocontainers, Rocker, ...), then building one with Seqera Wave from a
+  conda/pip spec, before hand-writing a custom `Dockerfile` under
+  `containers/<tool_name>/` — see [`environment.md`](environment.md#container-images-and-seqera-wave).
+- Analysis-specific parameters (e.g., input paths, per-run overrides)
+  belong in the relevant `analyses/<n>_<desc>/` folder, not here — this
+  folder holds the workflow logic and its defaults, not one run's inputs.
+- Adhoc, one-off scripts that aren't formal Nextflow processes still live
+  under `bin/`, alongside process scripts — keep them there rather than
+  scattering scripts elsewhere in the repo.
+- Notebooks under `notebooks/` read from `data/results/` (a workflow's
+  published output), not from `data/source/`/`data/input/` directly.
+- A notebook needing its own package set gets its own pixi feature and
+  environment rather than a separate environment file — see
+  [`environment.md`](environment.md#per-notebook-environments).
+- Lint before committing: `nextflow lint -exclude .pixi -exclude results .`
+  (also available as an IDE extension).

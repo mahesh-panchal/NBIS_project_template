@@ -5,41 +5,32 @@ Tools needed to work in this repository (Nextflow, nf-core tools, Quarto,
 and resolved with [pixi](https://pixi.sh), not a manually managed conda
 environment.
 
-- Never call `conda`/`mamba`/`micromamba` directly in this repository —
-  use `pixi run <command>` (or a defined task, see `pixi task list`)
-  instead, even for one-off checks.
-- Add new tool dependencies to `pixi.toml`'s `[dependencies]` table rather
-  than creating a separate environment file.
-- Repeated commands (rendering docs, linking the upstream template, ...)
-  are defined as `[tasks]` in `pixi.toml` — run them with `pixi run <task>`.
-- `analyses/<n>_<desc>/run_nextflow.sh` scripts assume `nextflow` is
-  already on `PATH` — each has a matching pixi task (`cwd` baked in), so
-  launch them with `pixi run <task-name>` (or from inside `pixi shell`),
-  never by activating a conda environment. See
-  [`nextflow_workflow.md`](nextflow_workflow.md).
-- Never include the `defaults` conda channel in `pixi.toml` or any vendored
-  `environment.yml` — only `conda-forge`/`bioconda`.
+## Adding a tool
 
-When asked to add a tool or change how an environment is built, edit
-`pixi.toml` and re-resolve with `pixi lock --dry-run` before installing.
+```bash
+pixi add <package>
+pixi lock --dry-run
+```
+
+Add it to `pixi.toml`'s `[dependencies]` table (`pixi add` does this for
+you). Never include the `defaults` conda channel in `pixi.toml` or any
+vendored `environment.yml` — only `conda-forge`/`bioconda`.
 
 ## Container images and Seqera Wave
-
-Nextflow processes always run containerised, pulling images from a
-registry. When a tool has no existing public image (Biocontainers,
-Rocker, ...), prefer building one with
-[Seqera Containers](https://seqera.io/containers/) (Wave) from a
-conda/pip environment spec over hand-writing a `Dockerfile` under
-`code/containers/`. Validate the spec resolves *before* building, using
-[`../../scratch/`](../../scratch/README.md) as scratch space:
 
 ```bash
 pixi init --import <environment.yml> -p linux-64 scratch/precheck
 pixi lock --manifest-path scratch/precheck/pixi.toml --dry-run
 ```
 
-Only fall back to a custom `Dockerfile` when Wave and existing public
-images don't cover it — see [`code.md`](code.md).
+Run this before building a container — it validates a conda/pip spec
+resolves, using [`../../scratch/`](../../scratch/README.md) as scratch
+space. Nextflow processes always run containerised, pulling images from
+a registry; when a tool has no existing public image (Biocontainers,
+Rocker, ...), build one with [Seqera Containers](https://seqera.io/containers/)
+(Wave) from that spec rather than hand-writing a `Dockerfile` under
+`code/containers/`. Only fall back to a custom `Dockerfile` when Wave and
+existing public images don't cover it — see [`code.md`](code.md).
 
 The container cache itself defaults to
 [`scratch/apptainer-cache/`](../../scratch/README.md), set via
@@ -51,10 +42,7 @@ separate storage allocation, `run_nextflow.sh` overrides this to point at
 — `scratch/` covers local development and anywhere without a separate
 allocation.
 
-### Publishing a custom container
-
-When Wave and existing public images genuinely don't cover a tool, build
-and push a `Dockerfile` from `code/containers/<tool_name>/`:
+## Publishing a custom container
 
 ```bash
 docker build -t ghcr.io/<org>/<image_name>:<tag> .
@@ -62,37 +50,20 @@ echo "$GITHUB_TOKEN" | docker login ghcr.io -u <username> --password-stdin
 docker push ghcr.io/<org>/<image_name>:<tag>
 ```
 
-New images are private by default — make the package public from its
-GitHub package settings once it's ready to be pulled without
-authentication. You can also build straight from a conda/pip spec with
-the Wave CLI itself, skipping the `Dockerfile` entirely:
+Use when Wave and existing public images genuinely don't cover a tool,
+building from a `Dockerfile` in `code/containers/<tool_name>/`. New
+images are private by default — make the package public from its GitHub
+package settings once it's ready to be pulled without authentication.
+
+To build straight from a conda/pip spec, skipping the `Dockerfile`
+entirely, use the Wave CLI itself:
 
 ```bash
 wave --conda-file environment.yml --freeze --await
 # -> community.wave.seqera.io/library/<name>:<tag>
 ```
 
-### Personal pixi setup on HPC
-
-Pixi's own cache and global-install directories (`~/.cache/rattler`,
-`~/.pixi`) default to your home directory, which often has a small quota
-on HPC. If you hit quota issues, redirect them to your storage
-allocation in your shell profile (this is personal machine setup, not
-something `pixi.toml` can declare):
-
-```bash
-export PIXI_CACHE_DIR=/proj/naiss20XX-YY-ZZ/<user>/nobackup/.pixi-cache
-export PIXI_HOME=/proj/naiss20XX-YY-ZZ/<user>/nobackup/.pixi-home
-mkdir -p "$PIXI_CACHE_DIR" "$PIXI_HOME"
-export PATH="$PATH:$PIXI_HOME/bin"
-```
-
 ## Per-notebook environments
-
-A notebook under `code/notebooks/` (see [`code.md`](code.md)) that needs
-a different set of packages than the project default gets its own pixi
-feature and environment, rather than a hand-written `environment.yml` in
-a separate folder:
 
 ```toml
 [feature.stats.dependencies]
@@ -107,17 +78,14 @@ cwd = "code/notebooks"
 stats = ["stats"]
 ```
 
-Run it with `pixi run -e stats stats-notebook`. This keeps one source of
-truth for every environment the project needs (all resolved and
-dry-run-checked the same way) instead of a parallel, hand-maintained set
-of environment files.
+Run with `pixi run -e stats stats-notebook`. A notebook under
+`code/notebooks/` (see [`code.md`](code.md)) that needs a different
+package set than the project default gets its own pixi feature and
+environment this way, rather than a hand-written `environment.yml` in a
+separate folder — one source of truth, dry-run-checked the same way as
+every other dependency.
 
 ## Platform-specific tasks
-
-When a task needs a different invocation on HPC/Linux (typically
-Apptainer) than locally on macOS (typically Docker), use
-pixi's per-platform task tables rather than branching inside the command
-itself:
 
 ```toml
 [target.linux.tasks.view-results]
@@ -127,5 +95,34 @@ cmd = "apptainer exec $NXF_APPTAINER_CACHEDIR/<image>.sif <viewer> <args>"
 cmd = "docker run --rm -v \"$PWD:/data\" <image>:<tag> <viewer> <args>"
 ```
 
-`pixi run view-results` then does the right thing on whichever platform
-it's run from.
+`pixi run view-results` then does the right thing whichever platform
+it's run from. Use this when a task needs a different invocation on
+HPC/Linux (typically Apptainer) than locally on macOS (typically Docker),
+rather than branching inside a single command.
+
+## Personal pixi setup on HPC
+
+```bash
+export PIXI_CACHE_DIR=/proj/naiss20XX-YY-ZZ/<user>/nobackup/.pixi-cache
+export PIXI_HOME=/proj/naiss20XX-YY-ZZ/<user>/nobackup/.pixi-home
+mkdir -p "$PIXI_CACHE_DIR" "$PIXI_HOME"
+export PATH="$PATH:$PIXI_HOME/bin"
+```
+
+Add to your shell profile if pixi's default cache/global-install
+directories (`~/.cache/rattler`, `~/.pixi`) hit a small home-directory
+quota on HPC. This is personal machine setup, not something `pixi.toml`
+can declare.
+
+## Conventions
+
+- Never call `conda`/`mamba`/`micromamba` directly in this repository —
+  use `pixi run <command>` (or a defined task, see `pixi task list`)
+  instead, even for one-off checks.
+- Repeated commands (rendering docs, linking the upstream template, ...)
+  are defined as `[tasks]` in `pixi.toml` — run them with `pixi run <task>`.
+- `analyses/<n>_<desc>/run_nextflow.sh` scripts assume `nextflow` is
+  already on `PATH` — each has a matching pixi task (`cwd` baked in), so
+  launch them with `pixi run <task-name>` (or from inside `pixi shell`),
+  never by activating a conda environment. See
+  [`nextflow_workflow.md`](nextflow_workflow.md).
