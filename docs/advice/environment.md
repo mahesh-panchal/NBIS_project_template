@@ -56,10 +56,15 @@ images are private by default — make the package public from its GitHub
 package settings once it's ready to be pulled without authentication.
 
 To build straight from a conda/pip spec, skipping the `Dockerfile`
-entirely, use the Wave CLI itself:
+entirely, use the Wave CLI itself. It's a standalone binary, not a pixi
+package — download it from the
+[wave-cli releases page](https://github.com/seqeralabs/wave-cli/releases/latest)
+(pick the asset matching your OS/arch, e.g. `wave-<version>-macos-arm64`
+or `wave-<version>-linux-x86_64`) and make it executable:
 
 ```bash
-wave --conda-file environment.yml --freeze --await
+chmod 755 wave-<version>-<os>-<arch>
+./wave-<version>-<os>-<arch> --conda-file environment.yml --freeze --await
 # -> community.wave.seqera.io/library/<name>:<tag>
 ```
 
@@ -118,7 +123,10 @@ can declare.
 
 - Never call `conda`/`mamba`/`micromamba` directly in this repository —
   use `pixi run <command>` (or a defined task, see `pixi task list`)
-  instead, even for one-off checks.
+  instead, even for one-off checks. The Wave CLI is the one exception —
+  it's not on conda-forge/bioconda, so it's a manually downloaded binary
+  (see [Publishing a custom container](#publishing-a-custom-container)),
+  not a pixi dependency.
 - Repeated commands (rendering docs, linking the upstream template, ...)
   are defined as `[tasks]` in `pixi.toml` — run them with `pixi run <task>`.
 - `analyses/<n>_<desc>/run_nextflow.sh` scripts assume `nextflow` is
