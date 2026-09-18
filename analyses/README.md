@@ -17,13 +17,15 @@ analyses
   |
   | - README.md                             (This file, including the History section)
   |
-  | - 01_workflow_dev/                      (Analysis folder used to develop the workflow with test data)
-  |     | - params.yml                      (Parameter file for test data)
-  |     | - nextflow.config                 (Additional Nextflow configuration, such as custom process configuration)
-  |     \ - run_nextflow.sh                 (Shell script to call nextflow with correct parameters)
+  | - 01_fetch-source-data/                  (Standalone script fetching the example's test data)
+  |     \ - fetch_source_data.sh
   |
-  \ - 02_<short_desc>/                      (Usually the workflow that runs all the data)
-        | - params.yml                      (Parameter config for all data)
+  | - 02_workflow_dev/                       (Nextflow workflow dev against that test data)
+  |     | - params.yml                       (Parameter file for test data)
+  |     \ - run_nextflow.sh                  (Shell script to call nextflow with correct parameters)
+  |
+  \ - 03_<short_desc>/                       (Usually the workflow that runs all the data)
+        | - params.yml                       (Parameter config for all data)
         | - nextflow.config
         \ - run_nextflow.sh
 ```
@@ -33,6 +35,9 @@ Analyses often follow this recipe, making the analyses easy to run, recreate, an
 ```bash
 pixi run <numbered-analysis-task>
 ```
+
+Try it now with the shipped example: `pixi run 01-fetch-source-data` then
+`pixi run 02-workflow-dev`.
 
 Each analysis folder has a matching task in the root
 [`pixi.toml`](../pixi.toml), with its `cwd` baked in, so running it

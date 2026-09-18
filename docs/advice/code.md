@@ -4,15 +4,18 @@
 scripts call. It is not run directly — `analyses/<n>_<desc>/run_nextflow.sh`
 invokes it with the parameters for that particular run.
 
-This folder ships with just a README — build up the layout below as the
-project's workflow takes shape, rather than assuming it already exists:
+A minimal, real, working example ships in this layout — a single
+`FASTQC` step (installed via `nf-core modules install fastqc`) run by
+`analyses/02_workflow_dev/`. Replace/extend it as the project's workflow
+takes shape (`containers/`, `bin/`, `notebooks/`, and `modules/local/`
+don't exist yet — add them when needed):
 
 ```
 code/
  | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
  | - configs/              Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
  | - containers/           Custom container image definitions (Dockerfile per tool)
- | - modules/nf-core/      Modules installed with `nf-core modules install <name>`
+ | - modules/nf-core/      Modules installed with `nf-core modules install <name>` (ships: fastqc)
  | - modules/local/        Hand-written modules (no nf-core equivalent exists)
  | - notebooks/            Notebooks analysing already-processed data (e.g. Quarto/Jupyter/Marimo)
  | - main.nf               The primary workflow script
@@ -112,7 +115,13 @@ Test modules and workflows with [nf-test](https://www.nf-test.com/), the
 nf-core-standard testing framework — it snapshots a process/workflow's
 output so a future change that alters it is caught as a diff to review,
 not silently passed. `nf-core modules install` already ships nf-test
-scaffolding for installed modules under their `tests/` folder.
+scaffolding for installed modules under their `tests/` folder; `nf-test.config`
+and `tests/nextflow.config` (which sets `params.modules_testdata_base_path`
+and includes `../nextflow.config` so the `local` profile is available)
+are already set up — run `nf-test test --profile local` from `code/`.
+The `nft-utils` plugin version pinned in `nf-test.config` is worth
+checking against [plugins.nf-test.com](https://plugins.nf-test.com/)
+occasionally — the version nf-core-tools itself defaults to can lag.
 
 ## Caching a shared reference file
 

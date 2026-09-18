@@ -6,9 +6,9 @@ the analyses were run:
 ```
 analyses/
  | - README.md                 Structure and History (mermaid diagram of how folders relate)
- | - 01_workflow_dev/           Launch scripts + params for e.g. workflow development on test data
- | - 02_<short_desc>/           Launch scripts + params for the next analysis
- \ - 03_<tool>_once/            A standalone script running one containerized tool, no Nextflow
+ | - 01_fetch-source-data/      Standalone script fetching the example's test data (real, runnable)
+ | - 02_workflow_dev/           Nextflow workflow dev against that test data (real, runnable)
+ \ - 03_<short_desc>/           Launch scripts + params for the next analysis
 ```
 
 A numbered folder holds whatever a single launch needs — that's not
@@ -28,13 +28,16 @@ always the full Nextflow shape:
 
 Either way, the folder is paired with a task of the same name in the root
 `pixi.toml` (`cwd` set to the folder), so it runs as `pixi run <task-name>`.
+A Nextflow-workflow folder's `run_nextflow.sh` also leaves behind a
+`results` symlink pointing at its `data/results/<analysis>` output, so
+you don't need to know/type that path to find it.
 
 ## Conventions
 
 - Number folders in the order they were run (`01_`, `02_`, ...), not by
   date — the number already gives a natural ordering, and a short
-  description says what the folder is for (`01_workflow_dev`, not
-  `01_2024-03-01`).
+  description says what the folder is for (`02_workflow_dev`, not
+  `02_2024-03-01`).
 - Never edit a completed analysis folder's parameters after the fact if
   the run produced results someone might rely on — make a new numbered
   folder instead, and use `analyses/README.md`'s History section (and its

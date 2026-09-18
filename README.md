@@ -9,12 +9,16 @@ for how to use this template.
 
 Quickstart:
 ```bash
-pixi run <numbered-analysis-task>
+pixi run 01-fetch-source-data
+pixi run 02-workflow-dev
 ```
 
-Each folder under `analyses/` has a matching pixi task (`cwd` baked in),
-so this doesn't require `cd`-ing there or activating anything manually.
-See [`docs/advice/nextflow_workflow.md`](docs/advice/nextflow_workflow.md)
+That's the shipped working example (fetches a tiny public test dataset,
+runs FastQC on it) — replace it with the project's actual data/workflow
+as it takes shape. Each folder under `analyses/` has a matching pixi task
+(`cwd` baked in), so running one doesn't require `cd`-ing there or
+activating anything manually. See
+[`docs/advice/nextflow_workflow.md`](docs/advice/nextflow_workflow.md)
 for how to write a `run_nextflow.sh`, `params.yml`, `nextflow.config`,
 and the matching pixi task.
 

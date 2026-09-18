@@ -4,8 +4,11 @@ Each numbered folder under `analyses/` (see [`analyses.md`](analyses.md))
 launches the workflow in `code/` (see [`code.md`](code.md)) with three
 files — `run_nextflow.sh`, `params.yml`, and an optional
 `nextflow.config` — plus a matching task in the root
-[`pixi.toml`](../../pixi.toml). None of these ship by default — create
-them per analysis, following the templates below.
+[`pixi.toml`](../../pixi.toml). `analyses/02_workflow_dev/` (paired with
+`analyses/01_fetch-source-data/` and the FastQC example in `code/`) is a
+real, working copy of this shape — `pixi run 01-fetch-source-data` then
+`pixi run 02-workflow-dev` to see it run end to end. Add a new numbered
+folder per analysis, following the templates below.
 
 ## Wiring it up as a pixi task
 
@@ -14,17 +17,17 @@ Give each analysis folder its own task in the root `pixi.toml`, with
 first or passing `--manifest-path`:
 
 ```toml
-[tasks."01-workflow-dev"]
+[tasks."02-workflow-dev"]
 cmd = "./run_nextflow.sh"
-cwd = "analyses/01_workflow_dev"
+cwd = "analyses/02_workflow_dev"
 description = "Run the workflow-dev analysis (test data)"
 ```
 
-Name the task after the folder, swapping `_` for `-` (`01_workflow_dev`
--> `01-workflow-dev`), and run it with:
+Name the task after the folder, swapping `_` for `-` (`02_workflow_dev`
+-> `02-workflow-dev`), and run it with:
 
 ```bash
-pixi run 01-workflow-dev
+pixi run 02-workflow-dev
 ```
 
 ## `run_nextflow.sh`
@@ -66,9 +69,15 @@ function run_nextflow {
     # and pin it with -r <version> below.
     SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/main.nf}"
 
-    # Override pixi.toml's scratch/ container cache default with this
-    # cluster's storage allocation
-    export NXF_APPTAINER_CACHEDIR="${PWD/analyses*/nobackup}/apptainer-cache"
+    # Convenience symlink from this analysis folder to its results, so
+    # you don't need to know/type the data/results/<analysis> path.
+    ln -sfn "$RESULTS" results
+
+    if [ "$PROFILE" != "local" ]; then
+        # Override pixi.toml's scratch/ container cache default with this
+        # cluster's storage allocation
+        export NXF_APPTAINER_CACHEDIR="${PWD/analyses*/nobackup}/apptainer-cache"
+    fi
 
     # Clean results folder if last run resulted in error
     if [ "$( nextflow log | awk -F $'\t' '{ last=$4 } END { print last }' )" == "ERR" ]; then
@@ -83,7 +92,7 @@ function run_nextflow {
         -resume \
         -ansi-log false \
         -params-file params.yml \
-        --outdir "$RESULTS"
+        -output-dir "$RESULTS"
         # -r <version>  # pin this if $SCRIPT is a remote pipeline, e.g. nf-core/rnaseq
 
     # Clean up Nextflow cache to remove unused files
@@ -110,6 +119,12 @@ case "$cluster" in
     pelle|bianca|arrhenius|nac)
         run_nextflow "$cluster" "$project_root"
         ;;
+    "")
+        # No recognised HPC cluster (e.g. running locally on a laptop) -
+        # fall back to a local Docker profile for development.
+        echo "No recognised HPC cluster detected; running locally." >&2
+        run_nextflow local "$project_root"
+        ;;
     *)
         echo "Error: unrecognised cluster '$cluster'." >&2
         exit 1
@@ -125,7 +140,7 @@ esac
 samples: ''
 
 ## Workflow outputs
-## run_nextflow.sh sets this via --outdir to <project_root>/data/results/<analysis>
+## run_nextflow.sh sets this via -output-dir to <project_root>/data/results/<analysis>
 ## (override here only if you need a different location)
 # results: '<project_root>/data/results/<analysis>'
 
@@ -148,10 +163,23 @@ process {
 ```
 
 `code/nextflow.config` itself should define one profile per cluster, named
-to match `run_nextflow.sh`'s detected cluster name. Prefer pulling in
+to match `run_nextflow.sh`'s detected cluster name, plus a `local` profile
+for development off-cluster (`run_nextflow.sh` falls back to it when no
+HPC cluster is detected):
+
+```groovy
+profiles {
+    local {
+        process.executor = 'local'
+        docker.enabled = true
+    }
+}
+```
+
+Prefer pulling in
 [nf-core's maintained institutional configs](https://nf-co.re/configs)
-over hand-writing one — they're kept up to date with each cluster's
-scheduler, scratch variable, and container tooling:
+for cluster profiles over hand-writing them — they're kept up to date
+with each cluster's scheduler, scratch variable, and container tooling:
 
 ```groovy
 profiles {
@@ -200,10 +228,12 @@ quicker to iterate on:
 - Store it under `data/source/` like any other source data (see
   [`data_management.md`](data_management.md)), and keep the script used to
   produce it so it's reproducible.
-- Use it in a dedicated `analyses/01_workflow_dev/` (or similar) folder
-  and matching `pixi run 01-workflow-dev` task (see above), with
-  `-resume` (already in the run script above) so re-running only executes
-  what changed.
+- Use it in a dedicated `analyses/02_workflow_dev/`-style folder and
+  matching pixi task (see above), with `-resume` (already in the run
+  script above) so re-running only executes what changed.
+  `analyses/01_fetch-source-data/` + `analyses/02_workflow_dev/` are a
+  real, working example of this pattern — see
+  [`../../analyses/README.md`](../../analyses/README.md).
 
 Examples:
 

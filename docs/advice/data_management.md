@@ -69,8 +69,8 @@ don't reach for a notebook to process raw sequencing data at scale.
 ## How the folders work together
 
 - **`analyses/`** contains one numbered folder per analysis run
-  (`01_workflow_dev/`, `02_full_data/`, ...), each with the parameters and
-  launch script for that run. See
+  (`01_fetch-source-data/`, `02_workflow_dev/`, ...), each with the
+  parameters and launch script for that run. See
   [`analyses.md`](analyses.md) and [`../../analyses/README.md`](../../analyses/README.md).
 - **`code/`** contains the workflow(s) and adhoc scripts that `analyses/`
   launch scripts call, reading from `data/input/` and writing to
