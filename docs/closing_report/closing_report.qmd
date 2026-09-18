@@ -84,7 +84,7 @@ The following tools were used in the current analysis:
 
 All the tools used in this project are available as Apptainer container
 images (`*.{img,sif}`) in the folder
-`/proj/naiss20xx-yy-zz/nobackup/nxf-work/apptainer-cache`. The container
+`/proj/naiss20xx-yy-zz/nobackup/apptainer-cache`. The container
 image and version each Apptainer image was made from can be found in
 the workflow's config files under `<project_root>/code/configs/`.
 
