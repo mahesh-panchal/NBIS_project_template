@@ -38,8 +38,11 @@ a Nextflow profile.
   own access controls and no general internet access. See the
   sensitive-data note in [`data_management.md`](data_management.md).
 - **Dardel** — PDC's (KTH Royal Institute of Technology) HPC cluster.
-- **Arrhenius** — covered by nf-core's `naiss` institutional config.
-- **NAC** — National Academic Compute; has no maintained nf-core config
+- **Arrhenius** — a NAISS-allocated HPC cluster, covered by nf-core's
+  generic `naiss` institutional config (no dedicated one like `uppmax`
+  or `pdc_kth`).
+- **NAC** — National Academic Compute, a Slurm-based HPC cluster with no
+  maintained nf-core config at all
   (see [`nextflow_workflow.md`](nextflow_workflow.md)).
 
 ## Administrative
@@ -70,3 +73,7 @@ Covered in depth elsewhere, listed here only as quick pointers:
   [`environment.md`](environment.md#publishing-a-custom-container).
 - **pixi** — the tool/task manager this template is built on. See
   [`environment.md`](environment.md).
+- **Slurm** / **`sbatch`** — the job scheduler most of these clusters use;
+  `sbatch` submits a batch job to it. See
+  [`nextflow_workflow.md`](nextflow_workflow.md) and
+  [`analyses.md`](analyses.md).

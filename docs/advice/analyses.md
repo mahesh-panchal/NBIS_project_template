@@ -6,8 +6,8 @@ the analyses were run:
 ```
 analyses/
  | - README.md                 Structure and History (mermaid diagram of how folders relate)
- | - 01_fetch-source-data/      Standalone script fetching the example's test data (real, runnable)
- | - 02_workflow_dev/           Nextflow workflow dev against that test data (real, runnable)
+ | - 01_fetch-source-data/      Standalone script fetching the example's test data
+ | - 02_workflow_dev/           Nextflow workflow dev against that test data
  \ - 03_<short_desc>/           Launch scripts + params for the next analysis
 ```
 

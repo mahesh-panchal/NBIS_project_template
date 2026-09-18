@@ -29,7 +29,8 @@ assumptions about project layout.
 If a task touches one of these areas and the relevant advice file doesn't
 cover it, prefer asking the user over guessing a convention.
 
-Sensitive/personal data (e.g., human sequencing data on Bianca) must
+Sensitive/personal data (e.g., human sequencing data on
+[Bianca](docs/advice/glossary.md#clusters)) must
 never be placed anywhere in this repository's working tree, including
 `data/`, `scratch/`, or your own temporary files — this and other AI
 tools (Copilot, etc.) read workspace file content live as you work,

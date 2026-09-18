@@ -22,31 +22,26 @@ data/
  \ - results/    Workflow/notebook outputs
 ```
 
-1. **`data/source/`** holds data exactly as received (e.g., a sequencing
-   centre delivery, a dataset from a collaborator). Once placed here, it is
-   made write-protected (`chmod -R a-w`) so nothing downstream can
-   accidentally modify or delete it.
-2. **`data/input/`** is a structured, descriptively named view onto
-   `source/`, built with symlinks rather than copies. This is where
-   reorganising happens — renaming, grouping by sample, building a
-   samplesheet — without ever touching the original files.
-3. **`data/results/`** holds outputs published by workflows or notebooks
-   launched from `analyses/`. These are generated, not authored, so they
-   are usually not committed to git; they can always be reproduced by
-   re-running the analysis that made them.
+1. **[`data/source/`](../../data/source/README.md)** — data exactly as
+   received, made write-protected once placed there.
+2. **[`data/input/`](../../data/input/README.md)** — a structured,
+   descriptively named view onto `source/`, built with symlinks.
+3. **[`data/results/`](../../data/results/README.md)** — outputs
+   published by workflows/notebooks, usually not committed to git.
 
 On systems with a separate storage allocation from the compute allocation
-(e.g., NAISS storage vs. compute projects on UPPMAX), `data/` is typically
-a symlink to, or mounted from, that storage allocation rather than living
-directly inside the git repository. The logical structure above still
-applies either way.
+(e.g., [NAISS](glossary.md#organisations) storage vs. compute projects on
+[UPPMAX](glossary.md#organisations)), `data/` is typically a symlink to,
+or mounted from, that storage allocation rather than living directly
+inside the git repository. The logical structure above still applies
+either way.
 
 **Sensitive/personal data does not go under `data/` at all.** AI coding
 tools (Copilot, this assistant, ...) read workspace file content live as
 you work, regardless of `.gitignore` or git status — keeping sensitive
-data out of the repository's working tree (e.g., processing it on Bianca
-under its own access controls, never inside a cloned copy of this repo)
-is the only reliable protection.
+data out of the repository's working tree (e.g., processing it on
+[Bianca](glossary.md#clusters) under its own access controls, never
+inside a cloned copy of this repo) is the only reliable protection.
 
 ## Workflows vs. notebooks
 

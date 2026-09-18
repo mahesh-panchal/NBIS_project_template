@@ -4,11 +4,16 @@ Each numbered folder under `analyses/` (see [`analyses.md`](analyses.md))
 launches the workflow in `code/` (see [`code.md`](code.md)) with three
 files — `run_nextflow.sh`, `params.yml`, and an optional
 `nextflow.config` — plus a matching task in the root
-[`pixi.toml`](../../pixi.toml). `analyses/02_workflow_dev/` (paired with
-`analyses/01_fetch-source-data/` and the FastQC example in `code/`) is a
-real, working copy of this shape — `pixi run 01-fetch-source-data` then
-`pixi run 02-workflow-dev` to see it run end to end. Add a new numbered
-folder per analysis, following the templates below.
+[`pixi.toml`](../../pixi.toml).
+
+```bash
+pixi run 01-fetch-source-data
+pixi run 02-workflow-dev
+```
+
+`analyses/02_workflow_dev/` (paired with `analyses/01_fetch-source-data/`
+and the FastQC example in `code/`) is a working copy of this shape. Add a
+new numbered folder per analysis, following the templates below.
 
 ## Wiring it up as a pixi task
 
@@ -32,8 +37,11 @@ pixi run 02-workflow-dev
 
 ## `run_nextflow.sh`
 
-Assumes `nextflow` is already on `PATH` — the pixi task above (or `pixi
-shell`) provides that, not `conda`/`mamba` or manual activation (see
+Detects which of pelle/bianca/dardel/arrhenius/nac it's running on (see
+[`glossary.md`](glossary.md#clusters) for what each cluster is) and picks
+the matching Nextflow profile. Assumes `nextflow` is already on `PATH` —
+the pixi task above (or `pixi shell`) provides that, not `conda`/`mamba`
+or manual activation (see
 [`environment.md`](environment.md)).
 
 ```bash
@@ -231,8 +239,8 @@ quicker to iterate on:
 - Use it in a dedicated `analyses/02_workflow_dev/`-style folder and
   matching pixi task (see above), with `-resume` (already in the run
   script above) so re-running only executes what changed.
-  `analyses/01_fetch-source-data/` + `analyses/02_workflow_dev/` are a
-  real, working example of this pattern — see
+  `analyses/01_fetch-source-data/` + `analyses/02_workflow_dev/` are an
+  example of this pattern — see
   [`../../analyses/README.md`](../../analyses/README.md).
 
 Examples:

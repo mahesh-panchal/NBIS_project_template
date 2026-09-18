@@ -25,7 +25,7 @@ reproducible output. It relies on a small set of tools working together:
   3. Set the owner appropriately (e.g. `NBISweden`).
   4. Name the repository following your organisation's convention (e.g. `SMS-<id>-<year>-<short_description>`).
   5. Ensure the repository is private, then click `Create repository`.
-  6. Add a link to the tracking issue/ticket (e.g. Redmine) in the repository's URL/description field.
+  6. Add a link to the tracking issue/ticket (e.g. [Redmine](glossary.md#administrative)) in the repository's URL/description field.
 - Clone it to wherever computations will run (e.g. an HPC compute allocation):
   ```bash
   cd /proj/naiss20XX-YY-ZZ
@@ -50,15 +50,22 @@ branch used on the compute allocation (usually `main`) distinct from the
 branch you push from locally (usually a feature branch), so a `git push`
 from either side doesn't clobber the other's in-progress state.
 
-**Never `git push hpc`.** The HPC clone's checked-out branch (usually
-`main` — it's what `run_nextflow.sh` actually runs from) refuses a
-direct push into it by default: git won't update a non-bare repository's
-working tree to match a pushed HEAD, so the push is rejected rather than
-leaving the checked-out files out of sync. Get code onto HPC the normal
-way instead — push to `origin`, then `git pull` from the HPC clone
-itself. The `hpc` remote is for `git fetch`/`pull` (pulling *from* HPC to
-local has no such restriction) and as an address for the `fetch-results`
-rsync task — see [`environment.md`](environment.md#syncing-with-hpc).
+**Never `git push hpc`.** Get code onto HPC this way instead:
+
+```bash
+git push origin main        # from wherever you're developing
+ssh <hpc-login-node>
+cd <project_root> && git pull origin main
+```
+
+The HPC clone's checked-out branch (usually `main` — it's what
+`run_nextflow.sh` actually runs from) refuses a direct push into it by
+default: git won't update a non-bare repository's working tree to match
+a pushed HEAD, so the push is rejected rather than leaving the checked-out
+files out of sync. The `hpc` remote is for `git fetch`/`pull` (pulling
+*from* HPC to local has no such restriction) and as an address for the
+`fetch-results` rsync task — see
+[`environment.md`](environment.md#syncing-with-hpc).
 
 ## Working habits
 

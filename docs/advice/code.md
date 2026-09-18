@@ -4,11 +4,11 @@
 scripts call. It is not run directly — `analyses/<n>_<desc>/run_nextflow.sh`
 invokes it with the parameters for that particular run.
 
-A minimal, real, working example ships in this layout — a single
-`FASTQC` step (installed via `nf-core modules install fastqc`) run by
-`analyses/02_workflow_dev/`. Replace/extend it as the project's workflow
-takes shape (`containers/`, `bin/`, `notebooks/`, and `modules/local/`
-don't exist yet — add them when needed):
+This layout ships a minimal example: a single `FASTQC` step (installed
+via `nf-core modules install fastqc`) run by `analyses/02_workflow_dev/`.
+Replace/extend it as the project's workflow takes shape (`containers/`,
+`bin/`, `notebooks/`, and `modules/local/` don't exist yet — add them
+when needed):
 
 ```
 code/
@@ -114,14 +114,18 @@ nf-test generate process modules/local/<tool>.nf
 Test modules and workflows with [nf-test](https://www.nf-test.com/), the
 nf-core-standard testing framework — it snapshots a process/workflow's
 output so a future change that alters it is caught as a diff to review,
-not silently passed. `nf-core modules install` already ships nf-test
-scaffolding for installed modules under their `tests/` folder; `nf-test.config`
-and `tests/nextflow.config` (which sets `params.modules_testdata_base_path`
-and includes `../nextflow.config` so the `local` profile is available)
-are already set up — run `nf-test test --profile local` from `code/`.
-The `nft-utils` plugin version pinned in `nf-test.config` is worth
-checking against [plugins.nf-test.com](https://plugins.nf-test.com/)
-occasionally — the version nf-core-tools itself defaults to can lag.
+not silently passed. `nf-core modules install` ships nf-test scaffolding
+under each module's `tests/` folder; run the full suite with:
+
+```bash
+nf-test test --profile local
+```
+
+`tests/nextflow.config` sets `params.modules_testdata_base_path` and
+includes `../nextflow.config` for the `local` profile. If a test fails
+with a `MissingMethodException` on `sanitizeOutput()`, the `nft-utils`
+plugin version in `nf-test.config` is out of date — check
+[plugins.nf-test.com](https://plugins.nf-test.com/) for the current one.
 
 ## Caching a shared reference file
 

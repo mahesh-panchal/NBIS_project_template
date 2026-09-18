@@ -1,9 +1,9 @@
 # Code
 
 This folder holds the workflow(s) and adhoc scripts that launch scripts
-under `analyses/` call. It ships a minimal, real, working example — a
-single `FASTQC` step run by `analyses/02_workflow_dev/` — build it up as
-the project's actual workflow takes shape:
+under `analyses/` call. It ships a minimal example — a single `FASTQC`
+step run by `analyses/02_workflow_dev/` — build it up as the project's
+actual workflow takes shape:
 
 ```
 code/

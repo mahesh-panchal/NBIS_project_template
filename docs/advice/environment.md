@@ -1,9 +1,9 @@
 # Environment management
 
-Tools needed to work in this repository (Nextflow, nf-core tools, Quarto,
-...) are declared as dependencies in the root [`pixi.toml`](../../pixi.toml)
-and resolved with [pixi](https://pixi.sh), not a manually managed conda
-environment.
+Tools needed to work in this repository (Nextflow,
+[nf-core](glossary.md#tools) tools, Quarto, ...) are declared as
+dependencies in the root [`pixi.toml`](../../pixi.toml) and resolved
+with [pixi](https://pixi.sh), not a manually managed conda environment.
 
 ## Adding a tool
 
@@ -34,13 +34,12 @@ existing public images don't cover it — see [`code.md`](code.md).
 
 The container cache itself defaults to
 [`scratch/apptainer-cache/`](../../scratch/README.md), set via
-`NXF_APPTAINER_CACHEDIR` in `pixi.toml`'s `[activation.env]` (Apptainer is
-the maintained successor to Singularity — prefer its env var/CLI name
-over the `singularity`-named equivalents). On HPC clusters with a
-separate storage allocation, `run_nextflow.sh` overrides this to point at
-`nobackup/` instead (see [`nextflow_workflow.md`](nextflow_workflow.md))
-— `scratch/` covers local development and anywhere without a separate
-allocation.
+`NXF_APPTAINER_CACHEDIR` in `pixi.toml`'s `[activation.env]` — see
+[`glossary.md`](glossary.md#tools) for what Apptainer is. On HPC clusters
+with a separate storage allocation, `run_nextflow.sh`
+overrides this to point at `nobackup/` instead (see
+[`nextflow_workflow.md`](nextflow_workflow.md)) — `scratch/` covers local
+development and anywhere without a separate allocation.
 
 ## Publishing a custom container
 
