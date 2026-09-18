@@ -25,6 +25,13 @@ always the full Nextflow shape:
   `docker run ...`, with no `params.yml`/`nextflow.config`. It can double
   as an `sbatch` script (`#SBATCH` directives at the top) when it needs to
   be queued rather than run interactively.
+- **Notebook analysis** (for interpreting already-processed, typically
+  small, tabular data a workflow has published): a Quarto/Jupyter/Marimo
+  notebook (e.g. `stats.qmd`) reading from an earlier folder's
+  `data/results/<analysis>/`, with no `params.yml`/`run_nextflow.sh`. See
+  [`data_management.md`](data_management.md#workflows-vs-notebooks) and
+  [`environment.md`](environment.md#per-notebook-environments) for giving
+  it its own pixi environment when it needs different packages.
 
 Either way, the folder is paired with a task of the same name in the root
 `pixi.toml` (`cwd` set to the folder), so it runs as `pixi run <task-name>`.

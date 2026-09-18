@@ -6,8 +6,7 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "osx-arm64"]
 
 [activation.env]
-# Local default container cache; analyses/*/run_nextflow.sh overrides this
-# on HPC clusters with a separate storage allocation (see nobackup/).
+# Container cache, shared by every analysis (see scratch/).
 NXF_APPTAINER_CACHEDIR = "$PIXI_PROJECT_ROOT/scratch/apptainer-cache"
 
 [dependencies]
@@ -58,3 +57,12 @@ rsync -av {{ opts }} \
 "data/results/{{ analysis }}/"
 """
 description = "Fetch an analysis's results from the HPC clone (git-link-hpc first)"
+
+[tasks.nextflow-clean]
+args = ["dir"]
+cmd = """
+cd {{ dir }} && \
+nextflow clean -f -before last && \
+find "${PWD/analyses/scratch}/nxf-work" -type d -empty -delete
+"""
+description = "Periodically prune an analysis folder's Nextflow cache/work dir, e.g. `pixi run nextflow-clean analyses/02_workflow_dev` (independent of any run; not tied to a specific analysis)"

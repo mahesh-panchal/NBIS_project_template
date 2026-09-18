@@ -3,13 +3,6 @@
 # Exit on unset variables, errors, or pipe failures
 set -euo pipefail
 
-# Guard against running this outside the project's pixi environment,
-# where `nextflow` (and the container cache env var) wouldn't be set up.
-if [ -z "${PIXI_ENVIRONMENT_NAME:-}" ]; then
-    echo "Error: run this via 'pixi run <task-name>' (see analyses/README.md)." >&2
-    exit 1
-fi
-
 function get_cluster_name {
     if command -v sacctmgr >/dev/null 2>&1; then
         # Only return cluster names we're catering for
@@ -22,29 +15,17 @@ function get_cluster_name {
 function run_nextflow {
     PROFILE="$1"                                # Nextflow profile to use, named after the cluster
     PROJECT_ROOT="$2"                           # Path to the project root (contains pixi.toml)
-    WORKDIR="${PWD/analyses/nobackup}/nxf-work" # Nextflow work directory
+    WORKDIR="${PWD/analyses/scratch}/nxf-work"  # Nextflow work directory
     RESULTS="${PWD/analyses/data/results}"      # Path to store results from Nextflow
 
     # Path to Nextflow script. Point this at a remote pipeline (e.g.
     # nf-core/rnaseq) instead of a local path if that's what you're running,
     # and pin it with -r <version> below.
-    SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/main.nf}"
+    SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/workflows/qc/main.nf}"
 
     # Convenience symlink from this analysis folder to its results, so
     # you don't need to know/type the data/results/<analysis> path.
     ln -sfn "$RESULTS" results
-
-    if [ "$PROFILE" != "local" ]; then
-        # Override pixi.toml's scratch/ container cache default with this
-        # cluster's storage allocation
-        export NXF_APPTAINER_CACHEDIR="${PWD/analyses*/nobackup}/apptainer-cache"
-    fi
-
-    # Clean results folder if last run resulted in error
-    if [ "$( nextflow log | awk -F $'\t' '{ last=$4 } END { print last }' )" == "ERR" ]; then
-        echo "WARN: Cleaning results folder due to previous error" >&2
-        rm -rf "$RESULTS"
-    fi
 
     # Run Nextflow
     nextflow run "$SCRIPT" \
@@ -79,12 +60,6 @@ case "$cluster" in
         ;;
     pelle|bianca|arrhenius|nac)
         run_nextflow "$cluster" "$project_root"
-        ;;
-    "")
-        # No recognised HPC cluster (e.g. running locally on a laptop) -
-        # fall back to a local Docker profile for development.
-        echo "No recognised HPC cluster detected; running locally." >&2
-        run_nextflow local "$project_root"
         ;;
     *)
         echo "Error: unrecognised cluster '$cluster'." >&2

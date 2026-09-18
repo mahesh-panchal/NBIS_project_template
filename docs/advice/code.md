@@ -2,25 +2,60 @@
 
 `code/` holds the workflow(s) and adhoc scripts that `analyses/` launch
 scripts call. It is not run directly — `analyses/<n>_<desc>/run_nextflow.sh`
-invokes it with the parameters for that particular run.
+invokes one workflow's `main.nf` with the parameters for that particular
+run.
 
 This layout ships a minimal example: a single `FASTQC` step (installed
 via `nf-core modules install fastqc`) run by `analyses/02_workflow_dev/`.
-Replace/extend it as the project's workflow takes shape (`containers/`,
-`bin/`, `notebooks/`, and `modules/local/` don't exist yet — add them
-when needed):
+Replace/extend it as the project's workflow(s) take shape (`containers/`
+and `modules/local/` don't exist yet — add them when needed). Notebooks
+live under `analyses/`, not here — see
+[`data_management.md`](data_management.md#workflows-vs-notebooks):
 
 ```
 code/
- | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
- | - configs/              Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
- | - containers/           Custom container image definitions (Dockerfile per tool)
- | - modules/nf-core/      Modules installed with `nf-core modules install <name>` (ships: fastqc)
- | - modules/local/        Hand-written modules (no nf-core equivalent exists)
- | - notebooks/            Notebooks analysing already-processed data (e.g. Quarto/Jupyter/Marimo)
- | - main.nf               The primary workflow script
- \ - nextflow.config       General Nextflow configuration (profiles, defaults)
+\ - workflows/                     One self-contained pipeline per folder
+     \ - qc/                       Ships: minimal FastQC example, for 02_workflow_dev
+          | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
+          | - configs/             Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
+          | - containers/          Custom container image definitions (Dockerfile per tool)
+          | - modules/nf-core/     Modules installed with `nf-core modules install <name>` (ships: fastqc)
+          | - modules/local/       Hand-written modules (no nf-core equivalent exists)
+          | - subworkflows/local/  Hand-written subworkflows (no nf-core equivalent exists)
+          | - main.nf              The primary workflow script
+          \ - nextflow.config      General Nextflow configuration (profiles, defaults)
 ```
+
+## Adding a workflow
+
+Give each independent pipeline its own self-contained folder under
+`workflows/` (`workflows/<name>/`, built from a fresh
+`nf-core pipelines create` or copied from `workflows/qc/`), rather than
+growing one `main.nf` to cover unrelated processing, or sharing
+`modules/`/`configs/`/`bin/` between pipelines that don't actually need
+the same ones:
+
+```groovy
+// workflows/<name>/main.nf
+include { FASTQC } from './modules/nf-core/fastqc/main'
+
+workflow {
+    main:
+    reads_ch = Channel.fromFilePairs( params.samples, checkIfExists: true )
+        .map { name, reads -> [ [ id: name ], reads ] }
+
+    FASTQC( reads_ch )
+
+    publish:
+    html = FASTQC.out.html
+}
+```
+
+Run `nf-core modules install <name>` from inside `workflows/<name>/` so
+modules land in that workflow's own `modules/` (and get tracked in its
+own `modules.json`/`.nf-core.yml`), not another workflow's. Point the
+matching `analyses/<n>_<desc>/run_nextflow.sh`'s `SCRIPT` at the new
+`workflows/<name>/main.nf` (see [`nextflow_workflow.md`](nextflow_workflow.md)).
 
 ## Installing an nf-core module
 
@@ -71,8 +106,8 @@ Write to standard error for progress/log messages (`>&2`), and `tee` a
 tool's own stderr to a log file so it survives even if the job's
 allocation is relinquished right after a failure.
 
-Wire the module into `main.nf`'s `workflow` block, passing whatever
-channel shape the process needs:
+Wire the module into the relevant `workflows/<name>/main.nf`'s `workflow`
+block, passing whatever channel shape the process needs:
 
 ```groovy
 workflow {
@@ -145,9 +180,10 @@ reuse the same download instead of refetching it.
 
 ## Conventions
 
-- `main.nf`/`modules/` (the Nextflow workflow) and `notebooks/` serve
-  different jobs — see [`data_management.md`](data_management.md#workflows-vs-notebooks)
-  for which one a task calls for.
+- `workflows/`/`modules/` here (the Nextflow workflows) and notebooks
+  under `analyses/` serve different jobs — see
+  [`data_management.md`](data_management.md#workflows-vs-notebooks) for
+  which one a task calls for.
 - Keep Nextflow processes modular, ideally one tool per process, so public
   container images can be reused directly. Prefer an existing public image
   (Biocontainers, Rocker, ...), then building one with Seqera Wave from a
@@ -159,10 +195,5 @@ reuse the same download instead of refetching it.
 - Adhoc, one-off scripts that aren't formal Nextflow processes still live
   under `bin/`, alongside process scripts — keep them there rather than
   scattering scripts elsewhere in the repo.
-- Notebooks under `notebooks/` read from `data/results/` (a workflow's
-  published output), not from `data/source/`/`data/input/` directly.
-- A notebook needing its own package set gets its own pixi feature and
-  environment rather than a separate environment file — see
-  [`environment.md`](environment.md#per-notebook-environments).
 - Lint before committing: `nextflow lint -exclude .pixi -exclude results .`
   (also available as an IDE extension).

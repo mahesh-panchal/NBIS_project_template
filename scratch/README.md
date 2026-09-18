@@ -8,10 +8,9 @@ elsewhere in the repo. Everything here except this file is gitignored
 and safe to delete at any time — nothing here should be the only copy of
 anything you care about.
 
-This is also where the local container image cache lives by default
-(`scratch/apptainer-cache/`, set via `NXF_APPTAINER_CACHEDIR` in the
-root [`pixi.toml`](../pixi.toml)) — slow to rebuild, but not precious;
-losing it just means Nextflow re-pulls/re-converts images next run. On
-HPC systems with a separate storage allocation, `run_nextflow.sh`
-overrides this to use `nobackup/` instead (see
-[`docs/advice/environment.md`](../docs/advice/environment.md)).
+This is also where the container image cache lives (`scratch/apptainer-cache/`,
+set via `NXF_APPTAINER_CACHEDIR` in the root [`pixi.toml`](../pixi.toml)) and
+where each analysis's Nextflow work directory is created (`scratch/<analysis>/nxf-work/`,
+see [`docs/advice/nextflow_workflow.md`](../docs/advice/nextflow_workflow.md)) —
+slow to rebuild/rerun, but not precious; losing either just means Nextflow
+re-pulls images or re-executes processes next run.

@@ -45,18 +45,21 @@ inside a cloned copy of this repo) is the only reliable protection.
 
 ## Workflows vs. notebooks
 
-`code/` can hold two different kinds of processing — pick the one that
-matches the task rather than defaulting to whichever is more familiar:
+Processing splits into two different kinds — pick the one that matches
+the task rather than defaulting to whichever is more familiar:
 
-- **Workflows** (Nextflow, `code/main.nf` + `modules/`) are for
-  large-scale data processing — anything working directly with
-  `data/source/`/`data/input/` at the scale of raw sequencing data, many
-  samples, or anything that benefits from Nextflow's parallelism, caching,
-  and container management.
-- **Notebooks** (e.g. Quarto/Jupyter/Marimo, `code/notebooks/`) are for analysing
+- **Workflows** (Nextflow, `code/workflows/<name>/`) are for large-scale
+  data processing — anything working directly with `data/source/`/`data/input/`
+  at the scale of raw sequencing data, many samples, or anything that
+  benefits from Nextflow's parallelism, caching, and container management.
+  Launched from `analyses/<n>_<desc>/` — see [`code.md`](code.md).
+- **Notebooks** (e.g. Quarto/Jupyter/Marimo) are for analysing
   already-processed, typically small, tabular data — CSVs and similar
   formats a workflow has published to `data/results/` — statistics,
-  figures, and interpretation.
+  figures, and interpretation. They live in `analyses/<n>_<desc>/`
+  alongside the run whose `data/results/<analysis>/` they read, not under
+  `code/` — a notebook is itself an analysis run, not shared workflow
+  logic.
 
 Don't reach for a Nextflow workflow to analyse a handful of CSVs, and
 don't reach for a notebook to process raw sequencing data at scale.

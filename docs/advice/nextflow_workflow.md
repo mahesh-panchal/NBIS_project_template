@@ -1,8 +1,8 @@
 # Writing a Nextflow run script, params.yml, and nextflow.config
 
 Each numbered folder under `analyses/` (see [`analyses.md`](analyses.md))
-launches the workflow in `code/` (see [`code.md`](code.md)) with three
-files — `run_nextflow.sh`, `params.yml`, and an optional
+launches one workflow under `code/workflows/` (see [`code.md`](code.md))
+with three files — `run_nextflow.sh`, `params.yml`, and an optional
 `nextflow.config` — plus a matching task in the root
 [`pixi.toml`](../../pixi.toml).
 
@@ -12,8 +12,9 @@ pixi run 02-workflow-dev
 ```
 
 `analyses/02_workflow_dev/` (paired with `analyses/01_fetch-source-data/`
-and the FastQC example in `code/`) is a working copy of this shape. Add a
-new numbered folder per analysis, following the templates below.
+and the `code/workflows/qc/` FastQC example) is a working copy of this
+shape. Add a new numbered folder per analysis, following the templates
+below.
 
 ## Wiring it up as a pixi task
 
@@ -40,22 +41,18 @@ pixi run 02-workflow-dev
 Detects which of pelle/bianca/dardel/arrhenius/nac it's running on (see
 [`glossary.md`](glossary.md#clusters) for what each cluster is) and picks
 the matching Nextflow profile. Assumes `nextflow` is already on `PATH` —
-the pixi task above (or `pixi shell`) provides that, not `conda`/`mamba`
-or manual activation (see
-[`environment.md`](environment.md)).
+whether the pixi task above (or `pixi shell`) provides that, or it's a
+`pixi global install` — not `conda`/`mamba` or manual activation (see
+[`environment.md`](environment.md)). An unrecognised cluster is a hard
+error rather than a silent fallback, since guessing wrong here (e.g.
+picking a profile assuming Docker's available) can run against a real
+allocation in the wrong way.
 
 ```bash
 #! /usr/bin/env bash
 
 # Exit on unset variables, errors, or pipe failures
 set -euo pipefail
-
-# Guard against running this outside the project's pixi environment,
-# where `nextflow` (and the container cache env var) wouldn't be set up.
-if [ -z "${PIXI_ENVIRONMENT_NAME:-}" ]; then
-    echo "Error: run this via 'pixi run <task-name>' (see analyses/README.md)." >&2
-    exit 1
-fi
 
 function get_cluster_name {
     if command -v sacctmgr >/dev/null 2>&1; then
@@ -69,29 +66,17 @@ function get_cluster_name {
 function run_nextflow {
     PROFILE="$1"                                # Nextflow profile to use, named after the cluster
     PROJECT_ROOT="$2"                           # Path to the project root (contains pixi.toml)
-    WORKDIR="${PWD/analyses/nobackup}/nxf-work" # Nextflow work directory
+    WORKDIR="${PWD/analyses/scratch}/nxf-work"  # Nextflow work directory
     RESULTS="${PWD/analyses/data/results}"      # Path to store results from Nextflow
 
     # Path to Nextflow script. Point this at a remote pipeline (e.g.
     # nf-core/rnaseq) instead of a local path if that's what you're running,
     # and pin it with -r <version> below.
-    SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/main.nf}"
+    SCRIPT="${SCRIPT:-$PROJECT_ROOT/code/workflows/qc/main.nf}"
 
     # Convenience symlink from this analysis folder to its results, so
     # you don't need to know/type the data/results/<analysis> path.
     ln -sfn "$RESULTS" results
-
-    if [ "$PROFILE" != "local" ]; then
-        # Override pixi.toml's scratch/ container cache default with this
-        # cluster's storage allocation
-        export NXF_APPTAINER_CACHEDIR="${PWD/analyses*/nobackup}/apptainer-cache"
-    fi
-
-    # Clean results folder if last run resulted in error
-    if [ "$( nextflow log | awk -F $'\t' '{ last=$4 } END { print last }' )" == "ERR" ]; then
-        echo "WARN: Cleaning results folder due to previous error" >&2
-        rm -rf "$RESULTS"
-    fi
 
     # Run Nextflow
     nextflow run "$SCRIPT" \
@@ -127,18 +112,17 @@ case "$cluster" in
     pelle|bianca|arrhenius|nac)
         run_nextflow "$cluster" "$project_root"
         ;;
-    "")
-        # No recognised HPC cluster (e.g. running locally on a laptop) -
-        # fall back to a local Docker profile for development.
-        echo "No recognised HPC cluster detected; running locally." >&2
-        run_nextflow local "$project_root"
-        ;;
     *)
         echo "Error: unrecognised cluster '$cluster'." >&2
         exit 1
         ;;
 esac
 ```
+
+For local development off-cluster, run `nextflow run` directly with
+`-profile local` (see the `local` profile in the `nextflow.config`
+template below) rather than through `run_nextflow.sh` — the script is
+built around auto-detecting a known HPC cluster and erroring otherwise.
 
 ## `params.yml`
 
@@ -158,8 +142,9 @@ samples: ''
 
 ## `nextflow.config`
 
-An analysis folder's `nextflow.config` overrides or extends `code/nextflow.config`
-(e.g., process-specific resources for this run only):
+An analysis folder's `nextflow.config` overrides or extends its workflow's
+`code/workflows/<name>/nextflow.config` (e.g., process-specific resources
+for this run only):
 
 ```groovy
 process {
@@ -170,10 +155,11 @@ process {
 }
 ```
 
-`code/nextflow.config` itself should define one profile per cluster, named
-to match `run_nextflow.sh`'s detected cluster name, plus a `local` profile
-for development off-cluster (`run_nextflow.sh` falls back to it when no
-HPC cluster is detected):
+`code/workflows/<name>/nextflow.config` itself should define one profile
+per cluster, named to match `run_nextflow.sh`'s detected cluster name,
+plus a `local` profile for development off-cluster (invoked directly with
+`nextflow run ... -profile local` — see above; `run_nextflow.sh` itself
+only ever picks a detected HPC cluster's profile):
 
 ```groovy
 profiles {
@@ -313,3 +299,15 @@ Once a debugging session is done, clean up redundant work directories with
 `nextflow clean -f -before <run_name>` (`run_nextflow.sh` does this after
 every run using `last`). Use `nextflow log` to see the date and status of
 past runs, and to find a specific `<run_name>` to clean before.
+
+To prune an analysis folder's cache/work dir outside of a run (e.g. an old
+`02_workflow_dev`-style folder you're not actively iterating on), use the
+generic `nextflow-clean` pixi task instead of repeating the commands above
+by hand:
+
+```bash
+pixi run nextflow-clean analyses/02_workflow_dev
+```
+
+It takes the analysis folder as an argument rather than being keyed to one,
+since it's meant to run periodically against whichever folder needs it.

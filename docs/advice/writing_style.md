@@ -97,7 +97,7 @@ and longer documentation; a few (marked) matter mainly for longer docs.
 
 ## Length calibration by artifact type
 
-- **Inline code comment** (`code/modules/*.nf`, `code/bin/*`): 1-3 lines.
+- **Inline code comment** (`code/workflows/*/modules/*.nf`, `code/workflows/*/bin/*`): 1-3 lines.
   State the exit condition/behavior/non-obvious *why*; if it needs more
   than that, the full rationale belongs in a linked decision record, not
   the comment.

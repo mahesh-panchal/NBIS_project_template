@@ -29,17 +29,16 @@ space. Nextflow processes always run containerised, pulling images from
 a registry; when a tool has no existing public image (Biocontainers,
 Rocker, ...), build one with [Seqera Containers](https://seqera.io/containers/)
 (Wave) from that spec rather than hand-writing a `Dockerfile` under
-`code/containers/`. Only fall back to a custom `Dockerfile` when Wave and
+`code/workflows/<name>/containers/`. Only fall back to a custom `Dockerfile` when Wave and
 existing public images don't cover it — see [`code.md`](code.md).
 
-The container cache itself defaults to
+The container cache lives at
 [`scratch/apptainer-cache/`](../../scratch/README.md), set via
 `NXF_APPTAINER_CACHEDIR` in `pixi.toml`'s `[activation.env]` — see
-[`glossary.md`](glossary.md#tools) for what Apptainer is. On HPC clusters
-with a separate storage allocation, `run_nextflow.sh`
-overrides this to point at `nobackup/` instead (see
-[`nextflow_workflow.md`](nextflow_workflow.md)) — `scratch/` covers local
-development and anywhere without a separate allocation.
+[`glossary.md`](glossary.md#tools) for what Apptainer is. This is shared by
+every analysis, on HPC and locally alike; see
+[`nextflow_workflow.md`](nextflow_workflow.md) for the (also `scratch/`-based)
+Nextflow work directory.
 
 ## Publishing a custom container
 
@@ -50,7 +49,7 @@ docker push ghcr.io/<org>/<image_name>:<tag>
 ```
 
 Use when Wave and existing public images genuinely don't cover a tool,
-building from a `Dockerfile` in `code/containers/<tool_name>/`. New
+building from a `Dockerfile` in `code/workflows/<name>/containers/<tool_name>/`. New
 images are private by default — make the package public from its GitHub
 package settings once it's ready to be pulled without authentication.
 
@@ -76,14 +75,14 @@ pandas = "*"
 
 [feature.stats.tasks.stats-notebook]
 cmd = "quarto render stats.qmd"
-cwd = "code/notebooks"
+cwd = "analyses/03_stats"
 
 [environments]
 stats = ["stats"]
 ```
 
 Run with `pixi run -e stats stats-notebook`. A notebook under
-`code/notebooks/` (see [`code.md`](code.md)) that needs a different
+`analyses/<n>_<desc>/` (see [`analyses.md`](analyses.md)) that needs a different
 package set than the project default gets its own pixi feature and
 environment this way, rather than a hand-written `environment.yml` in a
 separate folder — one source of truth, dry-run-checked the same way as

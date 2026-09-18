@@ -3,22 +3,26 @@
 This folder holds the workflow(s) and adhoc scripts that launch scripts
 under `analyses/` call. It ships a minimal example — a single `FASTQC`
 step run by `analyses/02_workflow_dev/` — build it up as the project's
-actual workflow takes shape:
+actual workflow takes shape. Each pipeline gets its own self-contained
+folder under `workflows/`, with its own modules, subworkflows, `bin/`,
+and configuration — nothing is shared between workflows:
 
 ```
 code/
- | - bin/                            Adhoc/custom scripts
- | - configs/                        Configuration files that govern workflow execution
- | - containers/                     Custom container definition files
- | - modules/nf-core/                nf-core modules (ships: fastqc)
- | - modules/local/                  Hand-written modules
- | - notebooks/                      Notebooks analysing already-processed data
- | - main.nf                         The primary analysis script
- \ - nextflow.config                 General Nextflow configuration
+ \ - workflows/                          One self-contained pipeline per folder
+      \ - qc/                            Ships: minimal FastQC example
+           | - bin/                      Adhoc/custom scripts
+           | - configs/                  Configuration files that govern workflow execution
+           | - containers/               Custom container definition files
+           | - modules/nf-core/          nf-core modules (ships: fastqc)
+           | - modules/local/            Hand-written modules
+           | - subworkflows/local/       Hand-written subworkflows
+           | - main.nf                   The primary analysis script
+           \ - nextflow.config           General Nextflow configuration
 ```
 
 See [`docs/advice/code.md`](../docs/advice/code.md) for conventions on
-adding modules, configuration, and containers, and
+adding workflows, modules, configuration, and containers, and
 [`docs/advice/nextflow_workflow.md`](../docs/advice/nextflow_workflow.md)
-for how `analyses/` launches this workflow (run script, `params.yml`,
+for how `analyses/` launches a given workflow (run script, `params.yml`,
 `nextflow.config`), including troubleshooting a failed run.
