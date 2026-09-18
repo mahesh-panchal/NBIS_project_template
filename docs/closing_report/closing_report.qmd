@@ -18,26 +18,12 @@ author:
 date: last-modified
 date-format: iso
 bibliography: citations.bib
-redmine_id: "[TODO]"
-project_contact: "[TODO]"
-project_pi: "[TODO]"
 compute_project: "[TODO]"
 storage_project: "[TODO]"
 ---
 
-* Redmine ID: {{< meta redmine_id >}}
-* Request by: {{< meta project_contact >}}
-* Principal Investigator: {{< meta project_pi >}}
-
-## NBIS Support Request.
-
-Redmine support request:
-
-> REDMINE DESCRIPTION
-
-NBIS Agreement:
-
-> - AGREEMENT TERMS
+Project ID, PI, and requester are in
+[`../project_info.md`](../project_info.md).
 
 ## Project information
 

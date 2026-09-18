@@ -75,8 +75,9 @@ don't reach for a notebook to process raw sequencing data at scale.
 - **`code/`** contains the workflow(s) and adhoc scripts that `analyses/`
   launch scripts call, reading from `data/input/` and writing to
   `data/results/`. See [`code.md`](code.md).
-- **`docs/`** contains project documentation, including this advice folder
-  and the Quarto closing report under `docs/closing_report/`.
+- **`docs/`** contains project documentation: this advice folder, the
+  Quarto closing report under `docs/closing_report/`, and Redmine/admin
+  fields in `docs/project_info.md`.
 - **`scratch/`** holds temporary/throwaway files and the local container
   image cache — nothing here is authored or precious. See
   [`environment.md`](environment.md#container-images-and-seqera-wave).

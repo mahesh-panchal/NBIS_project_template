@@ -36,8 +36,9 @@ reproducible output. It relies on a small set of tools working together:
   cd ~/Documents/Projects
   git clone <user>@<hpc-login-node>:/proj/naiss20XX-YY-ZZ/<project_root>
   ```
-- Update the root `README.md` with the project info, tasks to be
-  performed, and any allocation/storage details.
+- Update the root `README.md` with allocation/storage details, and
+  [`../project_info.md`](../project_info.md) with the Redmine/project info
+  and tasks to be performed.
 
 If compute and local work both push to the same repository, keep the
 branch used on the compute allocation (usually `main`) distinct from the

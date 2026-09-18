@@ -12,6 +12,14 @@ project root points AI agents here — keep these files up to date as the
 project's conventions evolve, and update them (not `AGENTS.md`) when a
 convention changes.
 
+## Project info
+
+[`project_info.md`](project_info.md) holds the Redmine/administrative
+fields (Project ID, PI, requester, NBIS Agreement) — kept separate from
+the root `README.md` so that file stays a quick technical orientation,
+and separate from the closing report so the report stays focused on
+methods and results.
+
 ## Decisions
 
 The [`decisions/`](decisions/) folder holds Architecture Decision Records
