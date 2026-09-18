@@ -41,3 +41,20 @@ git fetch template
 git merge --allow-unrelated-histories --squash template/main
 """
 description = "Stage changes from the upstream template as a single commit (review and commit yourself; --squash keeps the template's own history out of this repo's log)"
+
+[tasks.git-link-hpc]
+args = ["address"]
+cmd = "git remote add hpc {{ address }}"
+description = "Record the HPC clone's SSH address as a git remote, e.g. user@host:/proj/naiss20XX-YY-ZZ/<project_root> - for `git fetch hpc`/rsync addressing only, never `git push hpc` (see docs/advice/how_to.md)"
+
+[tasks.fetch-results]
+args = [
+    { arg = "analysis", default = "02_workflow_dev" },
+    { arg = "opts", default = "" },
+]
+cmd = """
+rsync -av {{ opts }} \
+"$(git remote get-url hpc)/data/results/{{ analysis }}/" \
+"data/results/{{ analysis }}/"
+"""
+description = "Fetch an analysis's results from the HPC clone (git-link-hpc first)"

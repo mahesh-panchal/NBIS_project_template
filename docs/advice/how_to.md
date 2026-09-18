@@ -36,6 +36,11 @@ reproducible output. It relies on a small set of tools working together:
   cd ~/Documents/Projects
   git clone <user>@<hpc-login-node>:/proj/naiss20XX-YY-ZZ/<project_root>
   ```
+- Record that HPC address as a git remote from the local clone, so you
+  don't need to retype it:
+  ```bash
+  pixi run git-link-hpc <user>@<hpc-login-node>:/proj/naiss20XX-YY-ZZ/<project_root>
+  ```
 - Update the root `README.md` with allocation/storage details, and
   [`../project_info.md`](../project_info.md) with the Redmine/project info
   and tasks to be performed.
@@ -44,6 +49,16 @@ If compute and local work both push to the same repository, keep the
 branch used on the compute allocation (usually `main`) distinct from the
 branch you push from locally (usually a feature branch), so a `git push`
 from either side doesn't clobber the other's in-progress state.
+
+**Never `git push hpc`.** The HPC clone's checked-out branch (usually
+`main` — it's what `run_nextflow.sh` actually runs from) refuses a
+direct push into it by default: git won't update a non-bare repository's
+working tree to match a pushed HEAD, so the push is rejected rather than
+leaving the checked-out files out of sync. Get code onto HPC the normal
+way instead — push to `origin`, then `git pull` from the HPC clone
+itself. The `hpc` remote is for `git fetch`/`pull` (pulling *from* HPC to
+local has no such restriction) and as an address for the `fetch-results`
+rsync task — see [`environment.md`](environment.md#syncing-with-hpc).
 
 ## Working habits
 

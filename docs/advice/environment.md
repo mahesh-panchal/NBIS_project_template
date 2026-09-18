@@ -119,6 +119,24 @@ directories (`~/.cache/rattler`, `~/.pixi`) hit a small home-directory
 quota on HPC. This is personal machine setup, not something `pixi.toml`
 can declare.
 
+## Syncing with HPC
+
+```bash
+pixi run git-link-hpc <user>@<hpc-login-node>:/proj/naiss20XX-YY-ZZ/<project_root>
+pixi run fetch-results 02_workflow_dev
+```
+
+`git-link-hpc` records the HPC clone's SSH address as a git remote named
+`hpc` — a git-over-SSH address and an rsync-over-SSH address share the
+same `user@host:/path` syntax, so `$(git remote get-url hpc)` doubles as
+an rsync prefix. `fetch-results` uses it to pull an analysis's results
+from the HPC clone to your local one (`data/results/<analysis>/` on both
+sides — see [`data_management.md`](data_management.md)); add similar
+tasks for other `data/` subfolders as needed. This is one-directional
+(HPC -> local) and only ever touches `data/`, not git history — see
+[`how_to.md`](how_to.md#starting-a-new-project) for why `git push hpc`
+specifically is never the right move.
+
 ## Conventions
 
 - Never call `conda`/`mamba`/`micromamba` directly in this repository —

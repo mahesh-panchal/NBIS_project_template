@@ -27,6 +27,11 @@ and the matching pixi task.
 - HPC compute allocation: `/proj/naiss20XX-YY-ZZ/<project_root>`
 - HPC storage allocation (if separate): `/proj/naiss20xx-yy-zz/`
 
+Also recorded as the `hpc` git remote (`git remote -v`; set up with
+`pixi run git-link-hpc <address>` if missing) — see
+[`docs/advice/environment.md`](docs/advice/environment.md#syncing-with-hpc)
+for fetching results from it.
+
 Project and Redmine details are in
 [`docs/project_info.md`](docs/project_info.md). A description of the
 workflow stages is in the
