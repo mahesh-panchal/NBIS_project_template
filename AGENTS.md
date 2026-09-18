@@ -22,6 +22,9 @@ assumptions about project layout.
 - [`docs/advice/writing_style.md`](docs/advice/writing_style.md) — how to
   write code comments, docs, commit messages, and review comments in this
   repository.
+- [`docs/advice/glossary.md`](docs/advice/glossary.md) — NBIS/NAISS
+  organisations, clusters, and administrative terms used elsewhere in
+  these docs.
 
 If a task touches one of these areas and the relevant advice file doesn't
 cover it, prefer asking the user over guessing a convention.
