@@ -12,6 +12,7 @@ code/
  \ - workflows/                          One self-contained pipeline per folder
       \ - qc/                            Ships: minimal FastQC example
            | - bin/                      Adhoc/custom scripts
+           | - conf/                     Per-architecture container digests from `nf-core pipelines create` (unused, see docs/advice/code.md)
            | - configs/                  Configuration files that govern workflow execution
            | - containers/               Custom container definition files
            | - modules/nf-core/          nf-core modules (ships: fastqc)

@@ -17,6 +17,7 @@ code/
 \ - workflows/                     One self-contained pipeline per folder
      \ - qc/                       Ships: minimal FastQC example, for 02_workflow_dev
           | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
+          | - conf/                Per-architecture container digests from `nf-core pipelines create` (not wired into nextflow.config - see below)
           | - configs/             Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
           | - containers/          Custom container image definitions (Dockerfile per tool)
           | - modules/nf-core/     Modules installed with `nf-core modules install <name>` (ships: fastqc)
@@ -56,6 +57,15 @@ modules land in that workflow's own `modules/` (and get tracked in its
 own `modules.json`/`.nf-core.yml`), not another workflow's. Point the
 matching `analyses/<n>_<desc>/run_nextflow.sh`'s `SCRIPT` at the new
 `workflows/<name>/main.nf` (see [`nextflow_workflow.md`](nextflow_workflow.md)).
+
+`nf-core pipelines create` also scaffolds a `conf/` folder of
+per-architecture, per-container-engine digest pins
+(`containers_docker_amd64.config` and similar) — `workflows/qc/` ships
+these unwired, since Nextflow's config parser won't let a later
+statement read back a profile-set value like `docker.enabled` to choose
+between them. Leave them unless you have a concrete reason to pin an
+exact digest per architecture, in which case wire the right one in via a
+dedicated profile (e.g. `docker_arm64`) rather than a conditional.
 
 ## Installing an nf-core module
 

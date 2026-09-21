@@ -84,13 +84,13 @@ The following tools were used in the current analysis:
 
 All the tools used in this project are available as Apptainer container
 images (`*.{img,sif}`) in the folder
-`/proj/naiss20xx-yy-zz/nobackup/apptainer-cache`. The container
+`<project_root>/scratch/apptainer-cache`. The container
 image and version each Apptainer image was made from can be found in
-the workflow's config files under `<project_root>/code/configs/`.
+the workflow's config files under `<project_root>/code/workflows/<name>/configs/`.
 
-Custom container images are uploaded to `ghrc.io` (GitHub container registry) and associated
-with the project repostory. Images hosted on `ghcr.io` are initially private if the code
-repository is private. These images should be copied to a public respository on publication.
+Custom container images are uploaded to `ghcr.io` (GitHub container registry) and associated
+with the project repository. Images hosted on `ghcr.io` are initially private if the code
+repository is private. These images should be copied to a public repository on publication.
 Request access to the code repository from the NBIS expert to
 have access to the Docker container images. All other Docker images
 are hosted on public registries.
