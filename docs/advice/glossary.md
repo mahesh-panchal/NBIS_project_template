@@ -35,8 +35,10 @@ a Nextflow profile.
 - **Pelle** — UPPMAX's general-purpose compute cluster (Rackham's
   successor).
 - **Bianca** — UPPMAX's cluster for sensitive/personal data, with its
-  own access controls and no general internet access. See the
-  sensitive-data note in [`data_management.md`](data_management.md).
+  own access controls and no general internet access; files move in and
+  out only via its `wharf` SFTP endpoint. See the sensitive-data note in
+  [`data_management.md`](data_management.md) and running a workflow
+  there in [`nextflow_workflow.md`](nextflow_workflow.md#running-on-bianca).
 - **Dardel** — PDC's (KTH Royal Institute of Technology) HPC cluster.
 - **Arrhenius** — a NAISS-allocated HPC cluster, covered by nf-core's
   generic `naiss` institutional config (no dedicated one like `uppmax`

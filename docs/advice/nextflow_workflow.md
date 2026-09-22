@@ -181,10 +181,6 @@ profiles {
         includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/uppmax.config'
         params.project = ''
     }
-    bianca {
-        includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/uppmax.config'
-        params.project = ''
-    }
     dardel {
         includeConfig 'https://raw.githubusercontent.com/nf-core/configs/master/conf/pdc_kth.config'
         params.project = ''
@@ -195,6 +191,52 @@ profiles {
     }
 }
 ```
+
+### Running on Bianca
+
+[Bianca](glossary.md#clusters) has no general internet access, so its
+profile can't `includeConfig` a live `https://...` URL the way `pelle`
+does — the fetch would just hang/fail. Vendor a local copy of the
+institutional config instead, and point each module's container at a
+local file instead of a registry:
+
+```groovy
+profiles {
+    bianca {
+        includeConfig 'conf/bianca_uppmax.config'
+        params.project = ''
+
+        process {
+            withName: 'FASTQC' {
+                container = "${System.getenv('NXF_APPTAINER_CACHEDIR')}/fastqc-0.12.1--hdfd78af_0.sif"
+            }
+        }
+    }
+}
+```
+
+- **Institutional config**: copy the contents of
+  [nf-core/configs' `uppmax.config`](https://github.com/nf-core/configs/blob/master/conf/uppmax.config)
+  into `code/workflows/<name>/conf/bianca_uppmax.config` (see
+  `code/workflows/qc/conf/bianca_uppmax.config` for a worked example,
+  including a header recording the source commit and fetch date).
+  Re-fetch and diff it against the vendored copy occasionally, from a
+  machine with internet — this file won't pick up upstream fixes on its
+  own the way `pelle`'s live include does.
+- **Container per module**: on a machine with internet, pull the same
+  image the module's `container` directive would otherwise resolve
+  (check `modules/nf-core/<name>/main.nf`, or run `nextflow config
+  code/workflows/<name> -profile pelle` and read the resolved
+  `container` value), e.g.:
+  ```bash
+  apptainer pull fastqc-0.12.1--hdfd78af_0.sif \
+      https://depot.galaxyproject.org/singularity/fastqc:0.12.1--hdfd78af_0
+  ```
+  Transfer the resulting `.sif` into Bianca's
+  `scratch/apptainer-cache/` (e.g. via the
+  [wharf](glossary.md#clusters) file transfer service), then add a
+  `withName` override like the one above for each module a Bianca run
+  needs — the filename just needs to match what you transferred.
 
 NAC has no maintained nf-core config, so hand-write its profile (it's
 still Slurm-based, but unlike the others doesn't need a project

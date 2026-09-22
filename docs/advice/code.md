@@ -17,7 +17,7 @@ code/
 \ - workflows/                     One self-contained pipeline per folder
      \ - qc/                       Ships: minimal FastQC example, for 02_workflow_dev
           | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
-          | - conf/                Per-architecture container digests from `nf-core pipelines create` (not wired into nextflow.config - see below)
+          | - conf/                Vendored bianca_uppmax.config, plus unused per-arch digests from `nf-core pipelines create` (see below)
           | - configs/             Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
           | - containers/          Custom container image definitions (Dockerfile per tool)
           | - modules/nf-core/     Modules installed with `nf-core modules install <name>` (ships: fastqc)
@@ -66,6 +66,10 @@ statement read back a profile-set value like `docker.enabled` to choose
 between them. Leave them unless you have a concrete reason to pin an
 exact digest per architecture, in which case wire the right one in via a
 dedicated profile (e.g. `docker_arm64`) rather than a conditional.
+`conf/bianca_uppmax.config` in the same folder is unrelated and
+genuinely wired in — see
+[`nextflow_workflow.md`](nextflow_workflow.md#running-on-bianca) and
+[decision 0001](../decisions/0001-vendor-bianca-institutional-config.md).
 
 ## Installing an nf-core module
 
