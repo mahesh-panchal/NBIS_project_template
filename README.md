@@ -53,6 +53,9 @@ the workflow stages is in the
  \ - scratch/                                  Disposable space - temp files, local container cache
 ```
 
+*Each subfolder's own README explains why it's split out the way it is
+— e.g. why `analyses/` and `code/` are separate.*
+
 On HPC systems with a separate storage allocation from the compute
 allocation (e.g., [NAISS](docs/advice/glossary.md#organisations) storage
 vs. compute projects on [UPPMAX](docs/advice/glossary.md#organisations)),

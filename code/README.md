@@ -22,6 +22,11 @@ code/
            \ - nextflow.config           General Nextflow configuration
 ```
 
+*Kept separate from [`analyses/`](../analyses/README.md) for the same
+reason in reverse — pipeline logic can be improved and reused across
+runs without changing the parameters/results record of a run that
+already happened.*
+
 See [`docs/advice/code.md`](../docs/advice/code.md) for conventions on
 adding workflows, modules, configuration, and containers, and
 [`docs/advice/nextflow_workflow.md`](../docs/advice/nextflow_workflow.md)

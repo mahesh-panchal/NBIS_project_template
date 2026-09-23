@@ -4,6 +4,11 @@ This folder contains numbered folders with launch scripts to run the
 project's analyses. Each folder is numbered in the order it was run, and
 has a short description of the analysis.
 
+*Kept separate from [`code/`](../code/README.md) so the same workflow
+logic can be re-run — against test data, then full data, or with a
+corrected parameter — without editing or losing the record of what
+parameters actually produced an earlier folder's results.*
+
 The section [History](#history) below, and its mermaid diagram, is used to
 communicate how the folders relate to each other. For example:
 - which folders run the same workflow but with different parameters.
