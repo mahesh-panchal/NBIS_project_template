@@ -86,7 +86,7 @@ All the tools used in this project are available as Apptainer container
 images (`*.{img,sif}`) in the folder
 `<project_root>/scratch/apptainer-cache`. The container
 image and version each Apptainer image was made from can be found in
-the workflow's config files under `<project_root>/code/workflows/<name>/configs/`.
+the workflow's config files under `<project_root>/code/workflows/<name>/conf/`.
 
 Custom container images are uploaded to `ghcr.io` (GitHub container registry) and associated
 with the project repository. Images hosted on `ghcr.io` are initially private if the code

@@ -17,8 +17,7 @@ code/
 \ - workflows/                     One self-contained pipeline per folder
      \ - qc/                       Ships: minimal FastQC example, for 02_workflow_dev
           | - bin/                 Adhoc/custom scripts (automatically on PATH for Nextflow processes)
-          | - conf/                Vendored bianca_uppmax.config, plus unused per-arch digests from `nf-core pipelines create` (see below)
-          | - configs/             Workflow configuration (compute resources, tool-specific config, e.g. MultiQC)
+          | - conf/                Workflow configuration (compute resources, tool-specific config, vendored bianca_uppmax.config; plus unused per-arch digests, see below)
           | - containers/          Custom container image definitions (Dockerfile per tool)
           | - modules/nf-core/     Modules installed with `nf-core modules install <name>` (ships: fastqc)
           | - modules/local/       Hand-written modules (no nf-core equivalent exists)
@@ -33,7 +32,7 @@ Give each independent pipeline its own self-contained folder under
 `workflows/` (`workflows/<name>/`, built from a fresh
 `nf-core pipelines create` or copied from `workflows/qc/`), rather than
 growing one `main.nf` to cover unrelated processing, or sharing
-`modules/`/`configs/`/`bin/` between pipelines that don't actually need
+`modules/`/`conf/`/`bin/` between pipelines that don't actually need
 the same ones:
 
 ```groovy
@@ -138,7 +137,7 @@ Write toy examples first (e.g. via `nextflow console`, or see
 [Nextflow Patterns](http://nextflow-io.github.io/patterns/index.html)) if
 it's not obvious what a channel operator produces.
 
-Add the process's resource requirements to `configs/compute_resources.config`:
+Add the process's resource requirements to `conf/compute_resources.config`:
 
 ```groovy
 process {
