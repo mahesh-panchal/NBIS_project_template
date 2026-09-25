@@ -128,7 +128,7 @@ built around auto-detecting a known HPC cluster and erroring otherwise.
 
 ```yaml
 ## Workflow inputs
-## The absolute path (full path, begins with / ) to the input data
+## Path to the input data, relative to this folder (or an absolute path)
 samples: ''
 
 ## Workflow outputs

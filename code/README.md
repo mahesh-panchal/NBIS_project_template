@@ -12,8 +12,7 @@ code/
  \ - workflows/                          One self-contained pipeline per folder
       \ - qc/                            Ships: minimal FastQC example
            | - bin/                      Adhoc/custom scripts
-           | - conf/                     Vendored bianca_uppmax.config, plus unused per-arch digests from `nf-core pipelines create` (see docs/advice/code.md)
-           | - configs/                  Configuration files that govern workflow execution
+           | - conf/                     Configuration files that govern workflow execution (see docs/advice/code.md)
            | - containers/               Custom container definition files
            | - modules/nf-core/          nf-core modules (ships: fastqc)
            | - modules/local/            Hand-written modules
