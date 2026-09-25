@@ -59,7 +59,7 @@ function get_cluster_name {
         # Only return cluster names we're catering for
         sacctmgr show cluster -P -n \
         | cut -f1 -d'|' \
-        | grep "pelle\|bianca\|dardel\|arrhenius\|nac"
+        | grep "pelle\|bianca\|dardel\|arrhenius\|nac" || true
     fi
 }
 
