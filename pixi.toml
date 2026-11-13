@@ -25,10 +25,27 @@ cmd = "./run_nextflow.sh"
 cwd = "analyses/02_workflow_dev"
 description = "Run the workflow-dev analysis (test data)"
 
+[tasks.closing-report-init]
+# Run once, when it is time to write the closing report, then commit the
+# result. Fetching here (not at project start or render time) means the report
+# uses the then-current template and never changes afterwards.
+# The ref is explicit because Quarto assumes `main` and upstream uses `master`.
+cmd = """bash -c '
+set -e
+mkdir -p docs/closing_report
+cd docs/closing_report
+if [ -e NBIS_Quarto_Report.qmd ]; then echo "Report already exists; not overwriting." >&2; exit 1; fi
+quarto use template NBISweden/NBIS-template-support-reports@master --no-prompt
+quarto add NBISweden/NBIS-template-support-reports@master --no-prompt
+rm -f NBIS_Quarto_Report.html
+../closing_report_additions/apply.sh NBIS_Quarto_Report.qmd
+'"""
+description = "Fetch the current NBIS report template into docs/closing_report/ and add this project's extra sections (run when writing the closing report; needs internet)"
+
 [tasks.closing-report]
-cmd = "quarto render closing_report.qmd"
+cmd = "quarto render NBIS_Quarto_Report.qmd"
 cwd = "docs/closing_report"
-description = "Render the closing report to a self-contained HTML file"
+description = "Render the closing report to a self-contained HTML file (run closing-report-init first; replace the template's R engine and example chunks)"
 
 [tasks.git-link-template]
 cmd = "git remote add template https://github.com/NBISweden/NBIS_project_template"

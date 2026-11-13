@@ -1,0 +1,26 @@
+## Reproducibility
+
+Several tools have been used to aid the reproducibility of this analysis.
+
+- Version Control: The scripts, documentation, configuration parameters,
+and container image definitions for this analysis have been managed
+using the version control system `git`. These files are also hosted
+privately on the `NBISweden/SMS-<id>-<description>` Github repository. Please
+ask the NBIS expert to add your Github user for access if you would like
+to make a copy of this repository and continue making changes to it.
+- Nextflow workflow management system: Nextflow is used to automate
+the running of various tools for data processing and analysis. It
+provides a complete computational description of how the analysis
+was run, from beginning to end. A configuration profile
+`<cluster>` was created to utilise the `apptainer` container technology
+and `slurm` queueing system available on the cluster <cluster>.
+- Apptainer container technology: Containers provide a software
+package that include everything needed to run an application: code,
+runtime, system tools, system libraries, and settings. Containerised
+software will run the same regardless of the infrastructure, and
+isolate its software from the computational environment to ensure
+it works uniformly.
+- Pixi: Pixi declares the tool environment (Nextflow and other tools) for
+running the workflow in a single `pixi.toml` file, shared by all
+members of the project.
+
