@@ -48,7 +48,7 @@ cwd = "docs/closing_report"
 description = "Render the closing report to a self-contained HTML file (run closing-report-init first; replace the template's R engine and example chunks)"
 
 [tasks.git-link-template]
-cmd = "git remote add template https://github.com/NBISweden/NBIS_project_template"
+cmd = "git remote add template https://github.com/mahesh-panchal/NBIS_project_template"
 description = "Add the upstream project template repository as a git remote"
 
 [tasks.git-merge-template]
