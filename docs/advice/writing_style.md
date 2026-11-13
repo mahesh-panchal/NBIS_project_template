@@ -1,7 +1,7 @@
 # Writing style
 
 Applies to code comments, `docs/advice/*.md`, the closing report
-(`docs/closing_report/closing_report.qmd`), `docs/decisions/*.md`, commit
+(`docs/closing_report/NBIS_Quarto_Report.qmd`, your own additions only), `docs/decisions/*.md`, commit
 messages, and PR/review comments. Does not apply to conversational
 replies to the user in the current session — those follow the harness's
 own tone conventions. Grounded in cognitive-load and technical-writing

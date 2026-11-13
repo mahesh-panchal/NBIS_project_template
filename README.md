@@ -35,7 +35,8 @@ for fetching results from it.
 Project and [Redmine](docs/advice/glossary.md#administrative) details
 are in [`docs/project_info.md`](docs/project_info.md). A description of
 the workflow stages is in the
-[closing report](docs/closing_report/closing_report.qmd).
+closing report (`docs/closing_report/`, created when writing the report by
+`pixi run closing-report-init`; see [`docs/README.md`](docs/README.md#closing-report)).
 
 ## Directories
 
